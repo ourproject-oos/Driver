@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "616365050033",
+    "firebase_url": "https://driver-b7c78.firebaseio.com",
+    "project_id": "driver-b7c78",
+    "storage_bucket": "driver-b7c78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616365050033:android:644d5c9a097db95b9a7a90",
+        "android_client_info": {
+          "package_name": "com.example.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616365050033-9vf8hhf627tk41qshq5810vccqd5t52l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.driver",
+            "certificate_hash": "e34baaa124a742637c9807c903f67d85d4a4fc04"
+          }
+        },
+        {
+          "client_id": "616365050033-8m12vcucrngmbpe5oq4c7a2dbpq78vs1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6Ui-l5wHbi5lE_o6BwHKSO8xw5ukRS5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616365050033-8m12vcucrngmbpe5oq4c7a2dbpq78vs1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

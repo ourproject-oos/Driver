@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+
+                    android:id="@+id/img_add_user_police"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_add_new_place_img"
+                    app:riv_border_color="@color/color2"
+                    app:riv_border_width="2dp"
+                    app:riv_corner_radius="50dp"
+                    android:layout_marginRight="2dp"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <EditText
+
+                    android:id="@+id/txt_userName_police"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/user_name_p"
+                    android:inputType="textPersonName"
+                    android:maxLength="15"
+                    android:textColor="@color/color2"
+                    android:textColorHint="@color/hint_txt_color" />
+
+                <EditText
+                    android:id="@+id/txt_password_police"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:ems="10"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/color2"
+                    android:textColorHint="@color/hint_txt_color" />
+
+                <EditText
+                    android:id="@+id/rePassword_police"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:ems="10"
+                    android:hint="@string/re_write_password_p"
+                    android:inputType="textPassword"
+                    android:textColor="@color/color2"
+                    android:textColorHint="@color/hint_txt_color" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/txt_lName__police"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:hint="@string/last_name_p"
+                        android:inputType="text"
+                        android:maxLength="15"
+                        android:textColor="@color/color2"
+                        android:textColorHint="@color/hint_txt_color" />
+
+                    <EditText
+                        android:id="@+id/txt_fName_police"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:hint="@string/first_name_p"
+                        android:inputType="text"
+                        android:maxLength="15"
+                        android:textColor="@color/color2"
+
+                        android:textColorHint="@color/hint_txt_color" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+
+                    <EditText
+                        android:id="@+id/txt_phoneNo_police"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone_number"
+                        android:inputType="none|phone"
+                        android:maxLength="9"
+                        android:textColor="@color/color2"
+                        android:textColorHint="@color/hint_txt_color" />
+                    <EditText
+                        android:id="@+id/txt_dgree_police"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/dgree"
+                        android:textColor="@color/color2"
+                        android:textColorHint="@color/hint_txt_color" />
+
+                    <EditText
+                        android:id="@+id/txt_job_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/job_id"
+                        android:textColor="@color/color2"
+                        android:textColorHint="@color/hint_txt_color" />
+
+                    <EditText
+                        android:id="@+id/txt_address_police"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/address_p"
+                        android:textColor="@color/color2"
+                        android:textColorHint="@color/hint_txt_color" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_SignUp_police"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:onClick="addUser"
+                    android:text="@string/add_police"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color2"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteY="420dp" />
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+

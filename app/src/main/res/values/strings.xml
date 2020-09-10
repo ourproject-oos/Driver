@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">TrafficGo</string>
+    <string name="title_profile" translatable="false">Profile</string>
+    <string name="title_notifications" translatable="false">Notifications</string>
+    <string name="title_activity_policemain" translatable="false">policemain</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
+    <string name="title_location" translatable="false">location</string>
+    <string name="title_update" translatable="false">update</string>
+    <string name="title_delete" translatable="false">delete</string>
+    <string name="title_insert">insert</string>
+    <string name="title_activity_main_all">MainAllActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="shared_preference_usr">user_sp</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="search_by_car_number">search by car number</string>
+    <string name="search">search</string>
+    <string name="driver_info">Driver Info</string>
+    <string name="add_violation">ADD VIOLATION</string>
+    <string name="user_name">user Name</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="user_name_police">User Name</string>
+    <string name="password_police">Password</string>
+    <string name="re_write_password">re-write password</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="male">Male</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="car_number">Car Number</string>
+    <string name="car_type">Car Type</string>
+    <string name="address">Address</string>
+    <string name="job">Job</string>
+    <string name="add_driver">Add Driver</string>
+    <string name="user_name_p">User Name</string>
+    <string name="re_write_password_p">Re-write Password</string>
+    <string name="last_name_p">last Name</string>
+    <string name="first_name_p">First Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="dgree">Dgree</string>
+    <string name="job_id">Job ID</string>
+    <string name="address_p">Address</string>
+    <string name="add_police">Add Police</string>
+    <string name="add_police">Add Police</string>
+    <string name="add_vio">Add vio</string>
+    <string name="add_driver">Add Driver</string>
+    <string name="add_type_of_violation">Add Type of Violation</string>
+    <string name="high_speed">Exceeding the speed limit   (Amount:5000 RY)</string>
+    <string name="car_with_no_number">Using dazzling lights   (Amount:1000 RY)</string>
+    <string name="eed">eed</string>
+    <string name="ghui">ghui</string>
+    <string name="not_wearing_seatbelt">Not wearing a seatbelt   (Amount:1000 RY)</string>
+    <string name="no_parking">No parking   (Amount:1000 RY)</string>
+    <string name="driving_vehicle_that_produces_excessive_smoke">Driving a vehicle that produces excessive smoke   (Amount:5000 RY)</string>
+    <string name="using_cell_phone_while_driving">Using a cell phone while driving   (Amount:1000 RY)</string>
+    <string name="unnecessary_usage_of_the_horn">Unnecessary usage of the horn   (Amount:1000 RY)</string>
+    <string name="Driving_without_drivers_license">Driving without a drivers license   (Amount:5000 RY)</string>
+    <string name="Driving_without_valid_documentation"><![CDATA[>Driving without valid documentation   (Amount:1000 RY)]]></string>
+    <string name="Unsafe_overtake">Unsafe overtake   (Amount:5000 RY)</string>
+    <string name="Driving_against_the_flow_of_traffic">Driving against the flow of traffic   (Amount:5000 RY)</string>
+    <string name="Impending_traffic">Impending traffic   (Amount:1000 RY)</string>
+    <string name="Driving_through_or_stopping_in_crossing_zone">Driving through or stopping in a crossing zone   (Amount:1000 RY)</string>
+    <string name="Reckless_driving">Reckless driving   (Amount:5000 RY)</string>
+    <string name="Refusing_or_comply_to_policemen_signal">Refusing or comply to policemen`s signal   (Amount:1000 RY)</string>
+</resources>
