@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:id="@+id/li_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+<!--                <com.lucem.anb.characterscanner.ScannerView-->
+<!--                    tools:ignore="MissingClass"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/scanner_view"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="20d"-->
+<!--                    />-->
+
+                <com.lucem.anb.characterscanner.ScannerView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:id="@+id/scanner_view"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:onClick="check_no"
+                    tools:ignore="VectorDrawableCompat"
+                   />
+
+
+        <EditText
+            android:id="@+id/deep_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:textColorHint="@color/hint_txt_color"
+            android:gravity="center"
+            android:hint="@string/search_by_car_number"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="25dp"
+             />
+
+        <Button
+            android:id="@+id/search_btn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/search"
+            android:background="@drawable/buttom_shape"
+            android:gravity="center"
+            android:layout_gravity="end"
+            />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/driver_info"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:textColor="@color/color3"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:gravity="center_horizontal"
+        android:background="@drawable/buttom_shape"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/driver_name"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:textColor="@color/color2"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/driver_car_type"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:textColor="@color/color2"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/driver_number"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:textColor="@color/color2"
+            />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="@string/add_type_of_violation"
+        android:textAlignment="center"
+        android:textColor="@color/color3"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:gravity="center_horizontal"
+        android:background="@drawable/buttom_shape" />
+
+
+        <CheckBox
+            android:id="@+id/checkbox1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/high_speed"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/car_with_no_number"
+            android:textColorHint="@color/hint_txt_color"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            ></CheckBox>
+
+        <CheckBox
+            android:id="@+id/checkbox3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/not_wearing_seatbelt"
+            android:textColorHint="@color/hint_txt_color"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            ></CheckBox>
+
+        <CheckBox
+            android:id="@+id/checkbox4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/no_parking"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/driving_vehicle_that_produces_excessive_smoke"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/using_cell_phone_while_driving"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/unnecessary_usage_of_the_horn"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/Driving_without_drivers_license"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/Driving_without_valid_documentation"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/Unsafe_overtake"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/Driving_against_the_flow_of_traffic"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/Impending_traffic"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/Driving_through_or_stopping_in_crossing_zone"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/Reckless_driving"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+
+        <CheckBox
+            android:id="@+id/checkbox15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color2"
+            android:text="@string/Refusing_or_comply_to_policemen_signal"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp" />
+
+
+
+
+
+
+        <ImageButton
+            android:id="@+id/btn_add_place_location"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+           android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_location_on_black_24dp"
+            tools:ignore="InefficientWeight,VectorDrawableCompat"
+            android:contentDescription="TODO" />
+
+        <Button
+            android:id="@+id/add_v_btn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:text="@string/add_violation"
+            android:layout_gravity="end"
+            android:background="@drawable/buttom_shape"/>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
