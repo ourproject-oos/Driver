@@ -6,12 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,14 +51,16 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.lucem.anb.characterscanner.ScannerListener;
-import com.lucem.anb.characterscanner.ScannerView;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -69,9 +76,9 @@ public class GalleryFragment extends Fragment {
 
     private static final int MY_LOCATION_REQUEST_CODE = 44;
     private GalleryViewModel galleryViewModel;
-    EditText txtCarNo;
+    EditText txtCarNo,txtImage;
     CheckBox chVolType1 , chVolType2 , chVolType3 , chVolType4 , chVolType5 , chVolType6 , chVolType7 , chVolType8 , chVolType9 , chVolType10 , chVolType11 , chVolType12 , chVolType13 , chVolType14 , chVolType15;
-    Button addBtn, searchBtn;
+    Button addBtn, searchBtn,imageBtn;
     ImageButton addLocationBtn;
     TextView txtName, txtCarType, txtDriverNo;
     int driverID, policeID;
@@ -86,7 +93,6 @@ public class GalleryFragment extends Fragment {
     private double lat, langLocation;
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
-    ScannerView scannerView;
     String serialNumber;
     Intent data;
     //
@@ -96,13 +102,14 @@ public class GalleryFragment extends Fragment {
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         addLocationBtn = root.findViewById(R.id.btn_add_place_location);
+        txtImage = root.findViewById(R.id.ed_txt_image);
         txtCarNo = root.findViewById(R.id.deep_search_bar);
         txtCarType = root.findViewById(R.id.driver_car_type);
         txtName = root.findViewById(R.id.driver_name);
         txtDriverNo = root.findViewById(R.id.driver_number);
+        imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
         searchBtn = root.findViewById(R.id.search_btn);
-
         chVolType1 = root.findViewById(R.id.checkbox1);
         chVolType2 = root.findViewById(R.id.checkbox2);
         chVolType3 = root.findViewById(R.id.checkbox3);
@@ -118,7 +125,6 @@ public class GalleryFragment extends Fragment {
         chVolType13= root.findViewById(R.id.checkbox13);
         chVolType14= root.findViewById(R.id.checkbox14);
         chVolType15= root.findViewById(R.id.checkbox15);
-        scannerView =root.findViewById(R.id.scanner_view);
 
 
 
@@ -378,24 +384,7 @@ public class GalleryFragment extends Fragment {
 
             super.onActivityResult(requestCode, resultCode, data);
         }
-    private void scannerViewEvents() {
 
-        scannerView.setOnDetectedListener(getActivity(), new ScannerListener() {
-            @Override
-            public void onDetected(String s) {
-               // Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-                Log.i("result_String",s);
-            }
-
-            @Override
-            public void onStateChanged(String s, int i) {
-                Log.d("scanner_result", s);
-
-            }
-        });
-
-
-    }
 
     public static String locationString (final Location location){
 
@@ -416,5 +405,111 @@ public class GalleryFragment extends Fragment {
                 // Permission was denied. Display an error message.
             }
         }
+    }
+
+
+    public class ImageCroped extends Activity {
+
+        public void click_me(View view) {
+
+            if (view.getId()==imageBtn.getId())
+            {
+                checkAndroidVersion();
+            }
+
+            else
+            {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        public void checkAndroidVersion() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                try {
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE}, 555);
+                }
+                catch (Exception e) {
+
+                }
+            }
+            else {
+                pickImage();
+            }
+        }
+
+        public void pickImage() {
+            CropImage.startPickImageActivity(this);
+        }
+
+        private void croprequest(Uri imageUri) {
+            CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setMultiTouchEnabled(true)
+                    .start(this);
+        }
+
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+                Uri imageUri = CropImage.getPickImageResultUri(this, data);
+                croprequest(imageUri);
+            }
+
+
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK)
+                {
+                    try {
+
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), result.getUri());
+                        TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+                        if (!txtRecognizer.isOperational())
+                        {
+                            textView.setText("Detector dependencies are not yet available");
+                        }
+                        else {
+                            // Set the bitmap taken to the frame to perform OCR Operations.
+                            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                            SparseArray items = txtRecognizer.detect(frame);
+                            StringBuilder strBuilder = new StringBuilder();
+
+                            for (int i = 0; i < items.size(); i++) {
+                                TextBlock item = (TextBlock) items.valueAt(i);
+                                strBuilder.append(item.getValue());
+                                strBuilder.append("\n");
+                                for (Text line : item.getComponents()) {
+                                    //extract scanned text lines here
+                                    Log.v("lines", line.getValue());
+                                    for (Text element : line.getComponents()) {
+                                        //extract scanned text words here
+                                        Log.v("element", element.getValue());
+                                    }
+
+                                }
+                            }
+                            txtImage.setText(strBuilder.toString());
+                        }
+                        ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+            if (requestCode == 555 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                pickImage();
+            } else {
+                checkAndroidVersion();
+            }
+        }
+
     }
 }

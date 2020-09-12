@@ -20,7 +20,7 @@ import okhttp3.internal.Internal;
 
 import static okhttp3.internal.Internal.instance;
 
-@Database(entities = {Driver.class, Police.class, Manager.class, TypeVoi.class, User.class},
+@Database(entities = {Driver.class, Police.class, Manager.class},
         version = 1, exportSchema = false)
 
 abstract class DataBaseApp extends RoomDatabase {
@@ -45,7 +45,7 @@ abstract class DataBaseApp extends RoomDatabase {
                 if (instance == null) {
 
             instance = Room.databaseBuilder(context.getApplicationContext() , DataBaseApp.class , DATABASE_NAME)
-                    .fallbackToDestructiveMigration()
+                   .fallbackToDestructiveMigration()
                     .build();
                 }
             }

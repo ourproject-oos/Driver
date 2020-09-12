@@ -36,26 +36,64 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center"
+                android:id="@+id/linear_layout"
+                >
 
-<!--                <com.lucem.anb.characterscanner.ScannerView-->
-<!--                    tools:ignore="MissingClass"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:id="@+id/scanner_view"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginTop="20d"-->
-<!--                    />-->
-
-                <com.lucem.anb.characterscanner.ScannerView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:id="@+id/scanner_view"
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:onClick="check_no"
-                    tools:ignore="VectorDrawableCompat"
-                   />
+                    tools:srcCompat="@tools:sample/avatars"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/ed_txt_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hello World!"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_add_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:drawableBottom="@android:drawable/ic_menu_gallery"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
         <EditText
@@ -84,6 +122,8 @@
             android:layout_gravity="end"
             />
             </LinearLayout>
+
+
         </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
 

@@ -1,15 +1,18 @@
 package com.example.driver.DataBaseRoom.Tables.Driver;
 
+import com.example.driver.Police;
+
 import androidx.annotation.NonNull;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
 
 @Entity(tableName = "Driver")
-
-class DriverBD  implements Serializable  {
+class DriverBD implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int driverId;
@@ -26,6 +29,18 @@ class DriverBD  implements Serializable  {
     private String gander;
     private double lat;
     private double lang;
+
+
+    @Embedded(prefix = "extend_")
+    public Police police;
+
+    public Police getPolice() {
+        return police;
+    }
+
+    public void setPolice(Police police) {
+        this.police = police;
+    }
 
     public String getUserName() {
         return userName;

@@ -96,11 +96,10 @@ public class SlideshowFragment extends Fragment {
 
 
                                 JSONObject js = response.getJSONObject(i);
-                                vioClass.setId(js.getInt("ID"));
-                                vioClass.setName(js.getString("NAME"));
 
                                 vioClass = new VioClass();
-
+                                vioClass.setId(js.getInt("ID"));
+                                vioClass.setName(js.getString("NAME"));
                                 vioClass.setDate(js.getString("DATE"));
                                 vioClass.setType(js.getString("TYPE"));
                                 vioClass.setLatLocation(js.getDouble("LAT"));
@@ -114,11 +113,9 @@ public class SlideshowFragment extends Fragment {
                             } else {
 
                                 vioAdapter = new VioAdapter(getContext(), vioClassList);
-
                                 vioAdapter.notifyDataSetChanged();
                                 recyclerView.setAdapter(vioAdapter);
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(getContext(), "driver not found",

@@ -21,6 +21,9 @@ class TypeVoiDB  implements Serializable
     private int CarNumber;
     private double lat;
 
+
+
+
     @NonNull
     public String getName() {
         return name;
