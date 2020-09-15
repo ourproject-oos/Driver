@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 
-@Entity(tableName = "TypeVoi")
+@Entity(tableName = "type_voi")
 
 class TypeVoiDB  implements Serializable
 {
@@ -83,3 +83,4 @@ class TypeVoiDB  implements Serializable
 
     private double lang;
 }
+//https://play.google.com/apps/publish/internalappsharing

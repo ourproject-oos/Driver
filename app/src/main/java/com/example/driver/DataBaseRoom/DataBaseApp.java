@@ -21,9 +21,9 @@ import okhttp3.internal.Internal;
 import static okhttp3.internal.Internal.instance;
 
 @Database(entities = {Driver.class, Police.class, Manager.class},
-        version = 1, exportSchema = false)
+        version = 3, exportSchema = false)
 
-abstract class DataBaseApp extends RoomDatabase {
+public abstract class DataBaseApp extends RoomDatabase {
 
     private static final String DbDirectoryName = "POS";
     private static final String DATABASE_NAME = "TrafficGo.db";
@@ -38,16 +38,19 @@ abstract class DataBaseApp extends RoomDatabase {
     public abstract TypeVoiDao typeVoiDao();
 
     public abstract UserDoa userDoa();
-    public static Internal getInstance(Context context) {
+
+
+    public static  DataBaseApp getInstance(Context context) {
         if (instance == null) {
             createDirectoryIfNotExist();
             synchronized (LOCK) {
                 if (instance == null) {
 
-            instance = Room.databaseBuilder(context.getApplicationContext() , DataBaseApp.class , DATABASE_NAME)
-                   .fallbackToDestructiveMigration()
-                    .build();
+            instance = Room.databaseBuilder(context.getApplicationContext(),DataBaseApp.class, DATABASE_NAME)
+                   .fallbackToDestructiveMigration().build();
+
                 }
+
             }
         }
 

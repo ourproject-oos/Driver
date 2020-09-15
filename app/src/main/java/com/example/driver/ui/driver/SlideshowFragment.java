@@ -101,7 +101,7 @@ public class SlideshowFragment extends Fragment {
                                 vioClass.setId(js.getInt("ID"));
                                 vioClass.setName(js.getString("NAME"));
                                 vioClass.setDate(js.getString("DATE"));
-                                vioClass.setType(js.getString("TYPE"));
+//                                vioClass.setType(js.getString("TYPE"));
                                 vioClass.setLatLocation(js.getDouble("LAT"));
                                 vioClass.setLongLocation(js.getDouble("LANG"));
                                 vioClass.setCarNumber(js.getString("CAR1_NUM"));

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 @Entity(tableName = "Manager")
-class ManagerBD  implements Serializable  {
+class ManagerDB  implements Serializable  {
 
     @PrimaryKey(autoGenerate = true)
     private int managerId;

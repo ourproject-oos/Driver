@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 
-@Entity(tableName = "Driver")
+@Entity(tableName = "driver")
 class DriverBD implements Serializable {
 
     @PrimaryKey(autoGenerate = true)

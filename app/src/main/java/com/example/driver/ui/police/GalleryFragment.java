@@ -19,14 +19,12 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +33,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -51,13 +51,17 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.Text;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -76,13 +80,14 @@ public class GalleryFragment extends Fragment {
 
     private static final int MY_LOCATION_REQUEST_CODE = 44;
     private GalleryViewModel galleryViewModel;
-    EditText txtCarNo,txtImage;
-    CheckBox chVolType1 , chVolType2 , chVolType3 , chVolType4 , chVolType5 , chVolType6 , chVolType7 , chVolType8 , chVolType9 , chVolType10 , chVolType11 , chVolType12 , chVolType13 , chVolType14 , chVolType15;
-    Button addBtn, searchBtn,imageBtn;
+    EditText txtCarNo, txtCarNumber;
+    CheckBox chVolType1, chVolType2, chVolType3, chVolType4, chVolType5, chVolType6, chVolType7, chVolType8, chVolType9, chVolType10, chVolType11, chVolType12, chVolType13, chVolType14, chVolType15;
+    Button addBtn, searchBtn, imageBtn;
     ImageButton addLocationBtn;
     TextView txtName, txtCarType, txtDriverNo;
     int driverID, policeID;
     Driver driver;
+    RecyclerView rvTypeVio;
     List<Driver> driverList;
     private RequestQueue queue;
     private File f;
@@ -95,6 +100,8 @@ public class GalleryFragment extends Fragment {
     private LocationListener mLocationListener;
     String serialNumber;
     Intent data;
+    List<VioType> vioTypeList = new ArrayList<>();
+
     //
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -102,33 +109,30 @@ public class GalleryFragment extends Fragment {
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         addLocationBtn = root.findViewById(R.id.btn_add_place_location);
-        txtImage = root.findViewById(R.id.ed_txt_image);
-        txtCarNo = root.findViewById(R.id.deep_search_bar);
-        txtCarType = root.findViewById(R.id.driver_car_type);
-        txtName = root.findViewById(R.id.driver_name);
-        txtDriverNo = root.findViewById(R.id.driver_number);
+        txtCarNumber = root.findViewById(R.id.ed_txt_car_no);
         imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
-        searchBtn = root.findViewById(R.id.search_btn);
-        chVolType1 = root.findViewById(R.id.checkbox1);
-        chVolType2 = root.findViewById(R.id.checkbox2);
-        chVolType3 = root.findViewById(R.id.checkbox3);
-        chVolType4 = root.findViewById(R.id.checkbox4);
-        chVolType5 = root.findViewById(R.id.checkbox5);
-        chVolType6 = root.findViewById(R.id.checkbox6);
-        chVolType7 = root.findViewById(R.id.checkbox7);
-        chVolType8 = root.findViewById(R.id.checkbox8);
-        chVolType9 = root.findViewById(R.id.checkbox9);
-        chVolType10 = root.findViewById(R.id.checkbox10);
-        chVolType11= root.findViewById(R.id.checkbox11);
-        chVolType12= root.findViewById(R.id.checkbox12);
-        chVolType13= root.findViewById(R.id.checkbox13);
-        chVolType14= root.findViewById(R.id.checkbox14);
-        chVolType15= root.findViewById(R.id.checkbox15);
+        rvTypeVio = root.findViewById(R.id.rv_typ_vio);
 
 
+        setVioTyp();
 
 
+//        chVolType1 = root.findViewById(R.id.checkbox1);
+//        chVolType2 = root.findViewById(R.id.checkbox2);
+//        chVolType3 = root.findViewById(R.id.checkbox3);
+//        chVolType4 = root.findViewById(R.id.checkbox4);
+//        chVolType5 = root.findViewById(R.id.checkbox5);
+//        chVolType6 = root.findViewById(R.id.checkbox6);
+//        chVolType7 = root.findViewById(R.id.checkbox7);
+//        chVolType8 = root.findViewById(R.id.checkbox8);
+//        chVolType9 = root.findViewById(R.id.checkbox9);
+//        chVolType10 = root.findViewById(R.id.checkbox10);
+//        chVolType11= root.findViewById(R.id.checkbox11);
+//        chVolType12= root.findViewById(R.id.checkbox12);
+//        chVolType13= root.findViewById(R.id.checkbox13);
+//        chVolType14= root.findViewById(R.id.checkbox14);
+//        chVolType15= root.findViewById(R.id.checkbox15);
 
 
         f = new File("/data/data/" + getContext().getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
@@ -180,10 +184,34 @@ public class GalleryFragment extends Fragment {
         return root;
 
 
+    }
 
+    private void setVioTyp() {
+        String[] s = getVioTyp();
+        for (int i = 0; i < s.length; i++) {
+
+            VioType vioType = new VioType();
+            vioType.setCbPos(i + 1);
+            vioType.setTxtVioTyp(s[i]);
+
+            vioTypeList.add(vioType);
+
+        }
+        VioCbAdapter vioCbAdapter = new VioCbAdapter(vioTypeList, getContext());
+        rvTypeVio.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvTypeVio.setAdapter(vioCbAdapter);
 
     }
 
+    public String[] getVioTyp() {
+
+        String[] strings = {getString(R.string.vio_typ_Driving_against_the_flow_of_traffic), getString(R.string.vio_typ_Impending_traffic)
+                , getString(R.string.vio_typ_Driving_against_the_flow_of_traffic)};
+
+        return strings;
+
+
+    }
 
 
     public void getlocation() {
@@ -195,7 +223,7 @@ public class GalleryFragment extends Fragment {
             public void onLocationChanged(Location location) {
                 lat = location.getLatitude();
                 langLocation = location.getLongitude();
-                Toast.makeText(getContext(), ""+langLocation+" "+lat, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "" + langLocation + " " + lat, Toast.LENGTH_SHORT).show();
                 mLocationManager.removeUpdates(this);
             }
 
@@ -315,7 +343,7 @@ public class GalleryFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-            Log.d("voly",error.getMessage());
+                Log.d("voly", error.getMessage());
             }
 
         }) {
@@ -358,7 +386,7 @@ public class GalleryFragment extends Fragment {
 
     int PLACE_PICKER_REQUEST = 1;
 
-    public void onActivityResult(int requestCode, int resultCode, Intent  data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getActivity(), data);
@@ -370,26 +398,26 @@ public class GalleryFragment extends Fragment {
             }
         }
 
-            if (data != null) {
+        if (data != null) {
 
-                Random random = new Random(90);
-                Calendar calendar = Calendar.getInstance();
-                serialNumber = calendar.getTimeInMillis() + "" + random;
+            Random random = new Random(90);
+            Calendar calendar = Calendar.getInstance();
+            serialNumber = calendar.getTimeInMillis() + "" + random;
 
-                data.getStringExtra("carNumber");
-
-
-            }
+            data.getStringExtra("carNumber");
 
 
-            super.onActivityResult(requestCode, resultCode, data);
         }
 
 
-    public static String locationString (final Location location){
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
-        return Location.convert(location.getLatitude(),Location.FORMAT_DEGREES)+" "+
-                Location.convert(location.getLongitude(),Location.FORMAT_DEGREES);
+
+    public static String locationString(final Location location) {
+
+        return Location.convert(location.getLatitude(), Location.FORMAT_DEGREES) + " " +
+                Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
 
     }
 
@@ -412,13 +440,9 @@ public class GalleryFragment extends Fragment {
 
         public void click_me(View view) {
 
-            if (view.getId()==imageBtn.getId())
-            {
+            if (view.getId() == imageBtn.getId()) {
                 checkAndroidVersion();
-            }
-
-            else
-            {
+            } else {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             }
         }
@@ -428,12 +452,10 @@ public class GalleryFragment extends Fragment {
                 try {
                     requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE}, 555);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
 
                 }
-            }
-            else {
+            } else {
                 pickImage();
             }
         }
@@ -460,17 +482,14 @@ public class GalleryFragment extends Fragment {
 
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if (resultCode == RESULT_OK)
-                {
+                if (resultCode == RESULT_OK) {
                     try {
 
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), result.getUri());
                         TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-                        if (!txtRecognizer.isOperational())
-                        {
-                            textView.setText("Detector dependencies are not yet available");
-                        }
-                        else {
+                        if (!txtRecognizer.isOperational()) {
+                            txtCarNo.setText("Detector dependencies are not yet available");
+                        } else {
                             // Set the bitmap taken to the frame to perform OCR Operations.
                             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                             SparseArray items = txtRecognizer.detect(frame);
@@ -490,9 +509,9 @@ public class GalleryFragment extends Fragment {
 
                                 }
                             }
-                            txtImage.setText(strBuilder.toString());
+                            txtCarNumber.setText(strBuilder.toString());
                         }
-                        ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
+                   //     ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
 
                     } catch (IOException e) {
                         e.printStackTrace();

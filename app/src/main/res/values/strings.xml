@@ -37,12 +37,12 @@
     <string name="last_name">Last Name</string>
     <string name="first_name">First Name</string>
     <string name="male">Male</string>
-    <string name="phone_number">Phone Number</string>
+
     <string name="car_number">Car Number</string>
     <string name="car_type">Car Type</string>
     <string name="address">Address</string>
     <string name="job">Job</string>
-    <string name="add_driver">Add Driver</string>
+
     <string name="user_name_p">User Name</string>
     <string name="re_write_password_p">Re-write Password</string>
     <string name="last_name_p">last Name</string>
@@ -51,7 +51,7 @@
     <string name="dgree">Dgree</string>
     <string name="job_id">Job ID</string>
     <string name="address_p">Address</string>
-    <string name="add_police">Add Police</string>
+
     <string name="add_police">Add Police</string>
     <string name="add_vio">Add vio</string>
     <string name="add_driver">Add Driver</string>
@@ -60,17 +60,17 @@
     <string name="car_with_no_number">Using dazzling lights   (Amount:1000 RY)</string>
     <string name="eed">eed</string>
     <string name="ghui">ghui</string>
-    <string name="not_wearing_seatbelt">Not wearing a seatbelt   (Amount:1000 RY)</string>
-    <string name="no_parking">No parking   (Amount:1000 RY)</string>
-    <string name="driving_vehicle_that_produces_excessive_smoke">Driving a vehicle that produces excessive smoke   (Amount:5000 RY)</string>
-    <string name="using_cell_phone_while_driving">Using a cell phone while driving   (Amount:1000 RY)</string>
-    <string name="unnecessary_usage_of_the_horn">Unnecessary usage of the horn   (Amount:1000 RY)</string>
-    <string name="Driving_without_drivers_license">Driving without a drivers license   (Amount:5000 RY)</string>
-    <string name="Driving_without_valid_documentation"><![CDATA[>Driving without valid documentation   (Amount:1000 RY)]]></string>
-    <string name="Unsafe_overtake">Unsafe overtake   (Amount:5000 RY)</string>
-    <string name="Driving_against_the_flow_of_traffic">Driving against the flow of traffic   (Amount:5000 RY)</string>
-    <string name="Impending_traffic">Impending traffic   (Amount:1000 RY)</string>
-    <string name="Driving_through_or_stopping_in_crossing_zone">Driving through or stopping in a crossing zone   (Amount:1000 RY)</string>
-    <string name="Reckless_driving">Reckless driving   (Amount:5000 RY)</string>
-    <string name="Refusing_or_comply_to_policemen_signal">Refusing or comply to policemen`s signal   (Amount:1000 RY)</string>
+    <string name="vio_typ_not_wearing_seatbelt">Not wearing a seatbelt   (Amount:1000 RY)</string>
+    <string name="vio_typ_no_parking">No parking   (Amount:1000 RY)</string>
+    <string name="vio_typ_driving_vehicle_that_produces_excessive_smoke">Driving a vehicle that produces excessive smoke   (Amount:5000 RY)</string>
+    <string name="vio_typ_using_cell_phone_while_driving">Using a cell phone while driving   (Amount:1000 RY)</string>
+    <string name="vio_typ_unnecessary_usage_of_the_horn">Unnecessary usage of the horn   (Amount:1000 RY)</string>
+    <string name="vio_typ_Driving_without_drivers_license">Driving without a drivers license   (Amount:5000 RY)</string>
+    <string name="vio_typ_Driving_without_valid_documentation"><![CDATA[>Driving without valid documentation   (Amount:1000 RY)]]></string>
+    <string name="vio_typ_Unsafe_overtake">Unsafe overtake   (Amount:5000 RY)</string>
+    <string name="vio_typ_Driving_against_the_flow_of_traffic">Driving against the flow of traffic   (Amount:5000 RY)</string>
+    <string name="vio_typ_Impending_traffic">Impending traffic   (Amount:1000 RY)</string>
+    <string name="vio_typ_Driving_through_or_stopping_in_crossing_zone">Driving through or stopping in a crossing zone   (Amount:1000 RY)</string>
+    <string name="vio_typ_Reckless_driving">Reckless driving   (Amount:5000 RY)</string>
+    <string name="vio_typ_Refusing_or_comply_to_policemen_signal">Refusing or comply to policemen`s signal   (Amount:1000 RY)</string>
 </resources>
