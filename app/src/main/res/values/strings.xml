@@ -56,8 +56,8 @@
     <string name="add_vio">Add vio</string>
     <string name="add_driver">Add Driver</string>
     <string name="add_type_of_violation">Add Type of Violation</string>
-    <string name="high_speed">Exceeding the speed limit   (Amount:5000 RY)</string>
-    <string name="car_with_no_number">Using dazzling lights   (Amount:1000 RY)</string>
+    <string name="vio_typ_high_speed" translatable="false">Exceeding the speed limit   (Amount:5000 RY)</string>
+    <string name="vio_typ_car_with_no_number" translatable="false">Using dazzling lights   (Amount:1000 RY)</string>
     <string name="eed">eed</string>
     <string name="ghui">ghui</string>
     <string name="vio_typ_not_wearing_seatbelt">Not wearing a seatbelt   (Amount:1000 RY)</string>
@@ -73,4 +73,8 @@
     <string name="vio_typ_Driving_through_or_stopping_in_crossing_zone">Driving through or stopping in a crossing zone   (Amount:1000 RY)</string>
     <string name="vio_typ_Reckless_driving">Reckless driving   (Amount:5000 RY)</string>
     <string name="vio_typ_Refusing_or_comply_to_policemen_signal">Refusing or comply to policemen`s signal   (Amount:1000 RY)</string>
+    <string name="username">UserName</string>
+    <string name="delete">delete</string>
+    <string name="update">update</string>
+    <string name="update_delete">update_delete</string>
 </resources>

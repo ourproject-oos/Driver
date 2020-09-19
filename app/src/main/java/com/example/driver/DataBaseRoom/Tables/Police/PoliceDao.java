@@ -15,7 +15,7 @@ public interface PoliceDao {
     @Insert()
     void insertPolice(PoliceDB police);
 
-    @Query("SELECT * FROM police ")
+    @Query("SELECT * FROM police   ")
     LiveData<PoliceDB> getPolice();
     List<PoliceDB> getPolices();
 

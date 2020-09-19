@@ -14,73 +14,25 @@ class TypeVoiDB  implements Serializable
     @PrimaryKey(autoGenerate = true)
     private int driverId;
     @NonNull
-    private String name;
-    private String date;
-    private String amount;
-    private String type;
-    private int CarNumber;
-    private double lat;
-
-
+    private String TypeVoi;
+    private int SerialNum;
 
 
     @NonNull
-    public String getName() {
-        return name;
+    public String getTypeVoi() {
+        return TypeVoi;
     }
 
-    public void setName(@NonNull String name) {
-        this.name = name;
+    public void setTypeVoi(@NonNull String typeVoi) {
+        TypeVoi = typeVoi;
     }
 
-    public String getDate() {
-        return date;
+    public int getSerialNum() {
+        return SerialNum;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setSerialNum(int SerialNum) {
+        this.SerialNum = SerialNum;
     }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public int getCarNumber() {
-        return CarNumber;
-    }
-
-    public void setCarNumber(int carNumber) {
-        CarNumber = carNumber;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public double getLang() {
-        return lang;
-    }
-
-    public void setLang(double lang) {
-        this.lang = lang;
-    }
-
-    private double lang;
 }
 //https://play.google.com/apps/publish/internalappsharing

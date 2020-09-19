@@ -45,6 +45,7 @@ public class MainAllActivity extends AppCompatActivity {
     RoundedImageView userImageNav;
     TextView userPoliceID;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,13 +166,19 @@ public class MainAllActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }*/
 
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.onNavDestinationSelected(item, navController)
                 || super.onOptionsItemSelected(item);
 
+
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

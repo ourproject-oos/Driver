@@ -17,14 +17,12 @@ public interface TypeVoiDao {
 
     @Query("SELECT * FROM driver ")
     LiveData<TypeVoiDB> getTypeVoi();
+
     List<TypeVoiDB> getTypeVois();
 
 
     @Update
     void updateTypeVoi(TypeVoiDB typeVoi);
 
-
-    @Query("DELETE FROM TypeVoi ")
-    void TypeVoiDelete();
 
 }

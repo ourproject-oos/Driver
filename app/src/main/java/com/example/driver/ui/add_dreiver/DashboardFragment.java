@@ -24,11 +24,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDB;
+import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDao;
+import com.example.driver.Driver;
+import com.example.driver.Manager;
 import com.example.driver.NukeSSLCerts;
+import com.example.driver.Police;
 import com.example.driver.R;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +47,11 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
     RequestQueue queue;
     private RadioGroup radioGroup;
     private String gender = "male";
+    ArrayList<Manager> list;
+    ManagerDB manager;
+    ManagerDao managerDao;
+    Driver driver;
+    Police police;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,17 +59,9 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         //final TextView textView = root.findViewById(R.id.text_dashboard);
-        userName = root.findViewById(R.id.txt_userNameSignup);
-        password = root.findViewById(R.id.txt_password);
-        rePassword = root.findViewById(R.id.rePassword);
-        firstName = root.findViewById(R.id.txt_fName);
-        lastName = root.findViewById(R.id.txt_lName);
-        phoneNo = root.findViewById(R.id.txt_phoneNo);
-        address = root.findViewById(R.id.txt_address);
-        carNumber = root.findViewById(R.id.txt_car_number);
-        carType = root.findViewById(R.id.txt_car_type);
-        userJob = root.findViewById(R.id.text_job);
-        btn_signup = root.findViewById(R.id.btn_SignUp);
+
+        IdentifyMethod();
+        addDriver();
         NukeSSLCerts.nuke();
         queue = Volley.newRequestQueue(root.getContext());
 
@@ -104,6 +107,20 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             }
         });
         return root;
+    }
+
+    public void IdentifyMethod() {
+        userName = userName.findViewById(R.id.txt_userNameSignup);
+        password = password.findViewById(R.id.txt_password);
+        rePassword = rePassword.findViewById(R.id.rePassword);
+        firstName = firstName.findViewById(R.id.txt_fName);
+        lastName = lastName.findViewById(R.id.txt_lName);
+        phoneNo = phoneNo.findViewById(R.id.txt_phoneNo);
+        address = address.findViewById(R.id.txt_address);
+        carNumber = carNumber.findViewById(R.id.txt_car_number);
+        carType = carType.findViewById(R.id.txt_car_type);
+        userJob = userJob.findViewById(R.id.text_job);
+        btn_signup = btn_signup.findViewById(R.id.btn_SignUp);
     }
 
     @Override
@@ -171,6 +188,34 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
         queue.add(request);
 
+
+    }
+
+
+    public void setter() {
+        manager.getUserName(userName.getText().toString().trim());
+        manager.setPassword(Integer.parseInt(password.getText().toString().trim()));
+        manager.setRePassword(Integer.parseInt(rePassword.getText().toString().trim()));
+        manager.setDriverFirstName(firstName.getText().toString().trim());
+        manager.setDriverLastName(lastName.getText().toString().trim());
+        manager.setPhone(Integer.parseInt(phoneNo.getText().toString().trim()));
+        manager.setAdress(address.getText().toString().trim());
+        manager.setCarNumber(Integer.parseInt(carNumber.getText().toString().trim()));
+        manager.setCarType(carType.getText().toString().trim());
+        manager.setUserJob(userJob.getText().toString().trim());
+    }
+
+
+    private void addDriver() {
+        btn_signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setter();
+                managerDao.insertManager(manager);
+
+                Toast.makeText(getContext(), "Inserted", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

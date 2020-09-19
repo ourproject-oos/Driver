@@ -13,7 +13,7 @@ import java.util.List;
 public interface ManagerDao {
 
     @Insert()
-    void insertManager(ManagerDao manager);
+    void insertManager(ManagerDB manager);
 
     @Query("SELECT * FROM manager ")
     LiveData<ManagerDao> getManager();

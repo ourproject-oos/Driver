@@ -21,6 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDB;
+import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDao;
+import com.example.driver.Manager;
 import com.example.driver.NukeSSLCerts;
 import com.example.driver.R;
 
@@ -36,23 +39,16 @@ public class HomeFragment extends Fragment {
     Button btn_signup;
     JSONObject jsonObject;
     RequestQueue queue;
-
+    ManagerDao managerDao;
+    ManagerDB manager;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        userName = root.findViewById(R.id.txt_userName_police);
-        password = root.findViewById(R.id.txt_password_police);
-        rePassword = root.findViewById(R.id.rePassword_police);
-        firstName = root.findViewById(R.id.txt_fName_police);
-        lastName = root.findViewById(R.id.txt_lName__police);
-        phoneNo = root.findViewById(R.id.txt_phoneNo_police);
-        address = root.findViewById(R.id.txt_address_police);
-        jobID = root.findViewById(R.id.txt_job_id);
-        dgree = root.findViewById(R.id.txt_dgree_police);
-        btn_signup = root.findViewById(R.id.btn_SignUp_police);
 
+        IdentifyMethod();
+        addPolice();
         NukeSSLCerts.nuke();
         queue = Volley.newRequestQueue(getContext());
 
@@ -63,14 +59,29 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
             }
         });
         return root;
+
     }
+
+    public void IdentifyMethod()
+    {
+        userName = userName.findViewById(R.id.txt_userName_police);
+        password = password.findViewById(R.id.txt_password_police);
+        rePassword = rePassword.findViewById(R.id.rePassword_police);
+        firstName = firstName.findViewById(R.id.txt_fName_police);
+        lastName = lastName.findViewById(R.id.txt_lName__police);
+        phoneNo = phoneNo.findViewById(R.id.txt_phoneNo_police);
+        address = address.findViewById(R.id.txt_address_police);
+        jobID = jobID.findViewById(R.id.txt_job_id);
+        dgree = dgree.findViewById(R.id.txt_dgree_police);
+        btn_signup = btn_signup.findViewById(R.id.btn_SignUp_police);
+    }
+
 
     public void setPoliceData() {
         final String url = "https://driverchecker.000webhostapp.com/insert_police.php";
@@ -121,6 +132,32 @@ public class HomeFragment extends Fragment {
 
         queue.add(request);
 
+
+    }
+
+    public void setter() {
+        manager.getUserName(userName.getText().toString().trim());
+        manager.setPassword(Integer.parseInt(password.getText().toString().trim()));
+        manager.setRePassword(Integer.parseInt(rePassword.getText().toString().trim()));
+        manager.setPoliceFirstName(firstName.getText().toString().trim());
+        manager.setPoliceLastName(lastName.getText().toString().trim());
+        manager.setPhone(Integer.parseInt(phoneNo.getText().toString().trim()));
+        manager.setAdress(address.getText().toString().trim());
+        manager.setUserID(Integer.parseInt(jobID.getText().toString().trim()));
+        manager.setDgree(dgree.getText().toString().trim());
+    }
+
+
+    private void addPolice() {
+        btn_signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setter();
+                managerDao.insertManager(manager);
+
+                Toast.makeText(getContext(), "Inserted", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

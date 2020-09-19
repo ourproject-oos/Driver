@@ -7,13 +7,13 @@
 
     <CheckBox
         android:id="@+id/cb_item_vio_typ"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/car_with_no_number"
+        android:text="@string/vio_typ_car_with_no_number"
         android:textColor="@color/color2"
         android:textColorHint="@color/hint_txt_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

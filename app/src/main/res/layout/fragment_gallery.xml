@@ -63,8 +63,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-
-
                             android:textColor="@color/colorPrimary"
                             android:textColorHint="@color/colorPrimary"
                             android:hint="@string/car_number"
@@ -97,11 +95,6 @@
                 android:layout_margin="10dp"
                 app:cardCornerRadius="10dp">
 
-
-
-
-
-
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -110,8 +103,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:cardCornerRadius="10dp">
-
-
 
             </androidx.cardview.widget.CardView>
 
@@ -126,18 +117,18 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="50dp"
-                        android:gravity="center_horizontal"
-                        android:text="@string/add_type_of_violation"
-                        android:textAlignment="center"
-                        android:layout_marginBottom="10dp"
-                        android:textColor="@color/color3"
-                        android:textSize="24sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="50dp"
+                android:gravity="center_horizontal"
+                android:text="@string/add_type_of_violation"
+                android:textAlignment="center"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/color3"
+                android:textSize="24sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_typ_vio"
