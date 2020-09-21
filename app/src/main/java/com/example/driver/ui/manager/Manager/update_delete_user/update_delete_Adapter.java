@@ -1,21 +1,15 @@
-package com.example.driver.ui.update_delete_user;
+package com.example.driver.ui.manager.Manager.update_delete_user;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.driver.R;
-import com.example.driver.VioAdapter;
-import com.example.driver.ui.update_delete_user.update_delete_Adapter;
-import com.example.driver.ui.police.VioType;
-import com.example.driver.ui.update_delete_user.update_delete_Adapter;
-import com.example.driver.ui.update_delete_user.update_delete;
 
 import java.util.List;
 

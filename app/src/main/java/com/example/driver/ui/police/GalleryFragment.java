@@ -51,10 +51,13 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -75,6 +78,7 @@ import java.util.Random;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.LOCATION_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.driver.ui.manager.Manager.add_dreiver.DashboardFragment.TAG;
 
 public class GalleryFragment extends Fragment {
 
@@ -385,7 +389,6 @@ public class GalleryFragment extends Fragment {
     }
 
     int PLACE_PICKER_REQUEST = 1;
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
@@ -519,7 +522,24 @@ public class GalleryFragment extends Fragment {
                 }
             }
         }
+   public void notification(){
 
+//       FirebaseMessaging.getInstance().subscribeToTopic("voi")
+//               .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                   @Override
+//                   public void onComplete(@NonNull Task<Void> task) {
+//                       String msg = getString(R.string.msg_subscribed);
+//                       if (!task.isSuccessful()) {
+//                           msg = getString(R.string.msg_subscribe_failed);
+//                       }
+//                       Log.d(TAG, msg);
+//                       Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+//                   }
+//
+//               });
+
+
+   }
         public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
             if (requestCode == 555 && grantResults[0] ==

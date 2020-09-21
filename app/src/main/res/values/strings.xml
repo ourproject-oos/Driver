@@ -9,20 +9,20 @@
     <string name="title_update" translatable="false">update</string>
     <string name="title_delete" translatable="false">delete</string>
     <string name="title_insert">insert</string>
-    <string name="title_activity_main_all">MainAllActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
-    <string name="shared_preference_usr">user_sp</string>
+    <string name="title_activity_main_all" translatable="false">MainAllActivity</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="menu_home" translatable="false">Home</string>
+    <string name="menu_gallery" translatable="false">Gallery</string>
+    <string name="menu_slideshow" translatable="false">Slideshow</string>
+    <string name="menu_tools" translatable="false">Tools</string>
+    <string name="menu_share" translatable="false">Share</string>
+    <string name="menu_send" translatable="false">Send</string>
+    <string name="shared_preference_usr" translatable="false">user_sp</string>
     <string name="title_activity_maps">Map</string>
     <string name="search_by_car_number">search by car number</string>
     <string name="search">search</string>
@@ -58,8 +58,7 @@
     <string name="add_type_of_violation">Add Type of Violation</string>
     <string name="vio_typ_high_speed" translatable="false">Exceeding the speed limit   (Amount:5000 RY)</string>
     <string name="vio_typ_car_with_no_number" translatable="false">Using dazzling lights   (Amount:1000 RY)</string>
-    <string name="eed">eed</string>
-    <string name="ghui">ghui</string>
+
     <string name="vio_typ_not_wearing_seatbelt">Not wearing a seatbelt   (Amount:1000 RY)</string>
     <string name="vio_typ_no_parking">No parking   (Amount:1000 RY)</string>
     <string name="vio_typ_driving_vehicle_that_produces_excessive_smoke">Driving a vehicle that produces excessive smoke   (Amount:5000 RY)</string>
@@ -73,8 +72,10 @@
     <string name="vio_typ_Driving_through_or_stopping_in_crossing_zone">Driving through or stopping in a crossing zone   (Amount:1000 RY)</string>
     <string name="vio_typ_Reckless_driving">Reckless driving   (Amount:5000 RY)</string>
     <string name="vio_typ_Refusing_or_comply_to_policemen_signal">Refusing or comply to policemen`s signal   (Amount:1000 RY)</string>
-    <string name="username">UserName</string>
-    <string name="delete">delete</string>
-    <string name="update">update</string>
-    <string name="update_delete">update_delete</string>
+    <string name="username" translatable="false">UserName</string>
+    <string name="delete" translatable="false">delete</string>
+    <string name="update" translatable="false">update</string>
+    <string name="update_delete" translatable="false">update_delete</string>
+    <string name="msg_subscribed" translatable="false" />
+    <string name="msg_subscribe_failed" translatable="false">failed</string>
 </resources>

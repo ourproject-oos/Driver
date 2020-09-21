@@ -8,13 +8,13 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.driver.ui.add_Police.HomeFragment"
+        android:name="com.example.driver.ui.manager.Manager.add_Police.HomeFragment"
         android:label="add police"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_dashboard"
-        android:name="com.example.driver.ui.add_dreiver.DashboardFragment"
+        android:name="com.example.driver.ui.manager.Manager.add_dreiver.DashboardFragment"
         android:label="add driver"
         tools:layout="@layout/fragment_dashboard" >
 

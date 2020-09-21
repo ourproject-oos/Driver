@@ -1,4 +1,4 @@
-package com.example.driver.ui.add_dreiver;
+package com.example.driver.ui.manager.Manager.add_dreiver;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

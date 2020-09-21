@@ -1,13 +1,23 @@
-package com.example.driver.ui.add_dreiver;
+package com.example.driver.ui.manager.Manager.add_dreiver;
 
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -31,18 +41,32 @@ import com.example.driver.Manager;
 import com.example.driver.NukeSSLCerts;
 import com.example.driver.Police;
 import com.example.driver.R;
+import com.example.driver.ui.UploadImageApacheHttp;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
+
 public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
+    public static final String TAG = "Upload Image";
+    public static final String UPLOAD_URL = "https://driverchecker.000webhostapp.com/insert_driver.php";
+    public static final String UPLOAD_KEY = "upload_image";
+
+    private int PICK_IMAGE_REQUEST = 100;
+    private ImageView imgView;
+    private Bitmap bitmap;
+    private Uri filePath;
+    private Object selectedFilePath;
+
 
     private DashboardViewModel dashboardViewModel;
     EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber, carType, address;
-    Button btn_signup;
+    Button btn_SignUp;
     JSONObject jsonObject;
     RequestQueue queue;
     private RadioGroup radioGroup;
@@ -61,7 +85,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         //final TextView textView = root.findViewById(R.id.text_dashboard);
 
         IdentifyMethod();
-        addDriver();
+        // addDriver();
         NukeSSLCerts.nuke();
         queue = Volley.newRequestQueue(root.getContext());
 
@@ -91,7 +115,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         });
 
 
-        btn_signup.setOnClickListener(new View.OnClickListener() {
+        btn_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDriverData();
@@ -120,7 +144,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         carNumber = carNumber.findViewById(R.id.txt_car_number);
         carType = carType.findViewById(R.id.txt_car_type);
         userJob = userJob.findViewById(R.id.text_job);
-        btn_signup = btn_signup.findViewById(R.id.btn_SignUp);
+        btn_SignUp = btn_SignUp.findViewById(R.id.btn_SignUp);
     }
 
     @Override
@@ -192,30 +216,92 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
     }
 
 
-    public void setter() {
-        manager.getUserName(userName.getText().toString().trim());
-        manager.setPassword(Integer.parseInt(password.getText().toString().trim()));
-        manager.setRePassword(Integer.parseInt(rePassword.getText().toString().trim()));
-        manager.setDriverFirstName(firstName.getText().toString().trim());
-        manager.setDriverLastName(lastName.getText().toString().trim());
-        manager.setPhone(Integer.parseInt(phoneNo.getText().toString().trim()));
-        manager.setAdress(address.getText().toString().trim());
-        manager.setCarNumber(Integer.parseInt(carNumber.getText().toString().trim()));
-        manager.setCarType(carType.getText().toString().trim());
-        manager.setUserJob(userJob.getText().toString().trim());
-    }
-
-
-    private void addDriver() {
-        btn_signup.setOnClickListener(new View.OnClickListener() {
+        Handler handler = handler = new Handler() {
             @Override
-            public void onClick(View v) {
-                setter();
-                managerDao.insertManager(manager);
-
-                Toast.makeText(getContext(), "Inserted", Toast.LENGTH_SHORT).show();
+            public void handleMessage(Message msg) {
+                Log.i(TAG, "Handler " + msg.what);
+                if (msg.what == 1) {
+                    Toast.makeText(getActivity(), "Upload Success", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Upload Field", Toast.LENGTH_SHORT).show();
+                }
             }
-        });
 
+        };
+
+        private void showFileChooser () {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data){
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+                filePath = data.getData();
+                selectedFilePath = getPath(filePath);
+                Log.i(TAG, " File path : " + selectedFilePath);
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap((ContentResolver) getPath(filePath), filePath);
+                    imgView.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public Object getPath (Uri uri){
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+
+        private void uploadImage () {
+
+            UploadImageApacheHttp uploadTask = new UploadImageApacheHttp();
+            uploadTask.doFileUpload(UPLOAD_URL, String.valueOf(bitmap), handler);
+
+        }
+
+        public void onClick (View v){
+            if (v == btn_SignUp)
+                showFileChooser();
+            else {
+                Toast.makeText(getContext(), "Start Uploading", Toast.LENGTH_SHORT).show();
+                uploadImage();
+            }
+        }
     }
-}
+
+//    public void setter() {
+//        manager.getUserName(userName.getText().toString().trim());
+//        manager.setPassword(Integer.parseInt(password.getText().toString().trim()));
+//        manager.setRePassword(Integer.parseInt(rePassword.getText().toString().trim()));
+//        manager.setDriverFirstName(firstName.getText().toString().trim());
+//        manager.setDriverLastName(lastName.getText().toString().trim());
+//        manager.setPhone(Integer.parseInt(phoneNo.getText().toString().trim()));
+//        manager.setAdress(address.getText().toString().trim());
+//        manager.setCarNumber(Integer.parseInt(carNumber.getText().toString().trim()));
+//        manager.setCarType(carType.getText().toString().trim());
+//        manager.setUserJob(userJob.getText().toString().trim());
+//    }
+//
+//
+//    private void addDriver() {
+//        btn_signup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setter();
+//                managerDao.insertManager(manager);
+//
+//                Toast.makeText(getContext(), "Inserted", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//    }

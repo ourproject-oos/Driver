@@ -45,7 +45,7 @@ public class VioAdapter extends RecyclerView.Adapter {
         ((ViewHolder) holder).txtCarNumber.setText("car Num: "+vioClass.getCarNumber());
 //        ((ViewHolder) holder).txtDate.setText("Vio Date: " +vioClass.getDate());
 //        ((ViewHolder) holder).txtType.setText("Vio Type: "+vioClass.getVio1());
-        ((ViewHolder) holder).txtAmount.setText("Vio Amount: "+vioClass.getVio2());
+   //  ((ViewHolder) holder).txtAmount.setText("Vio Amount: "+vioClass.getVio2());
 
 
         ((ViewHolder) holder).goLocation.setOnClickListener(new View.OnClickListener() {
