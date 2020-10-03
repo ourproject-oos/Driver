@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,34 +14,58 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
-
         >
 
-        <EditText
-            android:id="@+id/ed_txt_search"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimary"
-            android:hint="@string/car_number"
-            />
+            android:textSize="20sp"
+            android:textColorHint="@color/color_all"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_txt_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:hint="@string/car_number"
+                android:inputType="textPersonName"
+                android:maxLength="15"
+                android:textColor="@color/color_all"
+                android:textColorHint="@color/color_all"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
         <Button
             android:id="@+id/btn_search"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/search"
+            android:textColor="@android:color/white"
+            android:background="@drawable/shap_cardview"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+
             />
 
     </LinearLayout>
 
+
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_typ_vio"
+        android:id="@+id/update_driver_police_re"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:itemCount="2"
+        android:layout_margin="20dp"
         tools:listitem="@layout/info_user" />
 
 
@@ -52,6 +77,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="horizontal"
+        android:layout_margin="20dp"
 
         >
 
@@ -60,9 +86,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimary"
+            android:textColor="@android:color/white"
             android:text="@string/delete"
+            android:background="@drawable/shap_cardview"
             />
 
 
@@ -72,6 +98,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/update"
+            android:textColor="@android:color/white"
+            android:background="@drawable/shap_cardview"
             />
 
     </LinearLayout>

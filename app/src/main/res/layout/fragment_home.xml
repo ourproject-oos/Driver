@@ -35,52 +35,87 @@
                     android:layout_marginEnd="2dp"
                     android:layout_marginTop="2dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_add_new_place_img"
+                    android:src="@drawable/policeman"
                     app:riv_border_color="@color/color2"
                     app:riv_border_width="2dp"
                     app:riv_corner_radius="50dp"
                     android:layout_marginRight="2dp"
                     tools:ignore="VectorDrawableCompat" />
 
-                <EditText
 
-                    android:id="@+id/txt_userName_police"
+
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="8dp"
-                    android:hint="@string/user_name_p"
-                    android:inputType="textPersonName"
-                    android:maxLength="15"
-                    android:textColor="@color/color2"
-                    android:textColorHint="@color/hint_txt_color" />
+                    android:textSize="20sp"
+                    android:textColorHint="@color/color_all"
+                    >
 
-                <EditText
-                    android:id="@+id/txt_password_police"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
-                    android:ems="10"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:textColor="@color/color2"
-                    android:textColorHint="@color/hint_txt_color" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txt_userName_police"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/user_name_p"
+                        android:inputType="textPersonName"
+                        android:maxLength="15"
+                        android:textColor="@color/color_all"
+                        android:textColorHint="@color/color_all"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/rePassword_police"
+
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
-                    android:ems="10"
-                    android:hint="@string/re_write_password_p"
-                    android:inputType="textPassword"
-                    android:textColor="@color/color2"
-                    android:textColorHint="@color/hint_txt_color" />
+                    android:textSize="20sp"
+                    android:textColorHint="@color/color_all"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txt_password_police"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginStart="30dp"
+                        android:ems="10"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:maxLength="15"
+                        android:textColor="@color/color_all"
+                        android:textColorHint="@color/color_all"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColorHint="@color/color_all"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rePassword_police"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginStart="30dp"
+                        android:ems="10"
+                        android:hint="@string/re_write_password_p"
+                        android:inputType="textPassword"
+                        android:textColor="@color/color_all"
+                        android:textColorHint="@color/color_all"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -92,32 +127,52 @@
                     android:layout_marginStart="30dp"
                     android:gravity="center">
 
-                    <EditText
-                        android:id="@+id/txt_lName__police"
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="5dp"
+                        android:textSize="20sp"
                         android:layout_weight="1"
-                        android:hint="@string/last_name_p"
-                        android:inputType="text"
-                        android:maxLength="15"
-                        android:textColor="@color/color2"
-                        android:textColorHint="@color/hint_txt_color" />
+                        android:textColorHint="@color/color_all"
+                        >
 
-                    <EditText
-                        android:id="@+id/txt_fName_police"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_fName_police"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:hint="@string/first_name"
+                            android:inputType="text"
+                            android:maxLength="15"
+                            android:textColor="@color/color_all"
+                            android:textColorHint="@color/color_all"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
-                        android:hint="@string/first_name_p"
-                        android:inputType="text"
-                        android:maxLength="15"
-                        android:textColor="@color/color2"
+                        android:textSize="20sp"
+                        android:textColorHint="@color/color_all"
+                        >
 
-                        android:textColorHint="@color/hint_txt_color" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_lName_police"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:hint="@string/last_name"
+                            android:inputType="text"
+                            android:maxLength="15"
+                            android:textColor="@color/color_all"
+                            android:textColorHint="@color/color_all"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -132,38 +187,93 @@
                     android:weightSum="3">
 
 
-                    <EditText
-                        android:id="@+id/txt_phoneNo_police"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/phone_number"
-                        android:inputType="none|phone"
-                        android:maxLength="9"
-                        android:textColor="@color/color2"
-                        android:textColorHint="@color/hint_txt_color" />
-                    <EditText
-                        android:id="@+id/txt_dgree_police"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/dgree"
-                        android:textColor="@color/color2"
-                        android:textColorHint="@color/hint_txt_color" />
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:textColorHint="@color/color_all"
+                        >
 
-                    <EditText
-                        android:id="@+id/txt_job_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/job_id"
-                        android:textColor="@color/color2"
-                        android:textColorHint="@color/hint_txt_color" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_phoneNo_police"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginStart="5dp"
+                            android:hint="@string/phone_number"
+                            android:inputType="none|phone"
+                            android:maxLength="15"
+                            android:textColor="@color/color_all"
+                            android:textColorHint="@color/color_all"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/txt_address_police"
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/address_p"
-                        android:textColor="@color/color2"
-                        android:textColorHint="@color/hint_txt_color" />
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:textColorHint="@color/color_all"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_dgree_police"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginStart="5dp"
+                            android:hint="@string/dgree"
+                            android:maxLength="15"
+                            android:textColor="@color/color_all"
+                            android:textColorHint="@color/color_all"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:textColorHint="@color/color_all"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_job_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginStart="5dp"
+                            android:hint="@string/job"
+                            android:maxLength="15"
+                            android:textColor="@color/color_all"
+                            android:textColorHint="@color/color_all"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:textColorHint="@color/color_all"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_address_police"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginStart="5dp"
+                            android:hint="@string/address_p"
+                            android:maxLength="15"
+                            android:textColor="@color/color_all"
+                            android:textColorHint="@color/color_all"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                 </LinearLayout>
 
@@ -172,16 +282,19 @@
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
                     android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="10dp"
                     android:onClick="addUser"
                     android:text="@string/add_police"
                     android:textAllCaps="false"
-                    android:textColor="@color/color2"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/shap_cardview"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteY="420dp" />
+
 
 
             </LinearLayout>

@@ -2,46 +2,117 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_product"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="5dp"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginStart="10dp"
-    app:cardCornerRadius="10dp">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
-        android:id="@+id/textView_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="volition"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/color1"/>
-    <TextView
-        android:id="@+id/textView_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:text="date"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:textColor="@color/color1"/>
+    app:cardCornerRadius="5dp"
+   >
 
-    <ImageButton
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/go_location"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_location_on_black_24dp"
-        android:background="@color/color1"
-        tools:ignore="VectorDrawableCompat" />
-</LinearLayout>
+        android:orientation="vertical"
+        android:id="@+id/linear_layout_driver_cardview">
+
+        <TextView
+            android:id="@+id/text_driver_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Name"
+            android:textColor="@color/color_all"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_driver_car_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Car Number"
+            android:textColor="@color/color_all"
+            android:textSize="20dp" />
+
+
+        <TextView
+            android:id="@+id/text_driver_licence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Licence Date"
+            android:textColor="@color/color_all"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_driver_Type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/type"
+            android:textColor="@color/color_all"
+            android:textSize="20dp" />
+
+
+        <TextView
+            android:id="@+id/text_driver_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/date"
+            android:textColor="@color/color_all"
+            android:textSize="20dp" />
+
+
+
+
+
+
+        <TextView
+            android:id="@+id/text_driver_card_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/card_number"
+            android:textColor="@color/color_all"
+            android:textSize="20dp" />
+
+        <ImageButton
+            android:id="@+id/btn_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/driver_cardview"
+            app:srcCompat="@drawable/ic_location_on_black_24dp"
+
+            />
+
+
+        <!--        <ImageButton-->
+<!--            android:id="@+id/go_location"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@color/color1"-->
+<!--            android:src="@drawable/ic_location_on_black_24dp"-->
+<!--            tools:ignore="VectorDrawableCompat" />-->
+    </LinearLayout>
+
+
+
+
 </androidx.cardview.widget.CardView>

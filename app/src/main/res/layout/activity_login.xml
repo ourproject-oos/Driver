@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color1"
-    tools:context=".LoginActivity">
+    tools:context="com.example.driver.LoginActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_product"
+            android:layout_width="match_parent"
+            android:layout_height="262dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:elevation="120dp"
+            android:requiresFadingEdge="vertical"
+            app:cardBackgroundColor="@color/color_all"
+            app:cardCornerRadius="20dp"
+
+
+            >
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/bird"
+                tools:ignore="VectorDrawableCompat"
+                />
+
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,72 +52,117 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.63">
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/motto"
-            tools:ignore="VectorDrawableCompat"
-            android:background="@color/color1"
-            />
 
-        <EditText
-            android:id="@+id/userName_ed_text_login"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:hint="@string/user_name"
-            android:textColor="@color/color2"
-            android:textColorHint="@color/color5"
-            android:textSize="18sp" />
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginTop="35dp"
+            >
 
-        <EditText
-            android:id="@+id/password_ed_text_login"
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/user"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColorHint="@color/color_all"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userName_ed_text_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/user_name"
+                    android:textColorHint="@color/color_all"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/color_all"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:textColor="@color/color2"
-            android:textColorHint="@color/color5"
-            android:textSize="18sp" />
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/ic_baseline_vpn_key_24"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                />
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColorHint="@color/color_all"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_ed_text_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:hint="@string/Password"
+                    android:textColorHint="@color/color_all"
+                    android:textColor="@color/color_all"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+
 
         <Spinner
+            android:id="@+id/Spinner_major"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"
-            android:id="@+id/Spinner_major"
-            />
+            android:layout_marginEnd="20dp"
+            android:textColor="@android:color/black" />
 
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="15dp">
+
 
             <Button
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:onClick="regOnClick"
-                android:textSize="20sp"
                 android:text="@string/login"
-                android:textColor="@color/color6" />
-        </TableRow>
+                android:textSize="20sp"
+                android:background="@drawable/shap_cardview"
+                android:textColor="@android:color/white"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                />
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

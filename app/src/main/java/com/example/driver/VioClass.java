@@ -19,7 +19,8 @@ public class VioClass {
         "LAT": 0,
         "LANG": 0*/
 
-String name,date,type,carNumber;
+String name,date,type,carNumber
+    ,licence,cardDate ;
 double latLocation,longLocation;
 int id;
 
@@ -79,5 +80,26 @@ int id;
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getLicence() {
+        return licence;
+    }
+
+    public void setLicence(String licence) {
+        this.licence = licence;
+    }
+
+    public String getCardDate() {
+        return cardDate;
+    }
+
+    public void setCardDate(String cardDate) {
+        this.cardDate = cardDate;
+    }
+
+    public String getType() {
+        return type;
+
     }
 }

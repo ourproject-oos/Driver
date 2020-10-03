@@ -47,4 +47,16 @@
     <string name="vio_typ_Driving_through_or_stopping_in_crossing_zone">السير-الوقوف وسط طريق المشاة  (التكلفة:1000 ريال)</string>
     <string name="vio_typ_Reckless_driving">قيادة بطيش وأهمال   (التكلفة:5000 ريال)</string>
     <string name="vio_typ_Refusing_or_comply_to_policemen_signal">رفض إشارة رجل شرطة السير   (التكلفة:1000 ريال)</string>
+    <string name="email">إيميل</string>
+    <string name="Email">إيميل</string>
+    <string name="Password">كلمة السر</string>
+    <string name="password_driver">كلمة السر</string>
+    <string name="UserName">أسم المسخدم</string>
+    <string name="card_date">تاريخ البطاقة</string>
+    <string name="date">تاريخ</string>
+    <string name="type">نوع السيارة</string>
+    <string name="location">الموقع</string>
+    <string name="card_number">تاريخ البطاقة</string>
+    <string name="licence">رخصة</string>
+    <string name="licence_date">تاريخ الرخصة</string>
 </resources>

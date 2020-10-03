@@ -26,6 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,10 +40,23 @@ import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDB;
 import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDao;
 import com.example.driver.Driver;
 import com.example.driver.Manager;
+import com.example.driver.Notifications.APIService;
+import com.example.driver.Notifications.Client;
+import com.example.driver.Notifications.Data;
+import com.example.driver.Notifications.MyResponse;
+import com.example.driver.Notifications.NotificationSender;
+import com.example.driver.Notifications.Token;
 import com.example.driver.NukeSSLCerts;
 import com.example.driver.Police;
 import com.example.driver.R;
 import com.example.driver.ui.UploadImageApacheHttp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
@@ -62,11 +77,13 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
     private Bitmap bitmap;
     private Uri filePath;
     private Object selectedFilePath;
+    private APIService apiService;
 
 
     private DashboardViewModel dashboardViewModel;
-    EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber, carType, address;
+    EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber,cardDate, licence, carType, address;
     Button btn_SignUp;
+    ImageView imageView;
     JSONObject jsonObject;
     RequestQueue queue;
     private RadioGroup radioGroup;
@@ -76,7 +93,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
     ManagerDao managerDao;
     Driver driver;
     Police police;
-
+    Uri url;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
@@ -84,14 +101,13 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         //final TextView textView = root.findViewById(R.id.text_dashboard);
 
-        IdentifyMethod();
+        IdentifyMethod(root);
         // addDriver();
         NukeSSLCerts.nuke();
+//        UpdateToken();
         queue = Volley.newRequestQueue(root.getContext());
 
-        radioGroup = root.findViewById(R.id.rg_gender);
         radioGroup.setOnCheckedChangeListener(this);
-
         rePassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -120,6 +136,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             public void onClick(View view) {
                 setDriverData();
 
+
             }
         });
         dashboardViewModel.getText().observe(this, new Observer<String>() {
@@ -133,18 +150,24 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         return root;
     }
 
-    public void IdentifyMethod() {
-        userName = userName.findViewById(R.id.txt_userNameSignup);
-        password = password.findViewById(R.id.txt_password);
-        rePassword = rePassword.findViewById(R.id.rePassword);
-        firstName = firstName.findViewById(R.id.txt_fName);
-        lastName = lastName.findViewById(R.id.txt_lName);
-        phoneNo = phoneNo.findViewById(R.id.txt_phoneNo);
-        address = address.findViewById(R.id.txt_address);
-        carNumber = carNumber.findViewById(R.id.txt_car_number);
-        carType = carType.findViewById(R.id.txt_car_type);
-        userJob = userJob.findViewById(R.id.text_job);
-        btn_SignUp = btn_SignUp.findViewById(R.id.btn_SignUp);
+    public void IdentifyMethod(View root) {
+        userName = root.findViewById(R.id.txt_userName_driver);
+        password = root.findViewById(R.id.txt_password);
+        rePassword = root.findViewById(R.id.rePassword);
+        firstName = root.findViewById(R.id.txt_fName_diver);
+        lastName = root.findViewById(R.id.txt_lName_driver);
+        phoneNo = root.findViewById(R.id.txt_phoneNo);
+        address = root.findViewById(R.id.txt_address);
+        carNumber = root.findViewById(R.id.txt_car_number);
+        carType = root.findViewById(R.id.txt_car_type);
+        userJob = root.findViewById(R.id.text_job);
+        cardDate = root.findViewById(R.id.txt_card_date);
+        licence = root.findViewById(R.id.txt_licence);
+        imageView = root.findViewById(R.id.img_add_user);
+        btn_SignUp = root.findViewById(R.id.btn_SignUp);
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        radioGroup = root.findViewById(R.id.rg_gender);
+
     }
 
     @Override
@@ -179,7 +202,10 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
                 userJob.setText("");
                 carType.setText("");
                 carNumber.setText("");
+                cardDate.setText("");
+                licence.setText("");
                 address.setText("");
+                imageView.setImageBitmap(bitmap);
                 Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
             }
 
@@ -203,7 +229,11 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
                 map.put("gender", gender);
                 map.put("car_type", carType.getText().toString());
                 map.put("car_no", carNumber.getText().toString());
+                map.put("card_date", cardDate.getText().toString());
+                map.put("licence", licence.getText().toString());
                 map.put("address", address.getText().toString());
+                map.put("image", String.valueOf(imageView));
+
                 return map;
             }
 
@@ -254,7 +284,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             }
         }
 
-        public Object getPath (Uri uri){
+        public Object getPath ( Uri uri){
             String[] projection = {MediaStore.Images.Media.DATA};
             Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -277,6 +307,40 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
                 uploadImage();
             }
         }
+//
+//    private void UpdateToken()
+//    {
+//        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//        String refreshToken = FirebaseInstanceId.getInstance().getToken();
+//        Token token = new Token(refreshToken);
+//        FirebaseDatabase.getInstance().getReference("Token").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
+//    }
+//
+//    public void sendNotifications(String usertoken,String message)
+//    {
+//        Data data = new Data(message);
+//        NotificationSender sender = new NotificationSender(data,usertoken);
+//        apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
+//            @Override
+//            public void onResponse(Call<MyResponse> call, retrofit2.Response<MyResponse> response) {
+//
+//                if (response.code()==200)
+//                {
+//                    if (response.body().success != 1)
+//                    {
+//                        Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<MyResponse> call, Throwable t) {
+//
+//            }
+//        });
+//
+//    }
+
     }
 
 //    public void setter() {

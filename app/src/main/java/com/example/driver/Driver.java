@@ -3,7 +3,7 @@ package com.example.driver;
 public class Driver  {
 
 int id;
-   String userName, password, Name, phoneNo, email, Job, carNumber, carType, address,gander,lat,lang;
+   String userName, password, Name, phoneNo, email, Job, carNumber, carType,cardDate,licence ,address,gander,lat,lang ;
 
     public String getLat() {
         return lat;
@@ -107,5 +107,21 @@ int id;
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCardDate() {
+        return cardDate;
+    }
+
+    public void setCardDate(String cardDate) {
+        this.cardDate = cardDate;
+    }
+
+    public String getLicence() {
+        return licence;
+    }
+
+    public void setLicence(String licence) {
+        this.licence = licence;
     }
 }

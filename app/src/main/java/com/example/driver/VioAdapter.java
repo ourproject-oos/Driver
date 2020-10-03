@@ -41,11 +41,11 @@ public class VioAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         final VioClass vioClass = vioClassList.get(position);
-        ((ViewHolder) holder).txtName.setText("Driver name: "+vioClass.getName());
+        ((ViewHolder) holder).txtName.setText("Police name: "+vioClass.getName());
         ((ViewHolder) holder).txtCarNumber.setText("car Num: "+vioClass.getCarNumber());
-//        ((ViewHolder) holder).txtDate.setText("Vio Date: " +vioClass.getDate());
-//        ((ViewHolder) holder).txtType.setText("Vio Type: "+vioClass.getVio1());
-   //  ((ViewHolder) holder).txtAmount.setText("Vio Amount: "+vioClass.getVio2());
+        ((ViewHolder) holder).licence.setText("car Num: "+vioClass.getLicence());
+       ((ViewHolder) holder).txtType.setText("Vio Type: "+vioClass.getType());
+        ((ViewHolder) holder).txtDate.setText("Vio Date: " +vioClass.getDate());
 
 
         ((ViewHolder) holder).goLocation.setOnClickListener(new View.OnClickListener() {
@@ -74,11 +74,11 @@ public class VioAdapter extends RecyclerView.Adapter {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtName;
+        public TextView txtName,licence ;
         public TextView txtCarNumber;
         public TextView txtType;
-        public TextView txtAmount;
-        public TextView txtDate;
+        public TextView location;
+        public TextView txtDate, cardDate;
         ImageButton goLocation;
 
 
@@ -86,10 +86,12 @@ public class VioAdapter extends RecyclerView.Adapter {
             super(itemView);
             txtName = itemView.findViewById(R.id.textView_name);
             txtCarNumber = itemView.findViewById(R.id.textView_number_car);
-            txtAmount = itemView.findViewById(R.id.textView_amount);
+           cardDate = itemView.findViewById(R.id.txt_card_date);
             txtType = itemView.findViewById(R.id.textView_type);
-            txtDate = itemView.findViewById(R.id.textView_date);
-            goLocation = itemView.findViewById(R.id.go_location);
+            txtDate = itemView.findViewById(R.id.text_driver_date);
+           licence = itemView.findViewById(R.id.txt_licence);
+
+
 
 
         }

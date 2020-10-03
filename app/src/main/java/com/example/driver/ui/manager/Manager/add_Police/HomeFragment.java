@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     EditText userName, password, rePassword, firstName, lastName, phoneNo, jobID, dgree, address;
     Button btn_signup;
+    ImageView imageView;
     JSONObject jsonObject;
     RequestQueue queue;
     ManagerDao managerDao;
@@ -72,7 +73,7 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        IdentifyMethod();
+        IdentifyMethod(root);
         //addPolice();
         NukeSSLCerts.nuke();
         queue = Volley.newRequestQueue(getContext());
@@ -93,18 +94,19 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void IdentifyMethod()
+    public void IdentifyMethod(View root)
     {
-        userName = userName.findViewById(R.id.txt_userName_police);
-        password = password.findViewById(R.id.txt_password_police);
-        rePassword = rePassword.findViewById(R.id.rePassword_police);
-        firstName = firstName.findViewById(R.id.txt_fName_police);
-        lastName = lastName.findViewById(R.id.txt_lName__police);
-        phoneNo = phoneNo.findViewById(R.id.txt_phoneNo_police);
-        address = address.findViewById(R.id.txt_address_police);
-        jobID = jobID.findViewById(R.id.txt_job_id);
-        dgree = dgree.findViewById(R.id.txt_dgree_police);
-        btn_signup = btn_signup.findViewById(R.id.btn_SignUp_police);
+        userName = root.findViewById(R.id.txt_userName_police);
+        password = root.findViewById(R.id.txt_password_police);
+        rePassword = root.findViewById(R.id.rePassword_police);
+        firstName = root.findViewById(R.id.txt_fName_police);
+        lastName = root.findViewById(R.id.txt_lName_police);
+        phoneNo = root.findViewById(R.id.txt_phoneNo_police);
+        address = root.findViewById(R.id.txt_address_police);
+        jobID = root.findViewById(R.id.txt_job_id);
+        imageView = root.findViewById(R.id.img_add_user_police);
+        dgree = root.findViewById(R.id.txt_dgree_police);
+        btn_signup = root.findViewById(R.id.btn_SignUp_police);
     }
 
 
@@ -125,6 +127,7 @@ public class HomeFragment extends Fragment {
                 jobID.setText("");
                 dgree.setText("");
                 address.setText("");
+                imageView.setImageBitmap(bitmap);
                 Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
             }
 
@@ -147,6 +150,7 @@ public class HomeFragment extends Fragment {
                 map.put("dgree", dgree.getText().toString());
                 map.put("jobID", jobID.getText().toString());
                 map.put("address", address.getText().toString());
+                map.put("address", String.valueOf(imageView));
 
 
                 return map;

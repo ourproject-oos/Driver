@@ -1,6 +1,7 @@
 package com.example.driver.ui.police;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +36,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -45,6 +48,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
+import com.example.driver.Notifications.APIService;
+import com.example.driver.Notifications.Client;
+import com.example.driver.Notifications.Data;
+import com.example.driver.Notifications.MyResponse;
+import com.example.driver.Notifications.NotificationSender;
+import com.example.driver.Notifications.Token;
 import com.example.driver.NukeSSLCerts;
 import com.example.driver.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -57,6 +66,13 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -95,6 +111,7 @@ public class GalleryFragment extends Fragment {
     List<Driver> driverList;
     private RequestQueue queue;
     private File f;
+    private APIService apiService;
     ArrayAdapter<String> spArray;
     private SharedPreferences sharedPreferences;
     int idPolice;
@@ -117,10 +134,11 @@ public class GalleryFragment extends Fragment {
         imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
         rvTypeVio = root.findViewById(R.id.rv_typ_vio);
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
 
         setVioTyp();
-
+        UpdateToken();
 
 //        chVolType1 = root.findViewById(R.id.checkbox1);
 //        chVolType2 = root.findViewById(R.id.checkbox2);
@@ -137,6 +155,7 @@ public class GalleryFragment extends Fragment {
 //        chVolType13= root.findViewById(R.id.checkbox13);
 //        chVolType14= root.findViewById(R.id.checkbox14);
 //        chVolType15= root.findViewById(R.id.checkbox15);
+
 
 
         f = new File("/data/data/" + getContext().getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
@@ -177,6 +196,36 @@ public class GalleryFragment extends Fragment {
             public void onClick(View view) {
 
                 setViolationData();
+
+                FirebaseDatabase.getInstance().getReference().child("Tokens").child(txtCarNumber.getText().toString().trim()).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String usertoken=dataSnapshot.getValue(String.class);
+                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_against_the_flow_of_traffic));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_Impending_traffic));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_no_parking));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_high_speed));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_without_valid_documentation));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_without_drivers_license));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_driving_vehicle_that_produces_excessive_smoke));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_through_or_stopping_in_crossing_zone));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_car_with_no_number));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_not_wearing_seatbelt));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_Reckless_driving));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_unnecessary_usage_of_the_horn));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_Refusing_or_comply_to_policemen_signal));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_Unsafe_overtake));
+                        sendNotifications(usertoken,getString(R.string.vio_typ_using_cell_phone_while_driving));
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
             }
         });
         galleryViewModel.getText().observe(this, new Observer<String>() {
@@ -210,7 +259,13 @@ public class GalleryFragment extends Fragment {
     public String[] getVioTyp() {
 
         String[] strings = {getString(R.string.vio_typ_Driving_against_the_flow_of_traffic), getString(R.string.vio_typ_Impending_traffic)
-                , getString(R.string.vio_typ_Driving_against_the_flow_of_traffic)};
+                , getString(R.string.vio_typ_no_parking), getString(R.string.vio_typ_high_speed)
+                , getString(R.string.vio_typ_Driving_without_valid_documentation), getString(R.string.vio_typ_Driving_without_drivers_license)
+                , getString(R.string.vio_typ_driving_vehicle_that_produces_excessive_smoke), getString(R.string.vio_typ_Driving_through_or_stopping_in_crossing_zone)
+                , getString(R.string.vio_typ_car_with_no_number), getString(R.string.vio_typ_not_wearing_seatbelt)
+                , getString(R.string.vio_typ_Reckless_driving), getString(R.string.vio_typ_unnecessary_usage_of_the_horn)
+                , getString(R.string.vio_typ_Refusing_or_comply_to_policemen_signal), getString(R.string.vio_typ_Unsafe_overtake)
+                , getString(R.string.vio_typ_using_cell_phone_while_driving)};
 
         return strings;
 
@@ -358,23 +413,21 @@ public class GalleryFragment extends Fragment {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("d_id", String.valueOf(driver.getId()));
                 map.put("p_id", String.valueOf(idPolice));
-                map.put("ch_box1", chVolType1.getText().toString());
-                map.put("ch_box2", chVolType2.getText().toString());
-                map.put("ch_box3", chVolType3.getText().toString());
-                map.put("ch_box4", chVolType4.getText().toString());
-                map.put("ch_box5", chVolType5.getText().toString());
-                map.put("ch_box6", chVolType6.getText().toString());
-                map.put("ch_box7", chVolType7.getText().toString());
-                map.put("ch_box8", chVolType8.getText().toString());
-                map.put("ch_box9", chVolType9.getText().toString());
-                map.put("ch_box10", chVolType10.getText().toString());
-                map.put("ch_box11", chVolType11.getText().toString());
-                map.put("ch_box12", chVolType12.getText().toString());
-                map.put("ch_box13", chVolType13.getText().toString());
-                map.put("ch_box14", chVolType14.getText().toString());
-                map.put("ch_box15", chVolType15.getText().toString());
-
-
+//                map.put("ch_box1", chVolType1.getText().toString());
+//                map.put("ch_box2", chVolType2.getText().toString());
+//                map.put("ch_box3", chVolType3.getText().toString());
+//                map.put("ch_box4", chVolType4.getText().toString());
+//                map.put("ch_box5", chVolType5.getText().toString());
+//                map.put("ch_box6", chVolType6.getText().toString());
+//                map.put("ch_box7", chVolType7.getText().toString());
+//                map.put("ch_box8", chVolType8.getText().toString());
+//                map.put("ch_box9", chVolType9.getText().toString());
+//                map.put("ch_box10", chVolType10.getText().toString());
+//                map.put("ch_box11", chVolType11.getText().toString());
+//                map.put("ch_box12", chVolType12.getText().toString());
+//                map.put("ch_box13", chVolType13.getText().toString());
+//                map.put("ch_box14", chVolType14.getText().toString());
+//                map.put("ch_box15", chVolType15.getText().toString());
                 map.put("lang", String.valueOf(langLocation));
                 map.put("lat", String.valueOf(lat));
                 return map;
@@ -522,7 +575,7 @@ public class GalleryFragment extends Fragment {
                 }
             }
         }
-   public void notification(){
+ //  public void notification(){
 
 //       FirebaseMessaging.getInstance().subscribeToTopic("voi")
 //               .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -539,7 +592,7 @@ public class GalleryFragment extends Fragment {
 //               });
 
 
-   }
+  // }
         public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
             if (requestCode == 555 && grantResults[0] ==
@@ -549,6 +602,42 @@ public class GalleryFragment extends Fragment {
                 checkAndroidVersion();
             }
         }
+
+
+
+    }
+
+
+    private void UpdateToken()
+    {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String refreshToken = FirebaseInstanceId.getInstance().getToken();
+        Token token = new Token(refreshToken);
+        FirebaseDatabase.getInstance().getReference("Token").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
+    }
+
+    public void sendNotifications(String usertoken,String message)
+    {
+        Data data = new Data(message);
+        NotificationSender sender = new NotificationSender(data,usertoken);
+        apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, retrofit2.Response<MyResponse> response) {
+
+                if (response.code()==200)
+                {
+                    if (response.body().success != 1)
+                    {
+                        Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+
+            }
+        });
 
     }
 }
