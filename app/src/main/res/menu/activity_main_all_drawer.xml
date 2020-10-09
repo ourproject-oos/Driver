@@ -16,6 +16,7 @@
             android:id="@id/nav_gallery"
             android:icon="@drawable/ic_v"
             android:title="@string/add_vio" />
+
         <item
             android:id="@id/nav_slideshow"
             android:icon="@drawable/ic_v"
@@ -25,6 +26,11 @@
             android:id="@id/nav_dashboard"
             android:icon="@drawable/ic_drive"
             android:title="@string/add_driver"
+            />
+
+        <item
+            android:id="@id/nav_update_delete_user"
+            android:title="@string/update_delete_user"
             />
 
     </group>

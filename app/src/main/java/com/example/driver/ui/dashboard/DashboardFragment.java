@@ -82,7 +82,8 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
     boolean check = true;
     private RadioGroup radioGroup;
     private String gender = "male";
-    private int GALLERY = 1, CAMERA = 2;
+    private static final int PICK_IMAGE = 100;
+    Uri imageUri;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -110,16 +111,9 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         roundedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPictureDialog();
+                openGallery();
             }
         });
-
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{android.Manifest.permission.CAMERA},
-                        5);
-            }
-        }
 
 
         rePassword.addTextChangedListener(new TextWatcher() {
@@ -155,7 +149,8 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         dashboardViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                //         textView.setText(s);
+                //         textView.setTe
+                //         xt(s);
 
 
             }
@@ -164,6 +159,21 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
 
     }
+
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+            imageUri = data.getData();
+            roundedImageView.setImageURI(imageUri);
+        }
+    }
+
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -233,123 +243,6 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
     }
 
-    private void showPictureDialog() {
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
-        pictureDialog.setTitle("Select From:");
-        String[] pictureDialogItems = {"Gallery", "Camara"};
-        pictureDialog.setItems(pictureDialogItems,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                choosePhotoFromGallery();
-                                break;
-                            case 1:
-                                takePhotoFromCamera();
-                                break;
-                        }
-                    }
-                });
-        pictureDialog.show();
-    }
-
-    public void choosePhotoFromGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY);
-    }
-
-    private void takePhotoFromCamera() {
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CANCELED) {
-            return;
-        }
-        if (requestCode == GALLERY) {
-            if (data != null) {
-                Uri contentURI = data.getData();
-                try {
-                    FixBitmap    = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    //String path = saveImage(bitmap);
-                    Toast.makeText(getActivity(), "Image Saved!", Toast.LENGTH_SHORT).show();
-                    roundedImageView.setImageBitmap(FixBitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        } else if (requestCode == CAMERA) {
-            FixBitmap = (Bitmap) data.getExtras().get("data");
-            roundedImageView.setImageBitmap(FixBitmap);
-        }
-    }
-
-    public class ImageProcessClass {
-
-        String ImageHttpRequest(String requestURL, HashMap<String, String> PData) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                url = new URL(requestURL);
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setReadTimeout(20000);
-                httpURLConnection.setConnectTimeout(20000);
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoInput(true);
-                httpURLConnection.setDoOutput(true);
-                outputStream = httpURLConnection.getOutputStream();
-                bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                bufferedWriter.write(bufferedWriterDataFN(PData));
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                RC = httpURLConnection.getResponseCode();
-                if (RC == HttpsURLConnection.HTTP_OK) {
-                    bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                    stringBuilder = new StringBuilder();
-                    String RC2;
-                    while ((RC2 = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(RC2);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return stringBuilder.toString();
-        }
-
-        private String bufferedWriterDataFN(HashMap<String, String> HashMapParams) throws UnsupportedEncodingException {
-            stringBuilder = new StringBuilder();
-            for (Map.Entry<String, String> KEY : HashMapParams.entrySet()) {
-                if (check) {
-                    check = false;
-                } else {
-                    stringBuilder.append("&");
-                }
-                stringBuilder.append(URLEncoder.encode(KEY.getKey(), "UTF-8"));
-                stringBuilder.append("=");
-                stringBuilder.append(URLEncoder.encode(KEY.getValue(), "UTF-8"));
-            }
-            return stringBuilder.toString();
-        }
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 5) {
-            if (grantResults[0] == PERMISSION_GRANTED) {
-            } else {
-                Toast.makeText(getActivity(), "No se puede utilizar la cámara por favor otorgue el permiso", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 
 
 }

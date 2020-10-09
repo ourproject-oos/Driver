@@ -90,5 +90,6 @@
     <string name="card_number">Card Date</string>
     <string name="licence">Licence</string>
     <string name="licence_date">licence_Date</string>
-    
+    <string name="update_delete_user">update_delete_user</string>
+
 </resources>

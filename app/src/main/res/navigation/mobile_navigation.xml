@@ -6,6 +6,7 @@
     app:startDestination="@id/nav_dashboard"
     >
 
+
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.driver.ui.manager.Manager.add_Police.HomeFragment"
@@ -50,6 +51,13 @@
         android:name="com.example.driver.ui.send.SendFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
+
+    <fragment
+        android:id="@+id/nav_update_delete_user"
+        android:name="com.example.driver.ui.manager.Manager.update_delete_user.update_delete"
+        android:label="update_delete_user"
+        tools:layout="@layout/update_delete_user" />
+
 
 
 

@@ -13,6 +13,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
-        String[] majorList = {"MANAGER", "POLICE", "DRIVER"};
+        final String[] majorList = {"MANAGER", "POLICE", "DRIVER"};
         spinnerAdapter.addAll(majorList);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -101,9 +102,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+
+
+
     }
 
     public void regOnClick(View view) {
+        final LoadingDialog loadingDialog = new LoadingDialog(LoginActivity.this);
+        loadingDialog.startLoadingDialog();
         getUserData();
 
     }
