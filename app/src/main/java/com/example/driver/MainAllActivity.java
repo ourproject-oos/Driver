@@ -1,11 +1,13 @@
 package com.example.driver;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -44,7 +46,6 @@ public class MainAllActivity extends AppCompatActivity {
     TextView userNameNav, userMajorNav;
     RoundedImageView userImageNav;
     TextView userPoliceID;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

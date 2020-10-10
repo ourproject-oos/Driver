@@ -20,15 +20,10 @@
             android:id="@+id/card_product"
             android:layout_width="match_parent"
             android:layout_height="262dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
             android:elevation="120dp"
             android:requiresFadingEdge="vertical"
             app:cardBackgroundColor="@color/color_all"
             app:cardCornerRadius="20dp"
-
-
             >
 
             <ImageView
@@ -69,7 +64,7 @@
             <ImageButton
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/user"
+                app:srcCompat="@drawable/user1"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
@@ -106,10 +101,11 @@
             <ImageButton
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_baseline_vpn_key_24"
+                android:src="@drawable/password"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
+                android:background="@color/color_all"
                 />
 
 
@@ -128,6 +124,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:hint="@string/Password"
+                    android:inputType="textPassword"
                     android:textColorHint="@color/color_all"
                     android:textColor="@color/color_all"
                     />
@@ -143,7 +140,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/color_all"
+            />
 
 
 

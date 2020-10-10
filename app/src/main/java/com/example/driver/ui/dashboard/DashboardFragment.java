@@ -1,12 +1,22 @@
 package com.example.driver.ui.dashboard;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -16,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -29,21 +40,50 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.NukeSSLCerts;
 import com.example.driver.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
 
     private DashboardViewModel dashboardViewModel;
     EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber, carType, address;
     Button btn_signup;
+    RoundedImageView roundedImageView;
     JSONObject jsonObject;
     RequestQueue queue;
+    Bitmap FixBitmap;
+    URL url;
+    HttpURLConnection httpURLConnection;
+    OutputStream outputStream;
+    BufferedWriter bufferedWriter;
+    BufferedReader bufferedReader;
+    int RC;
+    StringBuilder stringBuilder;
+    boolean check = true;
     private RadioGroup radioGroup;
     private String gender = "male";
+    private static final int PICK_IMAGE = 100;
+    Uri imageUri;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,11 +102,19 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         carType = root.findViewById(R.id.txt_car_type);
         userJob = root.findViewById(R.id.text_job);
         btn_signup = root.findViewById(R.id.btn_SignUp);
+        roundedImageView = root.findViewById(R.id.img_add_user);
         NukeSSLCerts.nuke();
         queue = Volley.newRequestQueue(root.getContext());
-
         radioGroup = root.findViewById(R.id.rg_gender);
         radioGroup.setOnCheckedChangeListener(this);
+
+        roundedImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+
 
         rePassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -101,13 +149,31 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         dashboardViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                //         textView.setText(s);
+                //         textView.setTe
+                //         xt(s);
 
 
             }
         });
         return root;
+
+
     }
+
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+            imageUri = data.getData();
+            roundedImageView.setImageURI(imageUri);
+        }
+    }
+
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -176,4 +242,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
 
     }
+
+
+
 }
