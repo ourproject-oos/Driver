@@ -1,5 +1,6 @@
 package com.example.driver.ui.manager.Manager.add_dreiver;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -74,14 +75,14 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
     private int PICK_IMAGE_REQUEST = 100;
     private ImageView imgView;
-    private Bitmap bitmap;
+    private Bitmap bitmap, bitmap1;
     private Uri filePath;
     private Object selectedFilePath;
     private APIService apiService;
 
 
     private DashboardViewModel dashboardViewModel;
-    EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber,cardDate, licence, carType, address;
+    EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber, cardDate, licence, carType, address;
     Button btn_SignUp;
     ImageView imageView;
     JSONObject jsonObject;
@@ -94,6 +95,10 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
     Driver driver;
     Police police;
     Uri url;
+    Uri imageUri;
+
+   // private static final int PICK_IMAGE = 100;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
@@ -168,7 +173,24 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         radioGroup = root.findViewById(R.id.rg_gender);
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+
+
     }
+
+    private void openGallery() {
+
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE_REQUEST);
+
+
+    }
+
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -246,67 +268,105 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
     }
 
 
-        Handler handler = handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                Log.i(TAG, "Handler " + msg.what);
-                if (msg.what == 1) {
-                    Toast.makeText(getActivity(), "Upload Success", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "Upload Field", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-        };
-
-        private void showFileChooser () {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
-        }
-
+    Handler handler = handler = new Handler() {
         @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
-
-            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-                filePath = data.getData();
-                selectedFilePath = getPath(filePath);
-                Log.i(TAG, " File path : " + selectedFilePath);
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap((ContentResolver) getPath(filePath), filePath);
-                    imgView.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        public void handleMessage(Message msg) {
+            Log.i(TAG, "Handler " + msg.what);
+            if (msg.what == 1) {
+                Toast.makeText(getActivity(), "Upload Success", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Upload Field", Toast.LENGTH_SHORT).show();
             }
         }
 
-        public Object getPath ( Uri uri){
-            String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        }
+    };
 
-        private void uploadImage () {
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+    }
 
-            UploadImageApacheHttp uploadTask = new UploadImageApacheHttp();
-            uploadTask.doFileUpload(UPLOAD_URL, String.valueOf(bitmap), handler);
+    @SuppressLint("NewApi")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        }
+        if (resultCode == RESULT_OK && requestCode == 222) {
+            imageUri = data.getData();
+            try {
 
-        public void onClick (View v){
-            if (v == btn_SignUp)
-                showFileChooser();
-            else {
-                Toast.makeText(getContext(), "Start Uploading", Toast.LENGTH_SHORT).show();
-                uploadImage();
+                //  bitmap1 = MediaStore.Images.Media.getBitmap((ContentResolver) getPath(imageUri), imageUri);
+
+                //
+
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
             }
+            //  imageView.setImageBitmap(bitmap1);
         }
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
+
+//            filePath = data.getData();
+//            selectedFilePath = getPath(filePath);
+//            Log.i(TAG, " File path : " + selectedFilePath);
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap((ContentResolver) getPath(filePath), filePath);
+//                imgView.setImageBitmap(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
+            Uri uri = data.getData();
+            if(!uri.isAbsolute()){
+
+                imageView.setImageDrawable(getContext().getDrawable(R.drawable.image_driver));
+
+
+            }else{
+
+                imageView.setImageURI(uri);
+
+            }
+
+
+
+
+
+
+        }
+
+
+    }
+
+    public Object getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    private void uploadImage() {
+        UploadImageApacheHttp uploadTask = new UploadImageApacheHttp();
+        uploadTask.doFileUpload(UPLOAD_URL, String.valueOf(bitmap), handler);
+    }
+
+    public void onClick(View v) {
+        if (v == btn_SignUp)
+            showFileChooser();
+        else {
+            Toast.makeText(getContext(), "Start Uploading", Toast.LENGTH_SHORT).show();
+            uploadImage();
+        }
+    }
+
+
 //
 //    private void UpdateToken()
 //    {
@@ -341,7 +401,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 //
 //    }
 
-    }
+}
 
 //    public void setter() {
 //        manager.getUserName(userName.getText().toString().trim());

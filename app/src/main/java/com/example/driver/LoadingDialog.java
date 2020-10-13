@@ -27,6 +27,7 @@ class LoadingDialog {
 
     }
 
+
     void dismissDialog()
     {
         dialog.dismiss();

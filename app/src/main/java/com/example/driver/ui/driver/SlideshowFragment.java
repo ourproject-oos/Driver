@@ -119,17 +119,38 @@ public class SlideshowFragment extends Fragment {
 
 
                                 JSONObject js = response.getJSONObject(i);
+/*"NAME": "yousra nabil",
+        "PHONE": 725745789,
+        "PASSWORD": 1234,
+        "USER_NAME": "yousra",
+        "CREATED_DATE": "2020-02-23 11:14:00",
+        "CAR_NUM": 123456,
+        "CAR_TYPE": 25806,
+        "JOB": "business",
+        "ADDRESS": "sanaa",
+        "GENDER": "female",
+        "DRIVER_ID": 3,
+        "POLICE_ID": 0,
+        "AMOUNT": 5000,
+        "TYPE": "accident",
+        "DATE": "2020-02-23 23:06:11",
+        "LAT": 0,
+        "LANG": 0*/
+
 
                                 vioClass = new VioClass();
                                 vioClass.setId(js.getInt("ID"));
-                                vioClass.setName(js.getString("NAME"));
+                                vioClass.setDriverId(js.getInt("DRIVER_ID"));
+                                vioClass.setName(js.getString("USER_NAME"));
+                                vioClass.setCarNumber(js.getString("CAR_NUM"));
+ //                             vioClass.setLicence(js.getString("LICENCE"));
+                                vioClass.setType(js.getString("TYPE"));
                                 vioClass.setDate(js.getString("DATE"));
-                                vioClass.getType(js.getString("TYPE"));
+                                vioClass.setAddress(js.getString("ADDRESS"));
+                                vioClass.setCardDate(js.getString("CREATED_DATE"));
                                 vioClass.setLatLocation(js.getDouble("LAT"));
                                 vioClass.setLongLocation(js.getDouble("LANG"));
-                                vioClass.setCarNumber(js.getString("CAR1_NUM"));
-                                vioClass.setCardDate(js.getString("CARD_DATE"));
-                                vioClass.setLicence(js.getString("LICENCE"));
+                                vioClass.setAmount(js.getString("AMOUNT"));
 
 
                                 vioClassList.add(vioClass);

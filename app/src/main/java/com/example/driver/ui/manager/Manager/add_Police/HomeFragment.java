@@ -67,6 +67,8 @@ public class HomeFragment extends Fragment {
     RequestQueue queue;
     ManagerDao managerDao;
     ManagerDB manager;
+    Uri imageUri;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -107,6 +109,25 @@ public class HomeFragment extends Fragment {
         imageView = root.findViewById(R.id.img_add_user_police);
         dgree = root.findViewById(R.id.txt_dgree_police);
         btn_signup = root.findViewById(R.id.btn_SignUp_police);
+
+
+    imageView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            openGallery();
+
+        }
+    });
+
+
+    }
+
+    private void openGallery() {
+
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE_REQUEST);
+
+
     }
 
 
@@ -187,18 +208,43 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
+
+        if (resultCode == RESULT_OK && requestCode == 222) {
+            imageUri = data.getData();
+            try {
+
+                //  bitmap1 = MediaStore.Images.Media.getBitmap((ContentResolver) getPath(imageUri), imageUri);
+
+                //
+
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+            }
+            //  imageView.setImageBitmap(bitmap1);
+        }
+
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-            filePath = data.getData();
-            selectedFilePath = getPath(filePath);
-            Log.i(TAG, " File path : " + selectedFilePath);
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap((ContentResolver) getPath(filePath), filePath);
-                imgView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
+
+//            filePath = data.getData();
+//            selectedFilePath = getPath(filePath);
+//            Log.i(TAG, " File path : " + selectedFilePath);
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap((ContentResolver) getPath(filePath), filePath);
+//                imgView.setImageBitmap(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
+            Uri uri = data.getData();
+            imageView.setImageURI(uri);
+           }
+
+
     }
 
     public Object getPath (Uri uri){
@@ -224,6 +270,9 @@ public class HomeFragment extends Fragment {
             uploadImage();
         }
     }
+
+
+
 
 //    public void setter() {
 //        manager.getUserName(userName.getText().toString().trim());
