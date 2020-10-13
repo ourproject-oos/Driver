@@ -13,7 +13,6 @@ import android.widget.Toast;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class VioAdapter extends RecyclerView.Adapter {
@@ -43,41 +42,38 @@ public class VioAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         final VioClass vioClass = vioClassList.get(position);
-        ((ViewHolder) holder).txtName.setText("Police name: " + vioClass.getName());
-       // ((ViewHolder) holder).txtCarNumber.setText("car Num: " + vioClass.getCarNumber());
-      //  ((ViewHolder) holder).licence.setText("car Num: " + vioClass.getLicence());
-        ((ViewHolder) holder).txtType.setText("Vio Type: " + vioClass.getType());
-//        ((ViewHolder) holder).txtDate.setText("Vio Date: " + vioClass.getDate());
+        ((ViewHolder) holder).txtName.setText("Police name: "+vioClass.getName());
+        ((ViewHolder) holder).txtCarNumber.setText("car Num: "+vioClass.getCarNumber());
+      //  ((ViewHolder) holder).licence.setText("car Num: "+vioClass.getLicence());
+       ((ViewHolder) holder).txtType.setText("Vio Type: "+vioClass.getType());
+//        ((ViewHolder) holder).txtDate.setText("Vio Date: " +vioClass.getDate());
 
 
         ((ViewHolder) holder).goLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                String query = "?q=" + vioClass.getLatLocation() + "," + vioClass.getLongLocation() + "(" + vioClass.getName() + " car number: " + vioClass.getCarNumber() + ")" + "&z=18";
-//                String encodedQuery = Uri.encode(query);
 //
-//                Uri gmmIntentUri2 = Uri.parse("geo:" + vioClass.getLatLocation() + "," +
-//                        vioClass.getLongLocation() + query);
-//                Intent mapIntent2 = new Intent(Intent.ACTION_VIEW,
-//                        gmmIntentUri2);
-//                mapIntent2.setPackage("com.google.android.apps.maps");
-//                context.startActivity(mapIntent2);
-
-                if (vioClass.getLongLocation() == 0.0 || vioClass.getLatLocation() == 0.0) {
-                    Toast.makeText(context, "no address for this vio", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Intent intent = new Intent(context, MapsActivity.class);
-                    intent.putExtra("lat", vioClass.getLatLocation());
-                    intent.putExtra("long", vioClass.getLongLocation());
-                    context.startActivity(intent);
+                if(vioClass.getLatLocation()==0.0||vioClass.getLongLocation()==0.0){
+                    Toast.makeText(context, "no address location added", Toast.LENGTH_SHORT).show();
+                    return;
 
                 }
+                String query = "?q=" + vioClass.getLatLocation() + "," + vioClass.getLongLocation() + "(" + vioClass.getName() +" car number: "+vioClass.getCarNumber()+ ")" + "&z=18";
+                String encodedQuery = Uri.encode(query);
+                Uri gmmIntentUri2 = Uri.parse("geo:" + vioClass.getLatLocation() + "," + vioClass.getLongLocation() + query);
+                Intent mapIntent2 = new Intent(Intent.ACTION_VIEW, gmmIntentUri2);
+                mapIntent2.setPackage("com.google.android.apps.maps");
+                context.startActivity(mapIntent2);
 
 
-//                mapsActivity.setLongLocation();
-                //
+
+
+
+//                Intent  intent = new Intent(context,MapsActivity.class);
+//                intent.putExtra("lat",vioClass.getLatLocation());
+//                intent.putExtra("long",vioClass.getLongLocation());
+//                context.startActivity(intent);
+
 
 
             }
@@ -95,11 +91,12 @@ public class VioAdapter extends RecyclerView.Adapter {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtName, licence;
+        public TextView txtName,licence ;
         public TextView txtCarNumber;
         public TextView txtType;
-        public TextView location;
-        public TextView txtDate, cardDate;
+        public TextView tvAddress;
+//        public TextView location;
+        public TextView txtDate, cardDate,carNum;
         ImageButton goLocation;
 
 
@@ -107,10 +104,14 @@ public class VioAdapter extends RecyclerView.Adapter {
             super(itemView);
             txtName = itemView.findViewById(R.id.textView_name);
             txtCarNumber = itemView.findViewById(R.id.textView_number_car);
-            cardDate = itemView.findViewById(R.id.txt_card_date);
+           cardDate = itemView.findViewById(R.id.textView_card_date);
             txtType = itemView.findViewById(R.id.textView_type);
-            txtDate = itemView.findViewById(R.id.text_driver_date);
-            licence = itemView.findViewById(R.id.txt_licence);
+
+            tvAddress = itemView.findViewById(R.id.tv_address);
+          // licence = itemView.findViewById(R.id.txt_licence);
+           goLocation=itemView.findViewById(R.id.btn_go_location);
+
+
 
 
         }

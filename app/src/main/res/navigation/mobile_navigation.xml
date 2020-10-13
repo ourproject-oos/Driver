@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.driver.ui.driver.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="Driver"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment

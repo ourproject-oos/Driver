@@ -107,13 +107,23 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         queue = Volley.newRequestQueue(root.getContext());
         radioGroup = root.findViewById(R.id.rg_gender);
         radioGroup.setOnCheckedChangeListener(this);
-
         roundedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+              openGallery();
             }
         });
+
+
+//        roundedImageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openGallery();
+//            }
+//        });
+
+        //run
+//wheres the click listener
 
 
         rePassword.addTextChangedListener(new TextWatcher() {
@@ -172,6 +182,11 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             imageUri = data.getData();
             roundedImageView.setImageURI(imageUri);
         }
+    }
+
+    public void add_image_driver()
+    {
+        openGallery();
     }
 
 

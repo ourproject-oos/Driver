@@ -52,7 +52,7 @@ import static com.example.driver.ui.manager.Manager.add_dreiver.DashboardFragmen
 public class update_delete extends Fragment {
 
     String Message;
-    private UpdateDeleteViewModle update_deleteViewModel;
+
     private File f;
     private SharedPreferences sharedPreferences;
     int driverID;
@@ -69,8 +69,7 @@ public class update_delete extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        update_deleteViewModel =
-                ViewModelProviders.of(this).get(UpdateDeleteViewModle.class);
+
         View root = inflater.inflate(R.layout.update_delete_user, container, false);
         queue = Volley.newRequestQueue(getContext());
         recyclerView = root.findViewById(R.id.update_driver_police_re);
@@ -89,12 +88,7 @@ public class update_delete extends Fragment {
         }
 
 
-        update_deleteViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
 
-            }
-        });
 
         setDriverData();
         return root;
@@ -130,7 +124,7 @@ public class update_delete extends Fragment {
 
 
     public void setDriverData() {
-        final String url = "https://driverchecker.000webhostapp.com/insert_driver.php";
+        final String url = "https://driverchecker.000webhostapp.com/update_driver.php";
 
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -179,7 +173,7 @@ public class update_delete extends Fragment {
     }
 
     public void setPoliceData() {
-        final String url = "https://driverchecker.000webhostapp.com/insert_police.php";
+        final String url = "https://driverchecker.000webhostapp.com/update_police.php";
 
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

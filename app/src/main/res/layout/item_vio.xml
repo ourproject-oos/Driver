@@ -33,7 +33,7 @@
             android:id="@+id/textView_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="car number"
+            android:text="type"
 
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -47,12 +47,38 @@
             android:id="@+id/textView_number_car"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="car number"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/color1"/>
+        <TextView
+            android:id="@+id/textView_card_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="car date"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/color1"/>
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="address"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/color1"/>
 
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_go_location"
+            android:src="@drawable/ic_location_on_black_24dp"
+            android:background="@color/color_all"
+            android:layout_marginTop="10dp"
+            tools:ignore="VectorDrawableCompat" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

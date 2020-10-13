@@ -41,7 +41,6 @@
                     app:riv_corner_radius="50dp"
                     android:layout_marginRight="2dp"
                     tools:ignore="VectorDrawableCompat"
-                    android:onClick="add_image_police"
                     />
 
 

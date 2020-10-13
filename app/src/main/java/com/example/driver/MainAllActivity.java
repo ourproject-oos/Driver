@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ public class MainAllActivity extends AppCompatActivity {
     Fragment fragment;
     private File f;
     private SharedPreferences sharedPreferences;
-    String major = "", policeID, name = "";
+    String major = "", policeID, name = "", username,password;
     private NavGraph navGraph;
     private View haderView;
     TextView userNameNav, userMajorNav;
@@ -61,7 +62,8 @@ public class MainAllActivity extends AppCompatActivity {
             sharedPreferences = getSharedPreferences(getString(R.string.shared_preference_usr), MODE_PRIVATE);
             major = sharedPreferences.getString("major", "");
             name =sharedPreferences.getString("fullName","user1");
-            policeID =sharedPreferences.getString("job_id","user1");
+
+
 
                     Toast.makeText(this, major, Toast.LENGTH_SHORT).show();
         }
@@ -81,7 +83,7 @@ public class MainAllActivity extends AppCompatActivity {
 
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                    R.id.nav_dashboard)
+                    R.id.nav_dashboard,R.id.nav_update_delete_user)
                     .setDrawerLayout(drawer)
                     .build();
 
@@ -121,6 +123,7 @@ public class MainAllActivity extends AppCompatActivity {
             navigationView.getMenu().getItem(0).setVisible(false);
             navigationView.getMenu().getItem(2).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
         } else {
 
             mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -141,6 +144,7 @@ public class MainAllActivity extends AppCompatActivity {
             navigationView.getMenu().getItem(0).setVisible(false);
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
 
         }
 

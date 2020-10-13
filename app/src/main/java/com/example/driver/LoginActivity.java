@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         NukeSSLCerts.nuke();
         queue = Volley.newRequestQueue(this);
+        Toast.makeText(this, "" + queue.getSequenceNumber(), Toast.LENGTH_SHORT).show();
         edUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -102,13 +103,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
 
+    LoadingDialog loadingDialog = new LoadingDialog(LoginActivity.this);
+
     public void regOnClick(View view) {
-        final LoadingDialog loadingDialog = new LoadingDialog(LoginActivity.this);
         loadingDialog.startLoadingDialog();
         getUserData();
 
@@ -148,6 +147,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if (policeList.size() == 0) {
                                     Toast.makeText(LoginActivity.this, "username or Password or Major is error",
                                             Toast.LENGTH_SHORT).show();
+                                    loadingDialog.dismissDialog();
+
                                 } else {
 
                                     SharedPreferences sharedPreferencesUser =
@@ -195,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (driverList.size() == 0) {
                                     Toast.makeText(LoginActivity.this, "username or Password or Major is error",
                                             Toast.LENGTH_SHORT).show();
+                                    loadingDialog.dismissDialog();
                                 } else {
                                     SharedPreferences sharedPreferencesUser =
                                             LoginActivity.this.getSharedPreferences("user_sp", MODE_PRIVATE);
@@ -228,8 +230,9 @@ public class LoginActivity extends AppCompatActivity {
                                     managerList.add(manager);
                                 }
                                 if (managerList.size() == 0) {
-                                    Toast.makeText(LoginActivity.this, "username or Password or Major is errorء",
+                                    Toast.makeText(LoginActivity.this, "username or Password or Major is error",
                                             Toast.LENGTH_SHORT).show();
+                                    loadingDialog.dismissDialog();
                                 } else {
                                     SharedPreferences sharedPreferencesUser =
                                             LoginActivity.this.getSharedPreferences("user_sp", MODE_PRIVATE);
@@ -249,19 +252,19 @@ public class LoginActivity extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(LoginActivity.this, "username or Password or Major is errorء",
+                            Toast.makeText(LoginActivity.this, "username or Password or Major is error",
                                     Toast.LENGTH_SHORT).show();
-
+                            loadingDialog.dismissDialog();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this, "username or Password or Major is error",
+                Toast.makeText(LoginActivity.this, "no internet connection",
                         Toast.LENGTH_SHORT).show();
+                loadingDialog.dismissDialog();
             }
         });
-
 
         queue.add(jsArray);
     }

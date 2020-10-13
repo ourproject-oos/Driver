@@ -19,10 +19,12 @@ public class VioClass {
         "LAT": 0,
         "LANG": 0*/
 
+
+
 String name,date,type,carNumber
-    ,licence,cardDate ;
+    ,licence,cardDate,carType,address,amount ;
 double latLocation,longLocation;
-int id;
+int id,driverId,policeId;
 
 
     public String getCarNumber() {
@@ -43,6 +45,46 @@ int id;
 
     public String getDate() {
         return date;
+    }
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public int getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(int driverId) {
+        this.driverId = driverId;
+    }
+
+    public int getPoliceId() {
+        return policeId;
+    }
+
+    public void setPoliceId(int policeId) {
+        this.policeId = policeId;
     }
 
     public void setDate(String date) {

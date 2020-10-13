@@ -91,5 +91,8 @@
     <string name="licence">Licence</string>
     <string name="licence_date">licence_Date</string>
     <string name="update_delete_user">update_delete_user</string>
+    <string name="menu_violation">menu_Violation</string>
+    <string name="violation">Violation</string>
+    <string name="title_activity_maps2">Map</string>
 
 </resources>
