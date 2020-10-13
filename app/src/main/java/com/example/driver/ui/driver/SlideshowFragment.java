@@ -120,6 +120,7 @@ public class SlideshowFragment extends Fragment {
 
                                 JSONObject js = response.getJSONObject(i);
 
+
                                 vioClass = new VioClass();
                                 vioClass.setId(js.getInt("ID"));
                                 vioClass.setName(js.getString("NAME"));
@@ -127,9 +128,9 @@ public class SlideshowFragment extends Fragment {
                                 vioClass.getType(js.getString("TYPE"));
                                 vioClass.setLatLocation(js.getDouble("LAT"));
                                 vioClass.setLongLocation(js.getDouble("LANG"));
-                                vioClass.setCarNumber(js.getString("CAR1_NUM"));
-                                vioClass.setCardDate(js.getString("CARD_DATE"));
-                                vioClass.setLicence(js.getString("LICENCE"));
+                                vioClass.setCarNumber(js.getString("CAR_NUM"));
+                              //  vioClass.setCardDate(js.getString("CARD_DATE"));
+                              //  vioClass.setLicence(js.getString("LICENCE"));
 
 
                                 vioClassList.add(vioClass);

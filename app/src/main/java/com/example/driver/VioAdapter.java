@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -43,10 +44,10 @@ public class VioAdapter extends RecyclerView.Adapter {
 
         final VioClass vioClass = vioClassList.get(position);
         ((ViewHolder) holder).txtName.setText("Police name: " + vioClass.getName());
-        ((ViewHolder) holder).txtCarNumber.setText("car Num: " + vioClass.getCarNumber());
-        ((ViewHolder) holder).licence.setText("car Num: " + vioClass.getLicence());
+       // ((ViewHolder) holder).txtCarNumber.setText("car Num: " + vioClass.getCarNumber());
+      //  ((ViewHolder) holder).licence.setText("car Num: " + vioClass.getLicence());
         ((ViewHolder) holder).txtType.setText("Vio Type: " + vioClass.getType());
-        ((ViewHolder) holder).txtDate.setText("Vio Date: " + vioClass.getDate());
+//        ((ViewHolder) holder).txtDate.setText("Vio Date: " + vioClass.getDate());
 
 
         ((ViewHolder) holder).goLocation.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +64,20 @@ public class VioAdapter extends RecyclerView.Adapter {
 //                mapIntent2.setPackage("com.google.android.apps.maps");
 //                context.startActivity(mapIntent2);
 
-                MapsActivity mapsActivity = new MapsActivity();
-                mapsActivity.setLatLocation(vioClass.latLocation);
-                mapsActivity.setLongLocation(vioClass.longLocation);
-                //
+                if (vioClass.getLongLocation() == 0.0 || vioClass.getLatLocation() == 0.0) {
+                    Toast.makeText(context, "no address for this vio", Toast.LENGTH_SHORT).show();
 
+                } else {
+                    Intent intent = new Intent(context, MapsActivity.class);
+                    intent.putExtra("lat", vioClass.getLatLocation());
+                    intent.putExtra("long", vioClass.getLongLocation());
+                    context.startActivity(intent);
+
+                }
+
+
+//                mapsActivity.setLongLocation();
+                //
 
 
             }
