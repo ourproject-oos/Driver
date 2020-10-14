@@ -131,30 +131,13 @@ public class GalleryFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         addLocationBtn = root.findViewById(R.id.btn_add_place_location);
         txtCarNumber = root.findViewById(R.id.ed_txt_car_no);
-        imageBtn = root.findViewById(R.id.btn_add_image);
+       // imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
         rvTypeVio = root.findViewById(R.id.rv_typ_vio);
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
 
         setVioTyp();
-        UpdateToken();
-
-//        chVolType1 = root.findViewById(R.id.checkbox1);
-//        chVolType2 = root.findViewById(R.id.checkbox2);
-//        chVolType3 = root.findViewById(R.id.checkbox3);
-//        chVolType4 = root.findViewById(R.id.checkbox4);
-//        chVolType5 = root.findViewById(R.id.checkbox5);
-//        chVolType6 = root.findViewById(R.id.checkbox6);
-//        chVolType7 = root.findViewById(R.id.checkbox7);
-//        chVolType8 = root.findViewById(R.id.checkbox8);
-//        chVolType9 = root.findViewById(R.id.checkbox9);
-//        chVolType10 = root.findViewById(R.id.checkbox10);
-//        chVolType11= root.findViewById(R.id.checkbox11);
-//        chVolType12= root.findViewById(R.id.checkbox12);
-//        chVolType13= root.findViewById(R.id.checkbox13);
-//        chVolType14= root.findViewById(R.id.checkbox14);
-//        chVolType15= root.findViewById(R.id.checkbox15);
 
 
 
@@ -183,13 +166,13 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getlocation();
-                getUserData();
-            }
-        });
+//        searchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getlocation();
+////                getUserData();
+//            }
+//        });
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -320,66 +303,66 @@ public class GalleryFragment extends Fragment {
 
     }
 
-    public void getUserData() {
-
-        String num = txtCarNo.getText().toString();
-        JsonArrayRequest jsArray = new JsonArrayRequest("https://driverchecker.000webhostapp.com/deep_search.php?num=" + num + "",
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //JSONArray departmentArrayJson = response.getJSONArray("department");
-                        try {
-
-                            driverList = new ArrayList<>();
-
-                            for (int i = 0; i < response.length(); i++) {
-
-
-                                JSONObject js = response.getJSONObject(i);
-                                driver = new Driver();
-                                driver.setId(js.getInt("ID"));
-                                driver.setUserName(js.getString("USER_NAME"));
-                                driver.setName(js.getString("USER_NAME"));
-                                driver.setPassword(js.getString("PASSWORD"));
-                                driver.setPhoneNo(js.getString("PHONE"));
-                                driver.setAddress(js.getString("ADDRESS"));
-                                driver.setJob(js.getString("JOB"));
-                                driver.setCarNumber(js.getString("CAR_NUM"));
-                                driver.setCarType(js.getString("CAR_TYPE"));
-                                driver.setGander(js.getString("GENDER"));
-
-                                driverList.add(driver);
-                            }
-                            if (driverList.size() == 0) {
-                                Toast.makeText(getContext(), "not found",
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-
-                                txtCarType.setText("car type: " + driver.getCarType());
-                                txtName.setText("Driver Name: " + driver.getName());
-                                txtDriverNo.setText("Driver No: " + driver.getPhoneNo());
-                                driverID = driver.getId();
-
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), "driver not found",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "driver not found",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        queue.add(jsArray);
-    }
+//    public void getUserData() {
+//
+//        String num = txtCarNo.getText().toString();
+//        JsonArrayRequest jsArray = new JsonArrayRequest("https://driverchecker.000webhostapp.com/deep_search.php?num=" + num + "",
+//                new Response.Listener<JSONArray>() {
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//                        //JSONArray departmentArrayJson = response.getJSONArray("department");
+//                        try {
+//
+//                            driverList = new ArrayList<>();
+//
+//                            for (int i = 0; i < response.length(); i++) {
+//
+//
+//                                JSONObject js = response.getJSONObject(i);
+//                                driver = new Driver();
+//                                driver.setId(js.getInt("ID"));
+//                                driver.setUserName(js.getString("USER_NAME"));
+//                                driver.setName(js.getString("USER_NAME"));
+//                                driver.setPassword(js.getString("PASSWORD"));
+//                                driver.setPhoneNo(js.getString("PHONE"));
+//                                driver.setAddress(js.getString("ADDRESS"));
+//                                driver.setJob(js.getString("JOB"));
+//                                driver.setCarNumber(js.getString("CAR_NUM"));
+//                                driver.setCarType(js.getString("CAR_TYPE"));
+//                                driver.setGander(js.getString("GENDER"));
+//
+//                                driverList.add(driver);
+//                            }
+//                            if (driverList.size() == 0) {
+//                                Toast.makeText(getContext(), "not found",
+//                                        Toast.LENGTH_SHORT).show();
+//                            } else {
+//
+//                                txtCarType.setText("car type: " + driver.getCarType());
+//                                txtName.setText("Driver Name: " + driver.getName());
+//                                txtDriverNo.setText("Driver No: " + driver.getPhoneNo());
+//                                driverID = driver.getId();
+//
+//
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                            Toast.makeText(getContext(), "driver not found",
+//                                    Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getContext(), "driver not found",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        queue.add(jsArray);
+//    }
 
     public void setViolationData() {
         final String url = "https://driverchecker.000webhostapp.com/insert_v.php";
@@ -413,21 +396,6 @@ public class GalleryFragment extends Fragment {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("d_id", String.valueOf(driver.getId()));
                 map.put("p_id", String.valueOf(idPolice));
-//                map.put("ch_box1", chVolType1.getText().toString());
-//                map.put("ch_box2", chVolType2.getText().toString());
-//                map.put("ch_box3", chVolType3.getText().toString());
-//                map.put("ch_box4", chVolType4.getText().toString());
-//                map.put("ch_box5", chVolType5.getText().toString());
-//                map.put("ch_box6", chVolType6.getText().toString());
-//                map.put("ch_box7", chVolType7.getText().toString());
-//                map.put("ch_box8", chVolType8.getText().toString());
-//                map.put("ch_box9", chVolType9.getText().toString());
-//                map.put("ch_box10", chVolType10.getText().toString());
-//                map.put("ch_box11", chVolType11.getText().toString());
-//                map.put("ch_box12", chVolType12.getText().toString());
-//                map.put("ch_box13", chVolType13.getText().toString());
-//                map.put("ch_box14", chVolType14.getText().toString());
-//                map.put("ch_box15", chVolType15.getText().toString());
                 map.put("lang", String.valueOf(langLocation));
                 map.put("lat", String.valueOf(lat));
                 return map;
@@ -613,7 +581,7 @@ public class GalleryFragment extends Fragment {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String refreshToken = FirebaseInstanceId.getInstance().getToken();
         Token token = new Token(refreshToken);
-        FirebaseDatabase.getInstance().getReference("Token").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
+//        FirebaseDatabase.getInstance().getReference("Token").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
     }
 
     public void sendNotifications(String usertoken,String message)

@@ -72,7 +72,7 @@ public class GalleryFragment extends Fragment {
         galleryViewModel =
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        addLocationBtn=root.findViewById(R.id.btn_add_place_location);
+       // addLocationBtn=root.findViewById(R.id.btn_add_place_location);
         addBtn = root.findViewById(R.id.add_v_btn);
 
         f = new File("/data/data/" + getContext().getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
@@ -111,7 +111,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-setViolationData();
+        setViolationData();
             }
         });
         galleryViewModel.getText().observe(this, new Observer<String>() {

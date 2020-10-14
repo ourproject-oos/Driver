@@ -3,21 +3,22 @@ package com.example.driver;
 public class Driver  {
 
 int id;
-   String userName, password, Name, phoneNo, email, Job, carNumber, carType,cardDate,licence ,address,gander,lat,lang ;
+   String userName, password, Name, phoneNo, email, Job, carNumber, carType,cardDate,licence ,address,gander ;
+   double lat,lang;
 
-    public String getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(String lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public String getLang() {
+    public double getLang() {
         return lang;
     }
 
-    public void setLang(String lang) {
+    public void setLang(double lang) {
         this.lang = lang;
     }
 

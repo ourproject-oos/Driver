@@ -2,15 +2,20 @@ package com.example.driver;
 
 public class Police {
 
-    int id;
-    String userName;
-    String password;
-    String Name;
-    String phoneNo;
-    String dgree;
-    String Job_id;
+    int id, phoneNo;
+    String userName, Job_id, dgree, Name, password ;
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
     String address;
     String lat;
+    String job;
 
     public String getLat() {
         return lat;
@@ -63,11 +68,11 @@ public class Police {
         Name = name;
     }
 
-    public String getPhoneNo() {
+    public int getPhoneNo() {
         return phoneNo;
     }
 
-    public void setPhoneNo(String phoneNo) {
+    public void setPhoneNo(int phoneNo) {
         this.phoneNo = phoneNo;
     }
 

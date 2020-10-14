@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                                     police.setUserName(js.getString("USER_NAME"));
                                     police.setName(js.getString("NAME"));
                                     police.setPassword(js.getString("PASSWORD"));
-                                    police.setPhoneNo(js.getString("PHONE"));
+                                    police.setPhoneNo(js.getInt("PHONE"));
                                     police.setAddress(js.getString("ADDRESS"));
                                     police.setJob_id(js.getString("JOB_ID"));
                                     police.setDgree(js.getString("DGREE"));
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putInt("ID", police.getId());
                                     editor.putString("userName", police.getUserName());
                                     editor.putString("fullName", police.getName());
-                                    editor.putString("phone", police.getPhoneNo());
+                                    editor.putInt("phone", police.getPhoneNo());
                                     editor.putString("dgree", police.getDgree());
                                     editor.putString("job_id", police.getJob_id());
                                     editor.putString("address", police.getAddress());
