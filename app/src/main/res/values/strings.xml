@@ -96,5 +96,6 @@
     <string name="title_activity_maps2">Map</string>
     <string name="Name">name</string>
     <string name="gender">Gender</string>
+    <string name="date">Date</string>
 
 </resources>

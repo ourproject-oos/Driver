@@ -44,10 +44,12 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -55,6 +57,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class GalleryFragment extends Fragment {
 
     private GalleryViewModel galleryViewModel;
+    TextView date;
     EditText txtCarNo;
     Button addBtn, searchBtn;
     ImageButton addLocationBtn, imageBtn;
@@ -80,7 +83,21 @@ public class GalleryFragment extends Fragment {
         txtCarNo = root.findViewById(R.id.ed_txt_car_no);
         imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
+        date = root.findViewById(R.id.txt_date);
         rvTypeVio = root.findViewById(R.id.rv_typ_vio);
+
+//        Calendar calendar= container.getInstance(TimeZone.getTimeZone("YEMEN"));
+//        calendar.clear();
+//
+//        Long today = Mat
+//
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         f = new File("/data/data/" + getContext().getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
         if (f.exists()) {
