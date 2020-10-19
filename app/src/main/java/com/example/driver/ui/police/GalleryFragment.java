@@ -39,13 +39,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
+
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
 import com.example.driver.Notifications.APIService;
@@ -102,8 +102,8 @@ public class GalleryFragment extends Fragment {
     private GalleryViewModel galleryViewModel;
     EditText txtCarNo, txtCarNumber;
     CheckBox chVolType1, chVolType2, chVolType3, chVolType4, chVolType5, chVolType6, chVolType7, chVolType8, chVolType9, chVolType10, chVolType11, chVolType12, chVolType13, chVolType14, chVolType15;
-    Button addBtn, searchBtn, imageBtn;
-    ImageButton addLocationBtn;
+    Button addBtn, searchBtn;
+    ImageButton addLocationBtn, imageBtn;
     TextView txtName, txtCarType, txtDriverNo;
     int driverID, policeID;
     Driver driver;
@@ -131,10 +131,10 @@ public class GalleryFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         addLocationBtn = root.findViewById(R.id.btn_add_place_location);
         txtCarNumber = root.findViewById(R.id.ed_txt_car_no);
-       // imageBtn = root.findViewById(R.id.btn_add_image);
+       imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
         rvTypeVio = root.findViewById(R.id.rv_typ_vio);
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+//      apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
 
         setVioTyp();
@@ -180,33 +180,33 @@ public class GalleryFragment extends Fragment {
 
                 setViolationData();
 
-                FirebaseDatabase.getInstance().getReference().child("Tokens").child(txtCarNumber.getText().toString().trim()).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String usertoken=dataSnapshot.getValue(String.class);
-                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_against_the_flow_of_traffic));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_Impending_traffic));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_no_parking));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_high_speed));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_without_valid_documentation));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_without_drivers_license));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_driving_vehicle_that_produces_excessive_smoke));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_through_or_stopping_in_crossing_zone));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_car_with_no_number));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_not_wearing_seatbelt));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_Reckless_driving));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_unnecessary_usage_of_the_horn));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_Refusing_or_comply_to_policemen_signal));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_Unsafe_overtake));
-                        sendNotifications(usertoken,getString(R.string.vio_typ_using_cell_phone_while_driving));
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+//                FirebaseDatabase.getInstance().getReference().child("Tokens").child(txtCarNumber.getText().toString().trim()).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        String usertoken=dataSnapshot.getValue(String.class);
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_against_the_flow_of_traffic));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_Impending_traffic));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_no_parking));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_high_speed));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_without_valid_documentation));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_without_drivers_license));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_driving_vehicle_that_produces_excessive_smoke));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_through_or_stopping_in_crossing_zone));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_car_with_no_number));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_not_wearing_seatbelt));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_Reckless_driving));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_unnecessary_usage_of_the_horn));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_Refusing_or_comply_to_policemen_signal));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_Unsafe_overtake));
+//                        sendNotifications(usertoken,getString(R.string.vio_typ_using_cell_phone_while_driving));
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
 
 
             }
@@ -375,11 +375,11 @@ public class GalleryFragment extends Fragment {
                 Toast.makeText(getContext(), "" + lat + " " + langLocation, Toast.LENGTH_SHORT).show();
 
                 txtCarNo.setText("");
-                txtCarType.setText("");
-                txtDriverNo.setText("");
-                txtName.setText("");
+//                txtCarType.setText("");
+//                txtDriverNo.setText("");
+//                txtName.setText("");
 
-                // Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
             }
 
         }, new Response.ErrorListener() {
@@ -389,15 +389,15 @@ public class GalleryFragment extends Fragment {
             }
 
         }) {
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams()  {
 
 
                 // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("d_id", String.valueOf(driver.getId()));
                 map.put("p_id", String.valueOf(idPolice));
-                map.put("lang", String.valueOf(langLocation));
                 map.put("lat", String.valueOf(lat));
+                map.put("lang", String.valueOf(langLocation));
                 return map;
             }
 

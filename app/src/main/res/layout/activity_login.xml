@@ -141,7 +141,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
-            android:textColor="@color/color_all"
+            android:textColor="@android:color/black"
             />
 
 

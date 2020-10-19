@@ -16,13 +16,15 @@ import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.R;
 import com.example.driver.VioAdapter;
@@ -50,7 +52,7 @@ public class SlideshowFragment extends Fragment {
     VioAdapter vioAdapter;
     TextView name , cardNo , licence_date,type,date,location,card_number;
     List<VioClass> vioClassList = new ArrayList<>();
-
+    Navigation navigation;
     VioClass vioClass;
     private RequestQueue queue;
     RecyclerView recyclerView;
@@ -183,22 +185,22 @@ public class SlideshowFragment extends Fragment {
         queue.add(jsArray);
     }
 
-    public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
-
-        public void OnMessageReceived(@NonNull RemoteMessage remoteMessage) {
-            super.onMessageReceived(remoteMessage);
-
-            Message = remoteMessage.getData().get("Message");
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setContentText(Message);
-
-            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.notify(0, builder.build());
-        }
-
-
-    }
+//    public class MyFirebaseMessagingService extends FirebaseMessagingService {
+//
+//
+//        public void OnMessageReceived(@NonNull RemoteMessage remoteMessage) {
+//            super.onMessageReceived(remoteMessage);
+//
+//            Message = remoteMessage.getData().get("Message");
+//
+//            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+//                    .setSmallIcon(R.drawable.ic_launcher_background)
+//                    .setContentText(Message);
+//
+//            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//            manager.notify(0, builder.build());
+//        }
+//
+//
+//    }
 }

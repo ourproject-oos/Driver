@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                                     police.setUserName(js.getString("USER_NAME"));
                                     police.setName(js.getString("NAME"));
                                     police.setPassword(js.getString("PASSWORD"));
-                                    police.setPhoneNo(js.getInt("PHONE"));
+                                    police.setPhoneNo(js.getString("PHONE"));
                                     police.setAddress(js.getString("ADDRESS"));
                                     police.setJob_id(js.getString("JOB_ID"));
                                     police.setDgree(js.getString("DGREE"));
@@ -153,11 +154,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                     SharedPreferences sharedPreferencesUser =
                                             LoginActivity.this.getSharedPreferences("user_sp", MODE_PRIVATE);
+
                                     SharedPreferences.Editor editor = sharedPreferencesUser.edit();
                                     editor.putInt("ID", police.getId());
                                     editor.putString("userName", police.getUserName());
                                     editor.putString("fullName", police.getName());
-                                    editor.putInt("phone", police.getPhoneNo());
+                                    editor.putString("phone", police.getPhoneNo());
                                     editor.putString("dgree", police.getDgree());
                                     editor.putString("job_id", police.getJob_id());
                                     editor.putString("address", police.getAddress());
@@ -264,6 +266,8 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 loadingDialog.dismissDialog();
             }
+
+
         });
 
         queue.add(jsArray);

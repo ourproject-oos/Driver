@@ -18,18 +18,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
+
+
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
 import com.example.driver.NukeSSLCerts;
 import com.example.driver.R;
+import com.example.driver.ui.police.VioType;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -54,7 +57,8 @@ public class GalleryFragment extends Fragment {
     private GalleryViewModel galleryViewModel;
     EditText txtCarNo;
     Button addBtn, searchBtn;
-    ImageButton addLocationBtn;
+    ImageButton addLocationBtn, imageBtn;
+    RecyclerView rvTypeVio;
     TextView txtName, txtCarType, txtDriverNo;
     int driverID, policeID;
     Driver driver;
@@ -72,8 +76,11 @@ public class GalleryFragment extends Fragment {
         galleryViewModel =
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-       // addLocationBtn=root.findViewById(R.id.btn_add_place_location);
+        addLocationBtn=root.findViewById(R.id.btn_add_place_location);
+        txtCarNo = root.findViewById(R.id.ed_txt_car_no);
+        imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
+        rvTypeVio = root.findViewById(R.id.rv_typ_vio);
 
         f = new File("/data/data/" + getContext().getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
         if (f.exists()) {
@@ -99,13 +106,13 @@ public class GalleryFragment extends Fragment {
 
             }
         });
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                getUserData();
-            }
-        });
+//        searchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                getUserData();
+//            }
+//        });
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +129,10 @@ public class GalleryFragment extends Fragment {
         });
         return root;
     }
+
+
+
+
 
 
     public void getUserData() {
@@ -188,7 +199,8 @@ public class GalleryFragment extends Fragment {
     }
 
     public void setViolationData() {
-        final String url = "https://driverchecker.000webhostapp.com/insert_police.php";
+        final String url = "https://driverchecker.000webhostapp.com/insert_v.php";
+
 
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -197,7 +209,7 @@ public class GalleryFragment extends Fragment {
             public void onResponse(String response) {
                 txtCarNo.setText("");
                 txtCarType.setText("");
-               txtDriverNo.setText("");
+                txtDriverNo.setText("");
                 txtName.setText("");
 
                 Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
@@ -210,7 +222,7 @@ public class GalleryFragment extends Fragment {
             }
 
         }) {
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams()  {
 
 
                 // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;

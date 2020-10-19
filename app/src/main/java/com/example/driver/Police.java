@@ -2,8 +2,8 @@ package com.example.driver;
 
 public class Police {
 
-    int id, phoneNo;
-    String userName, Job_id, dgree, Name, password ;
+    int id;
+    String userName, Job_id, dgree, Name, password ,phoneNo,address,lat,lang,job;
 
     public String getJob() {
         return job;
@@ -13,9 +13,8 @@ public class Police {
         this.job = job;
     }
 
-    String address;
-    String lat;
-    String job;
+
+
 
     public String getLat() {
         return lat;
@@ -32,8 +31,6 @@ public class Police {
     public void setLang(String lang) {
         this.lang = lang;
     }
-
-    String lang;
 
 
     public int getId() {
@@ -68,11 +65,11 @@ public class Police {
         Name = name;
     }
 
-    public int getPhoneNo() {
+    public String getPhoneNo() {
         return phoneNo;
     }
 
-    public void setPhoneNo(int phoneNo) {
+    public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
 

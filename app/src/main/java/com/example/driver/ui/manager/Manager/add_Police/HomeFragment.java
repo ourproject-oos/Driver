@@ -23,13 +23,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDB;
 import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDao;
@@ -76,6 +75,7 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         IdentifyMethod(root);
+
         //addPolice();
         NukeSSLCerts.nuke();
         queue = Volley.newRequestQueue(getContext());
@@ -148,7 +148,6 @@ public class HomeFragment extends Fragment {
                 jobID.setText("");
                 dgree.setText("");
                 address.setText("");
-                imageView.setImageBitmap(bitmap);
                 Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
             }
 
@@ -159,7 +158,7 @@ public class HomeFragment extends Fragment {
             }
 
         }) {
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams()  {
 
 
                 // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
@@ -171,8 +170,6 @@ public class HomeFragment extends Fragment {
                 map.put("dgree", dgree.getText().toString());
                 map.put("jobID", jobID.getText().toString());
                 map.put("address", address.getText().toString());
-                map.put("address", String.valueOf(imageView));
-
 
                 return map;
             }
@@ -184,6 +181,10 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+
+
+
     Handler handler = handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
