@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,11 +50,11 @@ class update_delete_Adapter extends RecyclerView.Adapter<update_delete_Adapter.U
 
     public class UdateDelete extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        EditText editText;
 
         public UdateDelete(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.item_info_user);
+            editText = itemView.findViewById(R.id.item_info_user);
         }
     }
 }

@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -153,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     SharedPreferences sharedPreferencesUser =
                                             LoginActivity.this.getSharedPreferences("user_sp", MODE_PRIVATE);
+
                                     SharedPreferences.Editor editor = sharedPreferencesUser.edit();
                                     editor.putInt("ID", police.getId());
                                     editor.putString("userName", police.getUserName());
@@ -264,6 +266,8 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 loadingDialog.dismissDialog();
             }
+
+
         });
 
         queue.add(jsArray);

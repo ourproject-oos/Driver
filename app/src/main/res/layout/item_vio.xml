@@ -72,11 +72,12 @@
             android:textColor="@color/color1"/>
 
         <ImageButton
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_go_location"
-            android:src="@drawable/ic_location_on_black_24dp"
-            android:background="@color/color_all"
+            android:layout_gravity="end"
+            android:background="@drawable/driver_cardview"
+            app:srcCompat="@drawable/ic_location_on_black_24dp"
             android:layout_marginTop="10dp"
             tools:ignore="VectorDrawableCompat" />
     </LinearLayout>

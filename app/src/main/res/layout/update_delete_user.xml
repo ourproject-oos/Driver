@@ -64,7 +64,6 @@
         android:id="@+id/update_driver_police_re"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:itemCount="2"
         android:layout_margin="20dp"
         tools:listitem="@layout/info_user" />
 
@@ -78,7 +77,7 @@
         android:layout_marginEnd="10dp"
         android:orientation="horizontal"
         android:layout_margin="20dp"
-
+        android:width="1dp"
         >
 
         <Button

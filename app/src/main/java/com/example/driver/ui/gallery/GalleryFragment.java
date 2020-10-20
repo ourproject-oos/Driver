@@ -18,18 +18,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
+
+
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
 import com.example.driver.NukeSSLCerts;
 import com.example.driver.R;
+import com.example.driver.ui.police.VioType;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -41,10 +44,12 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -52,9 +57,11 @@ import static android.content.Context.MODE_PRIVATE;
 public class GalleryFragment extends Fragment {
 
     private GalleryViewModel galleryViewModel;
+    TextView date;
     EditText txtCarNo;
     Button addBtn, searchBtn;
-    ImageButton addLocationBtn;
+    ImageButton addLocationBtn, imageBtn;
+    RecyclerView rvTypeVio;
     TextView txtName, txtCarType, txtDriverNo;
     int driverID, policeID;
     Driver driver;
@@ -73,7 +80,24 @@ public class GalleryFragment extends Fragment {
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         addLocationBtn=root.findViewById(R.id.btn_add_place_location);
+        txtCarNo = root.findViewById(R.id.ed_txt_car_no);
+        imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
+        date = root.findViewById(R.id.txt_date);
+        rvTypeVio = root.findViewById(R.id.rv_typ_vio);
+
+//        Calendar calendar= container.getInstance(TimeZone.getTimeZone("YEMEN"));
+//        calendar.clear();
+//
+//        Long today = Mat
+//
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         f = new File("/data/data/" + getContext().getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
         if (f.exists()) {
@@ -99,19 +123,19 @@ public class GalleryFragment extends Fragment {
 
             }
         });
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                getUserData();
-            }
-        });
+//        searchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                getUserData();
+//            }
+//        });
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-setViolationData();
+        setViolationData();
             }
         });
         galleryViewModel.getText().observe(this, new Observer<String>() {
@@ -122,6 +146,10 @@ setViolationData();
         });
         return root;
     }
+
+
+
+
 
 
     public void getUserData() {
@@ -188,7 +216,8 @@ setViolationData();
     }
 
     public void setViolationData() {
-        final String url = "https://driverchecker.000webhostapp.com/insert_police.php";
+        final String url = "https://driverchecker.000webhostapp.com/insert_v.php";
+
 
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -197,7 +226,7 @@ setViolationData();
             public void onResponse(String response) {
                 txtCarNo.setText("");
                 txtCarType.setText("");
-               txtDriverNo.setText("");
+                txtDriverNo.setText("");
                 txtName.setText("");
 
                 Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
@@ -210,7 +239,7 @@ setViolationData();
             }
 
         }) {
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams()  {
 
 
                 // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
