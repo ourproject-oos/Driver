@@ -35,9 +35,9 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-
-import com.android.volley.error.VolleyError;
-import com.android.volley.request.StringRequest;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.NukeSSLCerts;
 import com.example.driver.R;
@@ -114,7 +114,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
               openGallery();
             }
         });
-
+        Toast.makeText(getContext(), "hoooooooo", Toast.LENGTH_SHORT).show();
 
 //        roundedImageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -149,23 +149,23 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             }
         });
 
-
-        btn_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDriverData();
-
-            }
-        });
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //         textView.setTe
-                //         xt(s);
-
-
-            }
-        });
+//
+//        btn_signup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                setDriverData();
+//
+//            }
+//        });
+////        dashboardViewModel.getText().observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                //         textView.setTe
+//                //         xt(s);
+//
+//
+//            }
+//        });
         return root;
 
 
@@ -206,58 +206,6 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         Toast.makeText(getContext(), gender, Toast.LENGTH_SHORT).show();
     }
 
-    public void setDriverData() {
-        final String url = "https://driverchecker.000webhostapp.com/insert_driver.php";
-
-
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                userName.setText("");
-                firstName.setText("");
-                lastName.setText("");
-                password.setText("");
-                rePassword.setText("");
-                phoneNo.setText("");
-                userJob.setText("");
-                carType.setText("");
-                carNumber.setText("");
-                address.setText("");
-                Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-
-        }) {
-            protected Map<String, String> getParams() {
-
-
-                // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("user_name", userName.getText().toString());
-                map.put("name", firstName.getText().toString() + " " + lastName.getText().toString());
-                map.put("password", password.getText().toString());
-                map.put("phone", phoneNo.getText().toString());
-                map.put("job", userJob.getText().toString());
-                map.put("gender", gender);
-                map.put("car_type", carType.getText().toString());
-                map.put("car_no", carNumber.getText().toString());
-                map.put("address", address.getText().toString());
-                return map;
-            }
-
-
-        };
-
-        queue.add(request);
-
-
-    }
 
 
 

@@ -55,6 +55,7 @@ address,dgree;-->
         android:textColorHint="@color/hint_txt_color"
         android:layout_marginTop="20dp"
         />
+
     <EditText
         android:id="@+id/ed_txt_user_job_up"
         android:layout_width="match_parent"

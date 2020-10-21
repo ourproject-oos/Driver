@@ -43,9 +43,9 @@ import retrofit2.Callback;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-
-import com.android.volley.error.VolleyError;
-import com.android.volley.request.StringRequest;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
 import com.example.driver.Notifications.APIService;
