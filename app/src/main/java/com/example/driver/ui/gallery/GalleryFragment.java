@@ -20,7 +20,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -171,7 +173,7 @@ public class GalleryFragment extends Fragment {
                                 driver = new Driver();
                                 driver.setId(js.getInt("ID"));
                                 driver.setUserName(js.getString("USER_NAME"));
-                                driver.setName(js.getString("USER_NAME"));
+                                driver.setName(js.getString("NAME"));
                                 driver.setPassword(js.getString("PASSWORD"));
                                 driver.setPhoneNo(js.getString("PHONE"));
                                 driver.setAddress(js.getString("ADDRESS"));

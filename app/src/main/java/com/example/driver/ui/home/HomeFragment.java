@@ -20,8 +20,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 
-import com.android.volley.error.VolleyError;
-import com.android.volley.request.StringRequest;
+
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Adapter;
 import com.example.driver.Contact;
@@ -82,6 +83,7 @@ public class HomeFragment extends Fragment {
 
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
 
             @Override
             public void onResponse(String response) {

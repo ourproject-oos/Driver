@@ -22,9 +22,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 
-import com.android.volley.error.VolleyError;
-import com.android.volley.request.JsonArrayRequest;
-import com.android.volley.request.StringRequest;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
 import com.example.driver.LoginActivity;
@@ -486,6 +488,70 @@ public class update_delete extends Fragment {
 
 
     }
+
+    public void getUserData() {
+
+        String num = "------";
+        JsonArrayRequest jsArray = new JsonArrayRequest("https://driverchecker.000webhostapp.com/deep_search.php?num=" + num + "",
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //JSONArray departmentArrayJson = response.getJSONArray("department");
+                        try {
+
+                            driverList = new ArrayList<>();
+
+                            for (int i = 0; i < response.length(); i++) {
+
+
+                                JSONObject js = response.getJSONObject(i);
+                                driver = new Driver();
+                                driver.setId(js.getInt("ID"));
+                                driver.setUserName(js.getString("USER_NAME"));
+                                driver.setName(js.getString("NAME"));
+                                driver.setPassword(js.getString("PASSWORD"));
+                                driver.setPhoneNo(js.getString("PHONE"));
+                                driver.setAddress(js.getString("ADDRESS"));
+                                driver.setJob(js.getString("JOB"));
+                                driver.setCarNumber(js.getString("CAR_NUM"));
+                                driver.setCarType(js.getString("CAR_TYPE"));
+                                driver.setGander(js.getString("GENDER"));
+
+
+                                driverList.add(driver);
+                            }
+                            if (driverList.size() == 0) {
+                                Toast.makeText(getContext(), "not found",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+
+//                                txtCarType.setText("car type: " + driver.getCarType());
+//                                txtName.setText("Driver Name: " + driver.getName());
+//                                txtDriverNo.setText("Driver No: " + driver.getPhoneNo());
+                                driverID = driver.getId();
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), "driver not found",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "driver not found",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        queue.add(jsArray);
+    }
+
 
     public void DeletePolice() {
         final String url = "https://driverchecker.000webhostapp.com/delete_police.php";
