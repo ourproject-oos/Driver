@@ -3,14 +3,17 @@ package com.example.driver.ui.manager.Manager.add_dreiver;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,6 +57,7 @@ import com.example.driver.NukeSSLCerts;
 import com.example.driver.Police;
 import com.example.driver.R;
 import com.example.driver.ui.UploadImageApacheHttp;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -88,7 +92,8 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
 
     private DashboardViewModel dashboardViewModel;
-    EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber, cardDate, licence, carType, address;
+    TextInputEditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber, cardDate, licence, carType, address;
+    TextInputEditText edt_userName, edt_password, edt_rePassword, edt_firstName, edt_lastName, edt_phoneNo, edt_email, edt_userJob, edt_carNumber, edt_cardDate, edt_licence, edt_carType, aedt_ddress;
     Button btn_SignUp;
     ImageView imageView;
     JSONObject jsonObject;
@@ -160,6 +165,246 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
             }
         });
+
+
+        userName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validatePassword(s.toString());
+
+            }
+        });
+
+        rePassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validatePassword(s.toString());
+
+            }
+        });
+
+        firstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
+        lastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
+        phoneNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateEmail(s.toString());
+
+            }
+        });
+
+        userJob.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
+
+        carNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
+
+        cardDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
+        licence.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
+
+        carType.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
+
+        address.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+            }
+        });
+
         return root;
     }
 
@@ -187,6 +432,82 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
                 openGallery();
             }
         });
+
+
+    }
+
+    private boolean validatePassword(String password) {
+
+
+        if (password.trim().isEmpty()) {
+            edt_password.setError("Password can't be empty");
+            edt_password.setTextColor(ColorStateList.valueOf(Color.BLACK));
+            return false;
+
+        } else if (password.length() < 4) {
+            edt_password.setError("Weak");
+            edt_password.setTextColor(ColorStateList.valueOf(Color.RED));
+            return false;
+        } else if (password.length() < 7) {
+            edt_password.setError("Medium");
+            edt_password.setTextColor(ColorStateList.valueOf(Color.BLUE));
+            return false;
+
+        } else if (password.length() < 10) {
+            edt_password.setError("Strong");
+            edt_password.setTextColor(ColorStateList.valueOf(Color.YELLOW));
+            return true;
+        } else if (password.length() < 13) {
+            edt_password.setError("Very Strong");
+            edt_password.setTextColor(ColorStateList.valueOf(Color.GREEN));
+            return true;
+        }
+
+        return true;
+    }
+
+    private boolean validateName(String name) {
+     //   TextInputEditText edt_userName, edt_password, edt_rePassword, edt_firstName, edt_lastName, edt_phoneNo, edt_email, edt_userJob, edt_carNumber, edt_cardDate, edt_licence, edt_carType, aedt_ddress;
+
+        if (name.trim().isEmpty())
+        {
+            edt_firstName.setError("Name can't be empty");
+            edt_lastName.setError("Name can't be empty");
+            edt_userName.setError("Name can't be empty");
+            return false;
+        }
+        else if (!name.trim().matches("[a-zA-Z]+"))
+        {
+            edt_firstName.setError("Name can only contain letters");
+            edt_lastName.setError("Name can only contain letters");
+            edt_userName.setError("Name can only contain letters");
+            return false;
+        }
+        else
+        {
+            edt_firstName.setEnabled(false);
+            edt_lastName.setEnabled(false);
+            edt_userName.setEnabled(false);
+            return true;
+        }
+    }
+
+    private boolean validateEmail(String email) {
+
+        if (email.isEmpty() || !isValidEmail(email)) {
+            edt_email.setError("Enter a valid email");
+            return false;
+
+        } else {
+            edt_email.setEnabled(false);
+            return true;
+        }
+
+    }
+
+    private boolean isValidEmail(String email) {
+
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
 
 
     }

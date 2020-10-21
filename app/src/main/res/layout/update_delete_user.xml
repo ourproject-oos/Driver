@@ -16,6 +16,16 @@
         android:orientation="vertical"
         >
 
+
+        <Spinner
+            android:id="@+id/Spinner_major_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            />
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,6 +51,29 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColorHint="@color/color_all"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_txt_id_job"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:hint="@string/id_job"
+                android:inputType="textPersonName"
+                android:maxLength="15"
+                android:textColor="@color/color_all"
+                android:textColorHint="@color/color_all"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button

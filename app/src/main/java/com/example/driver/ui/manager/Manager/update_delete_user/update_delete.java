@@ -9,9 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,7 @@ import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
+import com.example.driver.LoginActivity;
 import com.example.driver.Notifications.APIService;
 import com.example.driver.Notifications.Client;
 import com.example.driver.Police;
@@ -58,13 +62,15 @@ import static com.example.driver.ui.manager.Manager.add_dreiver.DashboardFragmen
 
 public class update_delete extends Fragment {
 
-    String Message;
+    String Message,major_up;
     Button search, btn_update,btn_delete;
     private File f;
     private SharedPreferences sharedPreferences;
     int driverID;
     int policeID;
-    EditText car_number,userName,Name, password, phoneNo, Job,gender,carType,carNo, cardDate, licence, address,dgree;
+    Spinner spinner_up;
+    ArrayAdapter<String> spinnerAdapter;
+    EditText IdJob,car_number,userName,Name, password, phoneNo, Job,gender,carType,carNo, cardDate, licence, address,dgree;
 
 //    EditText Name , phone, type, job,card_date, licence,address, dgree ,car_number;
     private RequestQueue queue;
@@ -88,6 +94,37 @@ public class update_delete extends Fragment {
         recyclerView = root.findViewById(R.id.update_driver_police_re);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+        spinnerAdapter = new ArrayAdapter<>(this,
+                R.layout.spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        final String[] updateList = {"POLICE", "DRIVER"};
+        spinnerAdapter.addAll(updateList);
+        spinner_up.setAdapter(spinnerAdapter);
+        spinner_up.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (view == IdJob )
+                {
+                    IdJob.setText((CharSequence) IdJob);
+                }
+
+                else
+                {
+                    car_number.setText((CharSequence) car_number);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+
+        });
 
 
 
@@ -132,6 +169,8 @@ public class update_delete extends Fragment {
 
     public void Identify (View root)    {
 
+        spinner_up = root.findViewById(R.id.Spinner_major_update);
+        IdJob=root.findViewById(R.id.ed_txt_id_job);
         car_number= root.findViewById(R.id.ed_txt_search);
         search=root.findViewById(R.id.btn_search);
         userName = root.findViewById(R.id.ed_txt_user_name_up);
@@ -147,7 +186,7 @@ public class update_delete extends Fragment {
         address = root.findViewById(R.id.ed_txt_user_address_up);
         btn_update= root.findViewById(R.id.btn_update);
         btn_delete= root.findViewById(R.id.btn_delete);
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+//        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         // date = root.findViewById(R.id.txt_user_date_up);
         //address = root.findViewById(R.id.txt_address);
