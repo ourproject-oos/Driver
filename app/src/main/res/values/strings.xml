@@ -72,7 +72,7 @@
     <string name="vio_typ_Driving_through_or_stopping_in_crossing_zone">Driving through or stopping in a crossing zone   (Amount:1000 RY)</string>
     <string name="vio_typ_Reckless_driving">Reckless driving   (Amount:5000 RY)</string>
     <string name="vio_typ_Refusing_or_comply_to_policemen_signal">Refusing or comply to policemen`s signal   (Amount:1000 RY)</string>
-    <string name="username" translatable="false">UserName</string>
+    <string name="username" >UserName</string>
     <string name="delete" translatable="false">delete</string>
     <string name="update" translatable="false">update</string>
     <string name="update_delete" translatable="false">update_delete</string>

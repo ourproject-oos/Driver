@@ -3,17 +3,16 @@ package com.example.driver.ui.manager.Manager.update_delete_user;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.text.style.UpdateAppearance;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.textclassifier.TextLinks;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,21 +22,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
-import com.example.driver.LoginActivity;
 import com.example.driver.Notifications.APIService;
-import com.example.driver.Notifications.Client;
 import com.example.driver.Police;
 import com.example.driver.R;
-import com.example.driver.VioAdapter;
-import com.example.driver.VioClass;
-import com.example.driver.ui.driver.SlideshowViewModel;
-import com.example.driver.ui.police.VioType;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -47,34 +39,35 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.driver.ui.manager.Manager.add_dreiver.DashboardFragment.TAG;
 
 public class update_delete extends Fragment {
 
-    String Message,major_up;
-    Button search, btn_update,btn_delete;
+    String Message, major_up;
+    Button search, btn_update, btn_delete;
     private File f;
     private SharedPreferences sharedPreferences;
     int driverID;
     int policeID;
     Spinner spinner_up;
+    LinearLayout lyPoliceDtl, lyDriverDtl, lyOption;
     ArrayAdapter<String> spinnerAdapter;
-    EditText userName,Name, password, phoneNo, Job,gender,carType,carNo, cardDate, licence, address,dgree;
+    EditText userNameDriver, NameDriver, passwordDriver, phoneNoDriver, JobDriver,
+            genderDriver, carTypeDriver, carNoDriver, cardDateDriver, licence, addressDriver;
+
+    EditText userNamePolice, NamePolice, passwordPolice, phoneNoPolice,
+            genderPolice, jobIdPolice, dgreePolice, addressPolice;
+
+    TextView tvId;
+
     TextInputEditText car_number;
     TextInputLayout edit_car_number;
     private RequestQueue queue;
@@ -84,7 +77,8 @@ public class update_delete extends Fragment {
     Police police;
     String spinner;
     List<Police> policeList;
-
+    String spCheckedMjr = "POLICE";
+    public String driver_id;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -94,78 +88,30 @@ public class update_delete extends Fragment {
         queue = Volley.newRequestQueue(getContext());
 
         Identify(root);
+        seiListener();
 
         spinnerAdapter = new ArrayAdapter<>(getContext(),
-               R.layout.spinner_item);
+                R.layout.spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
-        final String[] updateList = {"Police", "Driver"};
+        final String[] updateList = {"POLICE", "DRIVER"};
         spinnerAdapter.addAll(updateList);
         spinner_up.setAdapter(spinnerAdapter);
-
 
 
         spinner_up.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                spinner = adapterView.getSelectedItem().toString();
+                spCheckedMjr = adapterView.getSelectedItem().toString();
+                Log.i("spCheckedMjr", spCheckedMjr);
+                if (spCheckedMjr.contains("DRIVER")) {
 
-                if (spinner.equals("Driver"))
-                {
-                    car_number.setText("Car Number");
+                    edit_car_number.setHint("search by Car No");
+                } else {
 
+                    edit_car_number.setHint("search by Police job No");
                 }
-                else
-                {
-                    car_number.setText("ID Job");
-
-                }
-
-                search.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (spinner.equals("Driver"))
-                        {
-                            getDriverData();
-                        }
-                        else
-                        {
-                            getPoliceData();
-                        }
-                    }
-                });
-
-
-                btn_update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (spinner.equals("Driver"))
-                        {
-                            UpdateDriver();
-                        }
-                        else
-                        {
-                            UpdatePolice();
-                        }
-                    }
-                });
-
-                btn_delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (spinner.equals("Driver"))
-                        {
-                            DeleteDriver();
-                        }
-                        else
-                        {
-                            DeletePolice();
-                        }
-                    }
-                });
 
 
             }
@@ -179,7 +125,6 @@ public class update_delete extends Fragment {
         });
 
 
-
         f = new File("/data/data/" + getContext().getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
         if (f.exists()) {
             sharedPreferences = getContext().getSharedPreferences(getString(R.string.shared_preference_usr), MODE_PRIVATE);
@@ -188,53 +133,73 @@ public class update_delete extends Fragment {
         }
 
 
-
-
-
         return root;
 
     }
 
+    private void seiListener() {
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData();
+            }
+        });
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (spCheckedMjr.contains("DRIVER"))
+                    DeleteDriver(driver_id);
+
+            }
+        });
+    }
 
 
-
-    public void Identify (View root)    {
+    public void Identify(View root) {
 
         spinner_up = root.findViewById(R.id.Spinner_major_update);
-        edit_car_number=root.findViewById(R.id.txt_search);
-        car_number= root.findViewById(R.id.ed_txt_search);
-        search=root.findViewById(R.id.btn_search);
-        userName = root.findViewById(R.id.ed_txt_user_name_up);
-        Name = root.findViewById(R.id.ed_txt_name_up);
-        password = root.findViewById(R.id.ed_txt_user_password_up);
-        phoneNo = root.findViewById(R.id.ed_txt_user_phone_up);
-        Job = root.findViewById(R.id.ed_txt_user_job_up);
-        gender = root.findViewById(R.id.ed_txt_user_gender_up);
-        carType = root.findViewById(R.id.ed_txt_user_type_car_up);
-        carNo = root.findViewById(R.id.ed_txt_user_car_number_up);
-        cardDate = root.findViewById(R.id.ed_txt_user_card_date_up);
-        licence = root.findViewById(R.id.ed_txt_user_licence_up);
-        address = root.findViewById(R.id.ed_txt_user_address_up);
-        btn_update= root.findViewById(R.id.btn_update);
-        btn_delete= root.findViewById(R.id.btn_delete);
+        lyDriverDtl = root.findViewById(R.id.driver_detail);
+        lyPoliceDtl = root.findViewById(R.id.police_detail);
+        lyOption = root.findViewById(R.id.edit_op_layout);
+        edit_car_number = root.findViewById(R.id.txt_search);
+        car_number = root.findViewById(R.id.ed_txt_search);
+        search = root.findViewById(R.id.btn_search);
+        userNameDriver = root.findViewById(R.id.ed_txt_user_name_driver);
+        NameDriver = root.findViewById(R.id.ed_txt_name_driver);
+        passwordDriver = root.findViewById(R.id.ed_txt_user_password_driver);
+        phoneNoDriver = root.findViewById(R.id.ed_txt_user_phone_driver);
+        JobDriver = root.findViewById(R.id.ed_txt_user_job_driver);
+        genderDriver = root.findViewById(R.id.ed_txt_user_gender_driver);
+        carTypeDriver = root.findViewById(R.id.ed_txt_user_type_car_driver);
+        carNoDriver = root.findViewById(R.id.ed_txt_user_car_number_driver);
+        cardDateDriver = root.findViewById(R.id.ed_txt_user_card_date_driver);
+        licence = root.findViewById(R.id.ed_txt_user_licence_driver);
+        addressDriver = root.findViewById(R.id.ed_txt_user_address_driver);
+        addressPolice = root.findViewById(R.id.ed_txt_user_address_police);
+        userNamePolice = root.findViewById(R.id.ed_txt_user_name_police);
+        passwordPolice = root.findViewById(R.id.ed_txt_user_password_police);
+        NamePolice = root.findViewById(R.id.ed_txt_name_police);
+        phoneNoPolice = root.findViewById(R.id.ed_txt_user_phone_police);
+        tvId = root.findViewById(R.id.tv_id);
+        btn_update = root.findViewById(R.id.btn_update);
+        btn_delete = root.findViewById(R.id.btn_delete);
 //        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         // date = root.findViewById(R.id.txt_user_date_up);
         //address = root.findViewById(R.id.txt_address);
-       // carNumber = root.findViewById(R.id.txt_user_car_Num_up);
+        // carNumber = root.findViewById(R.id.txt_user_car_Num_up);
         //Type = root.findViewById(R.id.txt_user_type_car_up);
         //userJob = root.findViewById(R.id.text_job);
-      //  radioGroup = root.findViewById(R.id.rg_gender);
+        //  radioGroup = root.findViewById(R.id.rg_gender);
 
     }
 
 
-
-
-    public void getDriverData() {
+    public void getData() {
 
         String num = car_number.getText().toString();
-        JsonArrayRequest jsArray = new JsonArrayRequest("https://driverchecker.000webhostapp.com/deep_search.php?num=" + num + "",
+        JsonArrayRequest jsArray = new JsonArrayRequest("https://driverchecker.000webhostapp.com/deep_search.php?num=" + num + "&major=" + spCheckedMjr + "",
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -242,43 +207,85 @@ public class update_delete extends Fragment {
                         try {
 
                             driverList = new ArrayList<>();
+                            policeList = new ArrayList<>();
 
                             for (int i = 0; i < response.length(); i++) {
-
-
                                 JSONObject js = response.getJSONObject(i);
-                                driver = new Driver();
-                                driver.setId(js.getInt("ID"));
-                                driver.setUserName(js.getString("USER_NAME"));
-                                driver.setName(js.getString("Name"));
-                                driver.setPassword(js.getString("PASSWORD"));
-                                driver.setPhoneNo(js.getString("PHONE"));
-                                driver.setJob(js.getString("JOB"));
-                                driver.setGander(js.getString("GENDER"));
-                                driver.setCarType(js.getString("CAR_TYPE"));
-                                driver.setCarNumber(js.getString("CAR_NUM"));
-                                driver.setCarNumber(js.getString("CAR_DATE"));
-                                driver.setLicence(js.getString("LICENCE"));
-                                driver.setAddress(js.getString("ADDRESS"));
 
-                                driverList.add(driver);
+                                if (spCheckedMjr.equals("DRIVER")) {
+
+                                    driver = new Driver();
+                                    driver.setId(js.getInt("ID"));
+                                    driver.setUserName(js.getString("USER_NAME"));
+                                    driver.setName(js.getString("NAME"));
+                                    driver.setPassword(js.getString("PASSWORD"));
+                                    driver.setPhoneNo(js.getString("PHONE"));
+                                    driver.setJob(js.getString("JOB"));
+                                    driver.setGander(js.getString("GENDER"));
+                                    driver.setCarType(js.getString("CAR_TYPE"));
+                                    driver.setCarNumber(js.getString("CAR_NUM"));
+                                    driver.setCarNumber(js.getString("CARD_DATE"));
+                                    driver.setLicence(js.getString("LICENCE"));
+                                    driver.setAddress(js.getString("ADDRESS"));
+
+                                    driverList.add(driver);
+
+                                    if (driverList.size() != 0) {
+                                        lyDriverDtl.setVisibility(View.VISIBLE);
+                                        lyOption.setVisibility(View.VISIBLE);
+                                        driver_id = String.valueOf(driver.getId());
+                                        tvId.setText("driver id: " + driver.getId());
+                                        userNameDriver.setText(driver.getUserName());
+                                        NameDriver.setText(driver.getName());
+                                        passwordDriver.setText(driver.getPassword());
+                                        phoneNoDriver.setText(driver.getPhoneNo());
+                                        JobDriver.setText(driver.getJob());
+                                        genderDriver.setText(driver.getGander());
+                                        carTypeDriver.setText(driver.getCarType());
+                                        carNoDriver.setText(driver.getCarNumber());
+                                        cardDateDriver.setText(driver.getCardDate());
+                                        licence.setText(driver.getLicence());
+                                        addressDriver.setText(driver.getAddress());
+
+
+                                    }
+
+                                } else {
+
+                                    police = new Police();
+                                    police.setId(js.getInt("ID"));
+                                    police.setUserName(js.getString("USER_NAME"));
+                                    police.setName(js.getString("NAME"));
+                                    police.setPassword(js.getString("PASSWORD"));
+                                    police.setPhoneNo(js.getString("PHONE"));
+                                    police.setAddress(js.getString("ADDRESS"));
+                                    police.setJob_id(js.getString("JOB_ID"));
+                                    police.setDgree(js.getString("DGREE"));
+                                    police.setLat(js.getString("LAT"));
+                                    police.setLang(js.getString("LANG"));
+
+                                    policeList.add(police);
+                                }
+                                if (policeList.size() != 0) {
+
+                                    tvId.setText("police id: " + police.getId());
+                                    lyPoliceDtl.setVisibility(View.VISIBLE);
+                                    lyOption.setVisibility(View.VISIBLE);
+                                    addressPolice.setText(police.getAddress());
+                                    userNamePolice.setText(police.getUserName());
+                                    NamePolice.setText(police.getJob_id());
+                                    phoneNoPolice.setText(police.getPhoneNo());
+                                    // dgreePolice.setText(police.getDgree());
+                                    passwordPolice.setText(police.getPassword());
+                                }
+
+
                             }
-                            if (driverList.size() == 0) {
-                                Toast.makeText(getContext(), "Driver not found",
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
 
-                                carType.setText("car type: " + driver.getCarType());
-                                Name.setText("Driver Name: " + driver.getName());
-                                phoneNo.setText("Driver No: " + driver.getPhoneNo());
-                                driverID = driver.getId();
-
-
-                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getContext(), "Driver not found",
+                            Toast.makeText(getContext(), "not found",
                                     Toast.LENGTH_SHORT).show();
 
                         }
@@ -286,14 +293,13 @@ public class update_delete extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Driver not found",
+                Toast.makeText(getContext(), "not found",
                         Toast.LENGTH_SHORT).show();
             }
         });
 
         queue.add(jsArray);
     }
-
 
 
     public void UpdateDriver() {
@@ -304,17 +310,17 @@ public class update_delete extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                userName.setText("");
-                Name.setText("");
-                password.setText("");
-                phoneNo.setText("");
-                Job.setText("");
-                gender.setText("");
-                carType.setText("");
-                carNo.setText("");
-                cardDate.setText("");
+                userNameDriver.setText("");
+                NameDriver.setText("");
+                passwordDriver.setText("");
+                phoneNoDriver.setText("");
+                JobDriver.setText("");
+                genderDriver.setText("");
+                carTypeDriver.setText("");
+                carNoDriver.setText("");
+                cardDateDriver.setText("");
                 licence.setText("");
-                address.setText("");
+                addressDriver.setText("");
                 Toast.makeText(getContext(), "Update Driver done", Toast.LENGTH_SHORT).show();
             }
 
@@ -331,17 +337,17 @@ public class update_delete extends Fragment {
 
                 // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("user_name", userName.getText().toString());
-                map.put("name", Name.getText().toString() + " " + Name.getText().toString());
-                map.put("password", password.getText().toString());
-                map.put("phone", phoneNo.getText().toString());
-                map.put("job", Job.getText().toString());
-                map.put("gender", gender.getText().toString());
-                map.put("car_type", carType.getText().toString());
-                map.put("car_no", carNo.getText().toString());
-                map.put("card_date", cardDate.getText().toString());
+                map.put("user_name", userNameDriver.getText().toString());
+                map.put("name", NameDriver.getText().toString() + " " + NameDriver.getText().toString());
+                map.put("password", passwordDriver.getText().toString());
+                map.put("phone", phoneNoDriver.getText().toString());
+                map.put("job", JobDriver.getText().toString());
+                map.put("gender", genderDriver.getText().toString());
+                map.put("car_type", carTypeDriver.getText().toString());
+                map.put("car_no", carNoDriver.getText().toString());
+                map.put("card_date", cardDateDriver.getText().toString());
                 map.put("licence", licence.getText().toString());
-                map.put("address", address.getText().toString());
+                map.put("address", addressDriver.getText().toString());
                 return map;
             }
 
@@ -353,59 +359,54 @@ public class update_delete extends Fragment {
 
     }
 
-    public void DeleteDriver() {
-        final String url = "https://driverchecker.000webhostapp.com/delete_driver.php";
+    public void DeleteDriver(String driver_id) {
+         String url = "https://driverchecker.000webhostapp.com/delete_driver.php?driver_id=" + driver_id +"";
+        Log.d("url", url);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("url",response.toString());
+                        userNameDriver.setText("");
+                        NameDriver.setText("");
+                        passwordDriver.setText("");
+                        phoneNoDriver.setText("");
+                        JobDriver.setText("");
+                        genderDriver.setText("");
+                        carTypeDriver.setText("");
+                        carNoDriver.setText("");
+                        cardDateDriver.setText("");
+                        licence.setText("");
+                        addressDriver.setText("");
+                        Toast.makeText(getContext(), "Delete Driver done", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+
+                    }
+                });
 
 
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
-                userName.setText("");
-                Name.setText("");
-                password.setText("");
-                phoneNo.setText("");
-                Job.setText("");
-                gender.setText("");
-                carType.setText("");
-                carNo.setText("");
-                cardDate.setText("");
-                licence.setText("");
-                address.setText("");
-                Toast.makeText(getContext(), "Delete Driver done", Toast.LENGTH_SHORT).show();
+
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+error.printStackTrace();
             }
 
-        }) {
-            protected Map<String, String> getParams()  {
+        });
 
-
-                // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("user_name", userName.getText().toString());
-                map.put("name", Name.getText().toString() + " " + Name.getText().toString());
-                map.put("password", password.getText().toString());
-                map.put("phone", phoneNo.getText().toString());
-                map.put("job", Job.getText().toString());
-                map.put("gender", gender.getText().toString());
-                map.put("car_type", carType.getText().toString());
-                map.put("car_no", carNo.getText().toString());
-                map.put("card_date", cardDate.getText().toString());
-                map.put("licence", licence.getText().toString());
-                map.put("address", address.getText().toString());
-
-                return map;
-            }
-
-
-        };
-
-        queue.add(request);
+        queue.add(jsonObjectRequest);
 
 
     }
@@ -442,9 +443,9 @@ public class update_delete extends Fragment {
                                         Toast.LENGTH_SHORT).show();
                             } else {
 
-                                address.setText("car type: " + police.getAddress());
-                                userName.setText("Driver Name: " + police.getName());
-                                phoneNo.setText("Driver No: " + police.getPhoneNo());
+                                addressDriver.setText("car type: " + police.getAddress());
+                                userNameDriver.setText("Driver Name: " + police.getName());
+                                phoneNoDriver.setText("Driver No: " + police.getPhoneNo());
                                 policeID = police.getId();
 
 
@@ -477,13 +478,13 @@ public class update_delete extends Fragment {
             @Override
             public void onResponse(String response) {
 
-                userName.setText("");
-                Name.setText("");
-                password.setText("");
-                phoneNo.setText("");
-                Job.setText("");
-                gender.setText("");
-                address.setText("");
+                userNameDriver.setText("");
+                NameDriver.setText("");
+                passwordDriver.setText("");
+                phoneNoDriver.setText("");
+                JobDriver.setText("");
+                genderDriver.setText("");
+                addressDriver.setText("");
                 Toast.makeText(getContext(), "Update Police done", Toast.LENGTH_SHORT).show();
             }
 
@@ -499,13 +500,13 @@ public class update_delete extends Fragment {
 
                 // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("user_name", userName.getText().toString());
-                map.put("name", Name.getText().toString() + " " + Name.getText().toString());
-                map.put("password", password.getText().toString());
-                map.put("phone", phoneNo.getText().toString());
-                map.put("dgree", Job.getText().toString());
-                map.put("jobID", gender.getText().toString());
-                map.put("address", address.getText().toString());
+                map.put("user_name", userNameDriver.getText().toString());
+                map.put("name", NameDriver.getText().toString() + " " + NameDriver.getText().toString());
+                map.put("password", passwordDriver.getText().toString());
+                map.put("phone", phoneNoDriver.getText().toString());
+                map.put("dgree", JobDriver.getText().toString());
+                map.put("jobID", genderDriver.getText().toString());
+                map.put("address", addressDriver.getText().toString());
 
 
                 return map;
@@ -528,13 +529,13 @@ public class update_delete extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                userName.setText("");
-                Name.setText("");
-                password.setText("");
-                phoneNo.setText("");
-                Job.setText("");
-                gender.setText("");
-                address.setText("");
+                userNameDriver.setText("");
+                NameDriver.setText("");
+                passwordDriver.setText("");
+                phoneNoDriver.setText("");
+                JobDriver.setText("");
+                genderDriver.setText("");
+                addressDriver.setText("");
                 Toast.makeText(getContext(), "Delete Police done", Toast.LENGTH_SHORT).show();
             }
 
@@ -545,18 +546,18 @@ public class update_delete extends Fragment {
             }
 
         }) {
-            protected Map<String, String> getParams()  {
+            protected Map<String, String> getParams() {
 
 
                 // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("user_name", userName.getText().toString());
-                map.put("name", Name.getText().toString() + " " + Name.getText().toString());
-                map.put("password", password.getText().toString());
-                map.put("phone", phoneNo.getText().toString());
-                map.put("dgree", Job.getText().toString());
-                map.put("jobID", gender.getText().toString());
-                map.put("address", address.getText().toString());
+                map.put("user_name", userNameDriver.getText().toString());
+                map.put("name", NameDriver.getText().toString() + " " + NameDriver.getText().toString());
+                map.put("password", passwordDriver.getText().toString());
+                map.put("phone", phoneNoDriver.getText().toString());
+                map.put("dgree", JobDriver.getText().toString());
+                map.put("jobID", genderDriver.getText().toString());
+                map.put("address", addressDriver.getText().toString());
 
 
                 return map;
@@ -568,9 +569,6 @@ public class update_delete extends Fragment {
         queue.add(request);
 
     }
-
-
-
 
 
     Handler handler = handler = new Handler() {

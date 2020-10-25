@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,12 +22,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:orientation="vertical"
-            >
+            android:gravity="center"
+            android:orientation="vertical">
+
+
 
 
             <Spinner
@@ -38,24 +37,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="20dp"
-                />
+                android:layout_marginEnd="20dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txt_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
                 android:textColorHint="@color/color_all"
-                >
+                android:textSize="20sp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_txt_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_weight="1"
                     android:inputType="textPersonName"
                     android:maxLength="15"
@@ -66,176 +63,257 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-
             <Button
                 android:id="@+id/btn_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/search"
-                android:textColor="@android:color/white"
-                android:background="@drawable/shap_cardview"
-                android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/shap_cardview"
+                android:text="@string/search"
+                android:textColor="@android:color/white"
 
                 />
 
-
-            <EditText
-                android:id="@+id/ed_txt_user_name_up"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/username"
-                android:textSize="20sp"
-                android:textColor="@color/color2"
-                android:textColorHint="@color/hint_txt_color"
                 android:layout_marginTop="20dp"
-                />
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:id="@+id/edit_op_layout"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/ed_txt_name_up"
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shap_cardview"
+                    android:text="@string/delete"
+                    android:layout_marginEnd="5dp"
+                    android:textColor="@android:color/white"
+                    tools:ignore="RtlCompat" />
+
+
+                <Button
+                    android:id="@+id/btn_update"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/shap_cardview"
+                    android:text="@string/update"
+                    android:textColor="@android:color/white"
+                    tools:ignore="RtlCompat" />
+
+            </LinearLayout>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Name"
-                android:textSize="20sp"
-                android:textColor="@color/color2"
-                android:textColorHint="@color/hint_txt_color"
-                android:layout_marginTop="20dp"
-                />
-
-                    <EditText
-                        android:id="@+id/ed_txt_user_password_up"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Password"
-                        android:textSize="20sp"
-                        android:textColor="@color/color2"
-                        android:textColorHint="@color/hint_txt_color"
-                        android:layout_marginTop="20dp"
-                        />
-
-            <EditText
-                android:id="@+id/ed_txt_user_phone_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/phone_number"
-                android:textSize="20sp"
-                android:textColor="@color/color2"
-                android:textColorHint="@color/hint_txt_color"
-                android:layout_marginTop="20dp"
-                />
-
-            <EditText
-                android:id="@+id/ed_txt_user_job_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/job"
-                android:textSize="20sp"
-                android:textColor="@color/color2"
-                android:textColorHint="@color/hint_txt_color"
-                android:layout_marginTop="20dp"
-                />
-
-                    <EditText
-                        android:id="@+id/ed_txt_user_gender_up"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/gender"
-                        android:textSize="20sp"
-                        android:textColor="@color/color2"
-                        android:textColorHint="@color/hint_txt_color"
-                        android:layout_marginTop="20dp"
-                        />
-
-            <EditText
-                android:id="@+id/ed_txt_user_type_car_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/type"
-                android:textSize="20sp"
-                android:textColor="@color/color2"
-                android:textColorHint="@color/hint_txt_color"
-                android:layout_marginTop="20dp"
-                />
-
-            <EditText
-                android:id="@+id/ed_txt_user_car_number_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/car_number"
-                android:textSize="20sp"
-                android:textColor="@color/color2"
-                android:textColorHint="@color/hint_txt_color"
-                android:layout_marginTop="20dp"
-                />
-
-
-
-
-            <EditText
-                android:id="@+id/ed_txt_user_card_date_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/card_date"
-                android:textSize="20sp"
-                android:textColor="@color/color2"
-                android:textColorHint="@color/hint_txt_color"
-                android:layout_marginTop="20dp"
-                />
-
-
-
-            <EditText
-                android:id="@+id/ed_txt_user_licence_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/licence_date"
-                android:textSize="20sp"
-                android:textColor="@color/color2"
-                android:textColorHint="@color/hint_txt_color"
-                android:layout_marginTop="20dp"
-                />
-
-            <EditText
-                android:id="@+id/ed_txt_user_address_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/address"
-                android:textSize="20sp"
-                android:textColor="@color/color2"
-                android:textColorHint="@color/hint_txt_color"
+                android:id="@+id/tv_id"
                 android:layout_marginTop="20dp"
                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginBottom="20dp"
+                android:orientation="vertical"
+                android:id="@+id/driver_detail"
+                android:visibility="gone"
                 >
-            <Button
-                android:id="@+id/btn_delete"
+
+            <EditText
+                android:id="@+id/ed_txt_user_name_driver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@android:color/white"
-                android:text="@string/delete"
-                android:background="@drawable/shap_cardview"
-                />
+                android:layout_marginTop="20dp"
+                android:text="@string/username"
+                android:hint="@string/user_name"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
 
-
-            <Button
-                android:id="@+id/btn_update"
+            <EditText
+                android:id="@+id/ed_txt_name_driver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/update"
-                android:textColor="@android:color/white"
-                android:background="@drawable/shap_cardview"
-                />
+                android:layout_marginTop="8dp"
+                android:text="@string/Name"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
 
+            <EditText
+                android:id="@+id/ed_txt_user_password_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/Password"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_user_phone_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/phone_number"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_user_job_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/job"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_user_gender_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/gender"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_user_type_car_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/type"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_user_car_number_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/car_number"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+
+            <EditText
+                android:id="@+id/ed_txt_user_card_date_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/card_date"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+
+            <EditText
+                android:id="@+id/ed_txt_user_licence_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/licence_date"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_user_address_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/address"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/police_detail"
+                android:visibility="gone"
+                >
+
+            <EditText
+                android:id="@+id/ed_txt_user_name_police"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/username"
+                android:hint="@string/user_name"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_name_police"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/Name"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_user_password_police"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/Password"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_user_phone_police"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/phone_number"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/ed_txt_user_dgree_police"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/job"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+
+
+
+
+
+
+            <EditText
+                android:id="@+id/ed_txt_user_address_police"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/address"
+                android:textColor="@color/color2"
+                android:textColorHint="@color/hint_txt_color"
+                android:textSize="20sp" />
+            </LinearLayout>
+
 
         </LinearLayout>
 

@@ -13,9 +13,6 @@ public class Police {
         this.job = job;
     }
 
-
-
-
     public String getLat() {
         return lat;
     }
