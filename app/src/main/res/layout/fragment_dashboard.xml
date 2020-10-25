@@ -47,6 +47,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_username_d"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -70,6 +71,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_password_d"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -92,6 +94,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_repassword_d"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -128,6 +131,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_fname_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -151,6 +155,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_lname_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -215,6 +220,7 @@
                 android:weightSum="3">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_phoneNo_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -235,6 +241,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_car_number_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -253,6 +260,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_car_type_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -271,6 +279,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_card_date_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -286,7 +295,9 @@
                         android:textColorHint="@color/color_all"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_licence_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -303,6 +314,7 @@
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_address_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -321,6 +333,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_job_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"

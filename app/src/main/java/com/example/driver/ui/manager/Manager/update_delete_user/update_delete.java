@@ -38,6 +38,8 @@ import com.example.driver.VioAdapter;
 import com.example.driver.VioClass;
 import com.example.driver.ui.driver.SlideshowViewModel;
 import com.example.driver.ui.police.VioType;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,15 +74,15 @@ public class update_delete extends Fragment {
     int policeID;
     Spinner spinner_up;
     ArrayAdapter<String> spinnerAdapter;
-    EditText IdJob,car_number,userName,Name, password, phoneNo, Job,gender,carType,carNo, cardDate, licence, address,dgree;
-
-//    EditText Name , phone, type, job,card_date, licence,address, dgree ,car_number;
+    EditText userName,Name, password, phoneNo, Job,gender,carType,carNo, cardDate, licence, address,dgree;
+    TextInputEditText car_number;
+    TextInputLayout edit_car_number;
     private RequestQueue queue;
-    RecyclerView recyclerView;
     APIService apiService;
     List<Driver> driverList;
     Driver driver;
     Police police;
+    String spinner;
     List<Police> policeList;
 
 
@@ -93,30 +95,78 @@ public class update_delete extends Fragment {
 
         Identify(root);
 
-        recyclerView = root.findViewById(R.id.update_driver_police_re);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        spinnerAdapter = new ArrayAdapter<>(this,
-                R.layout.spinner_item);
+        spinnerAdapter = new ArrayAdapter<>(getContext(),
+               R.layout.spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
-        final String[] updateList = {"POLICE", "DRIVER"};
+        final String[] updateList = {"Police", "Driver"};
         spinnerAdapter.addAll(updateList);
         spinner_up.setAdapter(spinnerAdapter);
+
+
+
         spinner_up.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinner = adapterView.getSelectedItem().toString();
 
-                if (view == IdJob )
+                if (spinner.equals("Driver"))
                 {
-                    IdJob.setText((CharSequence) IdJob);
-                }
+                    car_number.setText("Car Number");
 
+                }
                 else
                 {
-                    car_number.setText((CharSequence) car_number);
+                    car_number.setText("ID Job");
+
                 }
+
+                search.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (spinner.equals("Driver"))
+                        {
+                            getDriverData();
+                        }
+                        else
+                        {
+                            getPoliceData();
+                        }
+                    }
+                });
+
+
+                btn_update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (spinner.equals("Driver"))
+                        {
+                            UpdateDriver();
+                        }
+                        else
+                        {
+                            UpdatePolice();
+                        }
+                    }
+                });
+
+                btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (spinner.equals("Driver"))
+                        {
+                            DeleteDriver();
+                        }
+                        else
+                        {
+                            DeletePolice();
+                        }
+                    }
+                });
+
 
             }
 
@@ -137,29 +187,8 @@ public class update_delete extends Fragment {
             Toast.makeText(getContext(), String.valueOf(driverID), Toast.LENGTH_SHORT).show();
         }
 
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDriverData();
-                getPoliceData();
-            }
-        });
 
-        btn_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UpdateDriver();
-                UpdatePolice();
-            }
-        });
 
-        btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DeleteDriver();
-                DeletePolice();
-            }
-        });
 
 
         return root;
@@ -172,7 +201,7 @@ public class update_delete extends Fragment {
     public void Identify (View root)    {
 
         spinner_up = root.findViewById(R.id.Spinner_major_update);
-        IdJob=root.findViewById(R.id.ed_txt_id_job);
+        edit_car_number=root.findViewById(R.id.txt_search);
         car_number= root.findViewById(R.id.ed_txt_search);
         search=root.findViewById(R.id.btn_search);
         userName = root.findViewById(R.id.ed_txt_user_name_up);
@@ -221,20 +250,21 @@ public class update_delete extends Fragment {
                                 driver = new Driver();
                                 driver.setId(js.getInt("ID"));
                                 driver.setUserName(js.getString("USER_NAME"));
-                                driver.setName(js.getString("USER_NAME"));
+                                driver.setName(js.getString("Name"));
                                 driver.setPassword(js.getString("PASSWORD"));
                                 driver.setPhoneNo(js.getString("PHONE"));
                                 driver.setJob(js.getString("JOB"));
                                 driver.setGander(js.getString("GENDER"));
                                 driver.setCarType(js.getString("CAR_TYPE"));
                                 driver.setCarNumber(js.getString("CAR_NUM"));
+                                driver.setCarNumber(js.getString("CAR_DATE"));
                                 driver.setLicence(js.getString("LICENCE"));
                                 driver.setAddress(js.getString("ADDRESS"));
 
                                 driverList.add(driver);
                             }
                             if (driverList.size() == 0) {
-                                Toast.makeText(getContext(), "not found",
+                                Toast.makeText(getContext(), "Driver not found",
                                         Toast.LENGTH_SHORT).show();
                             } else {
 
@@ -248,7 +278,7 @@ public class update_delete extends Fragment {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getContext(), "driver not found",
+                            Toast.makeText(getContext(), "Driver not found",
                                     Toast.LENGTH_SHORT).show();
 
                         }
@@ -256,7 +286,7 @@ public class update_delete extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "driver not found",
+                Toast.makeText(getContext(), "Driver not found",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -285,7 +315,7 @@ public class update_delete extends Fragment {
                 cardDate.setText("");
                 licence.setText("");
                 address.setText("");
-                Toast.makeText(getContext(), "Update done", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Update Driver done", Toast.LENGTH_SHORT).show();
             }
 
         }, new Response.ErrorListener() {
@@ -342,7 +372,7 @@ public class update_delete extends Fragment {
                 cardDate.setText("");
                 licence.setText("");
                 address.setText("");
-                Toast.makeText(getContext(), "Delete done", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Delete Driver done", Toast.LENGTH_SHORT).show();
             }
 
         }, new Response.ErrorListener() {
@@ -422,7 +452,7 @@ public class update_delete extends Fragment {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getContext(), "driver not found",
+                            Toast.makeText(getContext(), "Police not found1",
                                     Toast.LENGTH_SHORT).show();
 
                         }
@@ -430,7 +460,7 @@ public class update_delete extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "driver not found",
+                Toast.makeText(getContext(), "Police not found",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -454,7 +484,7 @@ public class update_delete extends Fragment {
                 Job.setText("");
                 gender.setText("");
                 address.setText("");
-                Toast.makeText(getContext(), "Update done", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Update Police done", Toast.LENGTH_SHORT).show();
             }
 
         }, new Response.ErrorListener() {
@@ -489,69 +519,6 @@ public class update_delete extends Fragment {
 
     }
 
-    public void getUserData() {
-
-        String num = "------";
-        JsonArrayRequest jsArray = new JsonArrayRequest("https://driverchecker.000webhostapp.com/deep_search.php?num=" + num + "",
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //JSONArray departmentArrayJson = response.getJSONArray("department");
-                        try {
-
-                            driverList = new ArrayList<>();
-
-                            for (int i = 0; i < response.length(); i++) {
-
-
-                                JSONObject js = response.getJSONObject(i);
-                                driver = new Driver();
-                                driver.setId(js.getInt("ID"));
-                                driver.setUserName(js.getString("USER_NAME"));
-                                driver.setName(js.getString("NAME"));
-                                driver.setPassword(js.getString("PASSWORD"));
-                                driver.setPhoneNo(js.getString("PHONE"));
-                                driver.setAddress(js.getString("ADDRESS"));
-                                driver.setJob(js.getString("JOB"));
-                                driver.setCarNumber(js.getString("CAR_NUM"));
-                                driver.setCarType(js.getString("CAR_TYPE"));
-                                driver.setGander(js.getString("GENDER"));
-
-
-                                driverList.add(driver);
-                            }
-                            if (driverList.size() == 0) {
-                                Toast.makeText(getContext(), "not found",
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-
-//                                txtCarType.setText("car type: " + driver.getCarType());
-//                                txtName.setText("Driver Name: " + driver.getName());
-//                                txtDriverNo.setText("Driver No: " + driver.getPhoneNo());
-                                driverID = driver.getId();
-
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), "driver not found",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "driver not found",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        queue.add(jsArray);
-    }
-
 
     public void DeletePolice() {
         final String url = "https://driverchecker.000webhostapp.com/delete_police.php";
@@ -568,7 +535,7 @@ public class update_delete extends Fragment {
                 Job.setText("");
                 gender.setText("");
                 address.setText("");
-                Toast.makeText(getContext(), "Update done", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Delete Police done", Toast.LENGTH_SHORT).show();
             }
 
         }, new Response.ErrorListener() {

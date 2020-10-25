@@ -6,8 +6,7 @@
     android:id="@+id/item_info_user"
     android:background="@drawable/shap_cardview"
     >
-<!--     Job,gender,carType,carNo, cardDate, licence,
-address,dgree;-->
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

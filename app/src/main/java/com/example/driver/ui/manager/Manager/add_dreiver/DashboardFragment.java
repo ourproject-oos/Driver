@@ -63,6 +63,7 @@ import com.example.driver.VolleyMultipartRequest;
 import com.example.driver.VolleySingleton;
 import com.example.driver.ui.UploadImageApacheHttp;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -99,8 +100,8 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
 
     private DashboardViewModel dashboardViewModel;
-    TextInputEditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber, cardDate, licence, carType, address;
-    TextInputEditText edt_userName, edt_password, edt_rePassword, edt_firstName, edt_lastName, edt_phoneNo, edt_email, edt_userJob, edt_carNumber, edt_cardDate, edt_licence, edt_carType, aedt_ddress;
+    TextInputLayout userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber, cardDate, licence, carType, address;
+    TextInputEditText edt_userName, edt_password, edt_rePassword, edt_firstName, edt_lastName, edt_phoneNo, edt_email, edt_userJob, edt_carNumber, edt_cardDate, edt_licence, edt_carType, edt_address;
     Button btn_SignUp;
     ImageView imageView;
     JSONObject jsonObject;
@@ -128,39 +129,269 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
         IdentifyMethod(root);
         // addDriver();
+        edt_userName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateName(s.toString());
+
+
+            }
+
+
+        });
+
+        edt_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validatePassword(s.toString());
+
+            }
+
+
+        });
+
+        edt_rePassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateRePassword(s.toString());
+
+
+            }
+
+
+        });
+
+        edt_firstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateFirstName(s.toString());
+
+
+            }
+
+
+        });
+
+        edt_lastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                validateLastName(s.toString());
+
+            }
+
+
+        });
+
+        edt_phoneNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                validatePhone(s.toString());
+
+            }
+
+
+        });
+
+        edt_carNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                validateCarNumber(s.toString());
+
+            }
+
+
+        });
+
+        edt_carType.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateCarType(s.toString());
+
+            }
+
+
+        });
+
+        edt_cardDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateCardDate(s.toString());
+
+            }
+
+
+        });
+
+        edt_licence.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateLicence(s.toString());
+
+            }
+
+
+        });
+
+        edt_address.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                validateAddress(s.toString());
+
+
+            }
+
+
+        });
+
+        edt_userJob.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                validateJob(s.toString());
+
+
+            }
+
+
+        });
+
+
         NukeSSLCerts.nuke();
 //        UpdateToken();
         queue = Volley.newRequestQueue(root.getContext());
 
         radioGroup.setOnCheckedChangeListener(this);
-        rePassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!rePassword.getText().toString().equals(password.getText().toString()))
-                    rePassword.setError("password not match");
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                if (!rePassword.getText().toString().equals(password.getText().toString()))
-                    rePassword.setError("password not match");
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!rePassword.getText().toString().equals(password.getText().toString()))
-                    rePassword.setError("password not match");
-            }
-        });
 
 
         btn_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //setDriverData();
-                Toast.makeText(getContext(), "777777", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "777777", Toast.LENGTH_SHORT).show();
                 insertDriverWithImage();
 
 
@@ -176,277 +407,54 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         });
 
 
-        userName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
-
-        password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validatePassword(s.toString());
-
-            }
-        });
-
-        rePassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validatePassword(s.toString());
-
-            }
-        });
-
-        firstName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
-
-        lastName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
-
-        phoneNo.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
-
-        email.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateEmail(s.toString());
-
-            }
-        });
-
-        userJob.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
-
-
-        carNumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
-
-
-        cardDate.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
-
-        licence.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
-
-
-        carType.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
-
-
-        address.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateName(s.toString());
-
-            }
-        });
 
         return root;
     }
 
     public void IdentifyMethod(View root) {
-        userName = root.findViewById(R.id.txt_userName_driver);
-        password = root.findViewById(R.id.txt_password);
-        rePassword = root.findViewById(R.id.rePassword);
-        firstName = root.findViewById(R.id.txt_fName_diver);
-        lastName = root.findViewById(R.id.txt_lName_driver);
-        phoneNo = root.findViewById(R.id.txt_phoneNo);
-        address = root.findViewById(R.id.txt_address);
-        carNumber = root.findViewById(R.id.txt_car_number);
-        carType = root.findViewById(R.id.txt_car_type);
-        userJob = root.findViewById(R.id.text_job);
-        cardDate = root.findViewById(R.id.txt_card_date);
-        licence = root.findViewById(R.id.txt_licence);
+
+        userName=root.findViewById(R.id.txt_layout_username_d);
+        edt_userName = root.findViewById(R.id.txt_userName_driver);
+        password=root.findViewById(R.id.txt_layout_password_d);
+        edt_password = root.findViewById(R.id.txt_password);
+        rePassword =root.findViewById(R.id.txt_layout_repassword_d);
+        edt_rePassword = root.findViewById(R.id.rePassword);
+        firstName=root.findViewById(R.id.txt_layout_fname_d);
+        edt_firstName = root.findViewById(R.id.txt_fName_diver);
+        lastName=root.findViewById(R.id.txt_layout_lname_d);
+        edt_lastName = root.findViewById(R.id.txt_lName_driver);
+        phoneNo=root.findViewById(R.id.txt_layout_phoneNo_d);
+        edt_phoneNo = root.findViewById(R.id.txt_phoneNo);
+        address=root.findViewById(R.id.txt_layout_address_d);
+        edt_address = root.findViewById(R.id.txt_address);
+        carNumber=root.findViewById(R.id.txt_layout_car_number_d);
+        edt_carNumber = root.findViewById(R.id.txt_car_number);
+        carType=root.findViewById(R.id.txt_layout_car_type_d);
+        edt_carType = root.findViewById(R.id.txt_car_type);
+        userJob=root.findViewById(R.id.txt_layout_job_d);
+        edt_userJob = root.findViewById(R.id.text_job);
+        cardDate=root.findViewById(R.id.txt_layout_card_date_d);
+        edt_cardDate = root.findViewById(R.id.txt_card_date);
+        licence=root.findViewById(R.id.txt_layout_licence_d);
+        edt_licence = root.findViewById(R.id.txt_licence);
         imageView = root.findViewById(R.id.img_add_user);
         btn_SignUp = root.findViewById(R.id.btn_SignUp);
 
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         radioGroup = root.findViewById(R.id.rg_gender);
-        userName.setText("mew");
-        password.setText("111");
-        rePassword.setText("111");
-        firstName.setText("med2");
-        lastName.setText("med22");
-        phoneNo.setText("2222");
-        address.setText("sssss");
-        carNumber.setText("33333");
-        carType.setText("suuuu");
-        userJob.setText("adnnnn");
-        licence.setText("med22");
-        cardDate.setText("wwwww");
+//        userName.setText("");
+//        password.setText("");
+//        rePassword.setText("");
+//        firstName.setText("");
+//        lastName.setText("");
+//        phoneNo.setText("");
+//        address.setText("");
+//        carNumber.setText("");
+//        carType.setText("");
+//        userJob.setText("");
+//        licence.setText("");
+//        cardDate.setText("");
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -459,81 +467,283 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
     }
 
-    private boolean validatePassword(String password) {
+    private boolean validateName(String name) {
 
-
-        if (password.trim().isEmpty()) {
-            edt_password.setError("Password can't be empty");
-            edt_password.setTextColor(ColorStateList.valueOf(Color.BLACK));
+        if (name.trim().isEmpty())
+        {
+            userName.setError("Name can't be empty");
             return false;
-
-        } else if (password.length() < 4) {
-            edt_password.setError("Weak");
-            edt_password.setTextColor(ColorStateList.valueOf(Color.RED));
+        }
+        else if (!name.trim().matches("[a-zA-Z]+"))
+        {
+            userName.setError("Name can only contain letters");
             return false;
-        } else if (password.length() < 7) {
-            edt_password.setError("Medium");
-            edt_password.setTextColor(ColorStateList.valueOf(Color.BLUE));
-            return false;
-
-        } else if (password.length() < 10) {
-            edt_password.setError("Strong");
-            edt_password.setTextColor(ColorStateList.valueOf(Color.YELLOW));
+        }
+        else
+        {
+            userName.setErrorEnabled(false);
             return true;
-        } else if (password.length() < 13) {
-            edt_password.setError("Very Strong");
-            edt_password.setTextColor(ColorStateList.valueOf(Color.GREEN));
+        }
+    }
+
+    private boolean validatePassword(String pass) {
+
+
+        if (pass.trim().isEmpty())
+        {
+            password.setError("Password can't be empty");
+            password.setErrorTextColor(ColorStateList.valueOf(Color.RED));
+            return false;
+
+        }
+        else if (pass.length()<4)
+        {
+            password.setError("Weak");
+            return false;
+        }
+
+        else if (pass.length()<7)
+        {
+            password.setError("Medium");
+            return false;
+
+        }
+
+        else if (pass.length()<10)
+        {
+            password.setError("Strong");
+            password.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
+            return true;
+        }
+
+        else if (pass.length()<20)
+        {
+            password.setError("Very Strong");
+            password.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
             return true;
         }
 
         return true;
     }
 
-    private boolean validateName(String name) {
-     //   TextInputEditText edt_userName, edt_password, edt_rePassword, edt_firstName, edt_lastName, edt_phoneNo, edt_email, edt_userJob, edt_carNumber, edt_cardDate, edt_licence, edt_carType, aedt_ddress;
+    private boolean validateRePassword(String repass) {
 
-        if (name.trim().isEmpty())
+
+        if (repass.trim().isEmpty())
         {
-            edt_firstName.setError("Name can't be empty");
-            edt_lastName.setError("Name can't be empty");
-            edt_userName.setError("Name can't be empty");
+            rePassword.setError("Password can't be empty");
+            rePassword.setErrorTextColor(ColorStateList.valueOf(Color.RED));
+            return false;
+
+        }
+        else if (repass.length()<4)
+        {
+            rePassword.setError("Weak");
             return false;
         }
-        else if (!name.trim().matches("[a-zA-Z]+"))
+
+        else if (repass.length()<7)
         {
-            edt_firstName.setError("Name can only contain letters");
-            edt_lastName.setError("Name can only contain letters");
-            edt_userName.setError("Name can only contain letters");
+            rePassword.setError("Medium");
+            return false;
+
+        }
+
+        else if (repass.length()<10)
+        {
+            rePassword.setError("Strong");
+            rePassword.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
+            return true;
+        }
+
+        else if (repass.length()<20)
+        {
+            rePassword.setError("Very Strong");
+            rePassword.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
+            return true;
+        }
+
+        return true;
+    }
+
+    private boolean validateFirstName(String fname) {
+
+        if (fname.trim().isEmpty())
+        {
+            firstName.setError("Name can't be empty");
+            return false;
+        }
+        else if (!fname.trim().matches("[a-zA-Z]+"))
+        {
+            firstName.setError("Name can only contain letters");
             return false;
         }
         else
         {
-            edt_firstName.setEnabled(false);
-            edt_lastName.setEnabled(false);
-            edt_userName.setEnabled(false);
+            firstName.setErrorEnabled(false);
             return true;
         }
     }
 
-    private boolean validateEmail(String email) {
+    private boolean validateLastName(String lname) {
 
-        if (email.isEmpty() || !isValidEmail(email)) {
-            edt_email.setError("Enter a valid email");
+        if (lname.trim().isEmpty())
+        {
+            lastName.setError("Name can't be empty");
+            return false;
+        }
+        else if (!lname.trim().matches("[a-zA-Z]+"))
+        {
+            lastName.setError("Name can only contain letters");
+            return false;
+        }
+        else
+        {
+            lastName.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private boolean validatePhone(String phone) {
+
+        if (phone.trim().isEmpty())
+        {
+            phoneNo.setError("Phone Number can't be empty");
+            phoneNo.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
             return false;
 
-        } else {
-            edt_email.setEnabled(false);
-            return true;
         }
 
+          if (phone.length() < 9) {
+             phoneNo.setError("Phone Number can't be more than 9 numbers");
+             phoneNo.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
+            return false;
+        }
+          else
+          {
+              phoneNo.setEnabled(false);
+          }
+
+        return true;
     }
 
-    private boolean isValidEmail(String email) {
+    private boolean validateCarNumber(String carnum) {
 
-        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-
-
+        if (carnum.trim().isEmpty())
+        {
+            carNumber.setError("Car Number can't be empty");
+            return false;
+        }
+        else if (!carnum.trim().matches("[a-zA-Z]+") && !carnum.trim().matches("[0-10]+"))
+        {
+            carNumber.setError("Name can only contain letters");
+            return false;
+        }
+        else
+        {
+            carNumber.setErrorEnabled(false);
+            return true;
+        }
     }
+
+    private boolean validateCarType(String type) {
+
+        if (type.trim().isEmpty())
+        {
+            carType.setError("Car Type can't be empty");
+            return false;
+        }
+        else if (!type.trim().matches("[a-zA-Z]+") && !type.trim().matches("[0-10]+"))
+        {
+            carType.setError("Car Type can only contain letters");
+            return false;
+        }
+        else
+        {
+            carType.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private boolean validateCardDate(String card) {
+
+        if (card.trim().isEmpty())
+        {
+            cardDate.setError("Name can't be empty");
+            return false;
+        }
+        else if (!card.trim().matches("[Date]+"))
+        {
+            cardDate.setError("Card Date can only contain Date ");
+            return false;
+        }
+        else
+        {
+            cardDate.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private boolean validateLicence(String lec) {
+
+        if (lec.trim().isEmpty())
+        {
+            licence.setError("Name can't be empty");
+            return false;
+        }
+        else if (!lec.trim().matches("[a-zA-Z]+") && !lec.trim().matches("[0-10]+"))
+        {
+            licence.setError("Name can only contain letters and Numbers");
+            return false;
+        }
+        else
+        {
+            licence.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private boolean validateAddress(String addre) {
+
+        if (addre.trim().isEmpty())
+        {
+            address.setError("Address can't be empty");
+            return false;
+        }
+        else if (!addre.trim().matches("[a-zA-Z]+") && !addre.trim().matches("[0-10]+"))
+        {
+            address.setError("Address can only contain letters and Numbers");
+            return false;
+        }
+        else
+        {
+            address.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private boolean validateJob(String job) {
+
+        if (job.trim().isEmpty())
+        {
+            userJob.setError("Job can't be empty");
+            return false;
+        }
+        else if (!job.trim().matches("[a-zA-Z]+"))
+        {
+            userJob.setError("Job can only contain letters");
+            return false;
+        }
+        else
+        {
+            userJob.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+
+
+
 
     private void openGallery() {
 
@@ -600,17 +810,17 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-                map.put("user_name", userName.getText().toString());
-                map.put("name", firstName.getText().toString() + " " + lastName.getText().toString());
-                map.put("password", password.getText().toString());
-                map.put("phone", phoneNo.getText().toString());
-                map.put("job", userJob.getText().toString());
+                map.put("user_name", edt_userName.getText().toString());
+                map.put("name", edt_firstName.getText().toString() + " " + edt_lastName.getText().toString());
+                map.put("password", edt_password.getText().toString());
+                map.put("phone", edt_phoneNo.getText().toString());
+                map.put("job", edt_userJob.getText().toString());
                 map.put("gender", gender);
-                map.put("car_type", carType.getText().toString());
-                map.put("car_no", carNumber.getText().toString());
-                map.put("card_date", cardDate.getText().toString());
-                map.put("licence", licence.getText().toString());
-                map.put("address", address.getText().toString());
+                map.put("car_type", edt_carType.getText().toString());
+                map.put("car_no", edt_carNumber.getText().toString());
+                map.put("card_date", edt_cardDate.getText().toString());
+                map.put("licence", edt_licence.getText().toString());
+                map.put("address", edt_address.getText().toString());
                 return map;
             }
 
@@ -626,7 +836,7 @@ if(byteArray==null){
 
 }else{
 
-    params.put("file", new DataPart(userName.getText().toString()+".png", byteArray, "image/*"));
+    params.put("file", new DataPart(edt_userName.getText().toString()+".png", byteArray, "image/*"));
 
 }
 
