@@ -108,7 +108,7 @@ public class GalleryFragment extends Fragment {
         addBtn = root.findViewById(R.id.add_v_btn);
         date = root.findViewById(R.id.txt_date);
         rvTypeVio = root.findViewById(R.id.rv_typ_vio);
-//
+
 //        Calendar calendar= Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 //        calendar.clear();
 //        long today= MaterialDatePicker.todayInUtcMilliseconds();
@@ -126,7 +126,7 @@ public class GalleryFragment extends Fragment {
 //            @Override
 //            public void onClick(View v) {
 //
-//                materialDatePicker.show(getSupportFragmentManager(),"Date_paicer");
+//                materialDatePicker.show(getContext(),"Date_paicer");
 //
 //            }
 //        });

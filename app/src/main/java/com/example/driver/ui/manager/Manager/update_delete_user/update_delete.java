@@ -1,5 +1,6 @@
 package com.example.driver.ui.manager.Manager.update_delete_user;
 
+import android.app.job.JobParameters;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -64,7 +65,7 @@ public class update_delete extends Fragment {
             genderDriver, carTypeDriver, carNoDriver, cardDateDriver, licence, addressDriver;
 
     EditText userNamePolice, NamePolice, passwordPolice, phoneNoPolice,
-            genderPolice, jobIdPolice, dgreePolice, addressPolice;
+            jobIdPolice, dgreePolice, addressPolice;
 
     TextView tvId;
 
@@ -78,7 +79,7 @@ public class update_delete extends Fragment {
     String spinner;
     List<Police> policeList;
     String spCheckedMjr = "POLICE";
-    public String driver_id;
+    public String driver_id,police_id;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -151,8 +152,28 @@ public class update_delete extends Fragment {
                 if (spCheckedMjr.contains("DRIVER"))
                     DeleteDriver(driver_id);
 
+                else
+                {
+                    DeletePolice(police_id);
+                }
+
             }
         });
+
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (spCheckedMjr.contains("DRIVER"))
+                    UpdateDriver();
+
+                else
+                {
+                    UpdatePolice();
+                }
+
+            }
+        });
+
     }
 
 
@@ -179,8 +200,10 @@ public class update_delete extends Fragment {
         addressPolice = root.findViewById(R.id.ed_txt_user_address_police);
         userNamePolice = root.findViewById(R.id.ed_txt_user_name_police);
         passwordPolice = root.findViewById(R.id.ed_txt_user_password_police);
+        jobIdPolice=root.findViewById(R.id.ed_txt_user_job_police);
         NamePolice = root.findViewById(R.id.ed_txt_name_police);
         phoneNoPolice = root.findViewById(R.id.ed_txt_user_phone_police);
+        dgreePolice=root.findViewById(R.id.ed_txt_user_dgree_police);
         tvId = root.findViewById(R.id.tv_id);
         btn_update = root.findViewById(R.id.btn_update);
         btn_delete = root.findViewById(R.id.btn_delete);
@@ -412,62 +435,62 @@ error.printStackTrace();
     }
 
 
-    public void getPoliceData() {
-
-        String num = car_number.getText().toString();
-        JsonArrayRequest jsArray = new JsonArrayRequest("https://driverchecker.000webhostapp.com/deep_search.php?num=" + num + "",
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //JSONArray departmentArrayJson = response.getJSONArray("department");
-                        try {
-
-                            policeList = new ArrayList<>();
-
-                            for (int i = 0; i < response.length(); i++) {
-
-                                JSONObject js = response.getJSONObject(i);
-                                police = new Police();
-                                police.setId(js.getInt("ID"));
-                                police.setUserName(js.getString("USER_NAME"));
-                                police.setPassword(js.getString("PASSWORD"));
-                                police.setPhoneNo(js.getString("PHONE"));
-                                police.setDgree(js.getString("DGREE"));
-                                police.setJob(js.getString("JOB"));
-                                police.setAddress(js.getString("ADDRESS"));
-
-                                policeList.add(police);
-                            }
-                            if (policeList.size() == 0) {
-                                Toast.makeText(getContext(), "not found",
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-
-                                addressDriver.setText("car type: " + police.getAddress());
-                                userNameDriver.setText("Driver Name: " + police.getName());
-                                phoneNoDriver.setText("Driver No: " + police.getPhoneNo());
-                                policeID = police.getId();
-
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), "Police not found1",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Police not found",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        queue.add(jsArray);
-    }
+//    public void getPoliceData() {
+//
+//        String num = car_number.getText().toString();
+//        JsonArrayRequest jsArray = new JsonArrayRequest("https://driverchecker.000webhostapp.com/deep_search.php?num=" + num + "",
+//                new Response.Listener<JSONArray>() {
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//                        //JSONArray departmentArrayJson = response.getJSONArray("department");
+//                        try {
+//
+//                            policeList = new ArrayList<>();
+//
+//                            for (int i = 0; i < response.length(); i++) {
+//
+//                                JSONObject js = response.getJSONObject(i);
+//                                police = new Police();
+//                                police.setId(js.getInt("ID"));
+//                                police.setUserName(js.getString("USER_NAME"));
+//                                police.setPassword(js.getString("PASSWORD"));
+//                                police.setPhoneNo(js.getString("PHONE"));
+//                                police.setDgree(js.getString("DGREE"));
+//                                police.setJob(js.getString("JOB"));
+//                                police.setAddress(js.getString("ADDRESS"));
+//
+//                                policeList.add(police);
+//                            }
+//                            if (policeList.size() == 0) {
+//                                Toast.makeText(getContext(), "not found",
+//                                        Toast.LENGTH_SHORT).show();
+//                            } else {
+//
+//                                addressDriver.setText("car type: " + police.getAddress());
+//                                userNameDriver.setText("Driver Name: " + police.getName());
+//                                phoneNoDriver.setText("Driver No: " + police.getPhoneNo());
+//                                policeID = police.getId();
+//
+//
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                            Toast.makeText(getContext(), "Police not found1",
+//                                    Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getContext(), "Police not found",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        queue.add(jsArray);
+//    }
 
     public void UpdatePolice() {
         final String url = "https://driverchecker.000webhostapp.com/update_police.php";
@@ -500,13 +523,13 @@ error.printStackTrace();
 
                 // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("user_name", userNameDriver.getText().toString());
-                map.put("name", NameDriver.getText().toString() + " " + NameDriver.getText().toString());
-                map.put("password", passwordDriver.getText().toString());
-                map.put("phone", phoneNoDriver.getText().toString());
-                map.put("dgree", JobDriver.getText().toString());
-                map.put("jobID", genderDriver.getText().toString());
-                map.put("address", addressDriver.getText().toString());
+                map.put("user_name", userNamePolice.getText().toString());
+                map.put("name", NamePolice.getText().toString() + " " + NameDriver.getText().toString());
+                map.put("password", passwordPolice.getText().toString());
+                map.put("phone", phoneNoPolice.getText().toString());
+                map.put("dgree", dgreePolice.getText().toString());
+                map.put("jobID", jobIdPolice.getText().toString());
+                map.put("address", addressPolice.getText().toString());
 
 
                 return map;
@@ -521,54 +544,55 @@ error.printStackTrace();
     }
 
 
-    public void DeletePolice() {
-        final String url = "https://driverchecker.000webhostapp.com/delete_police.php";
+    public void DeletePolice(String police_id) {
+        String url = "https://driverchecker.000webhostapp.com/delete_polve.php?police_id=" + police_id +"";
+        Log.d("url", url);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("url",response.toString());
+                        userNamePolice.setText("");
+                        NamePolice.setText("");
+                        passwordPolice.setText("");
+                        phoneNoPolice.setText("");
+                        jobIdPolice.setText("");
+                        dgreePolice.setText("");
+                        addressPolice.setText("");
+                        Toast.makeText(getContext(), "Delete Police done", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+
+                    }
+                });
 
 
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
-                userNameDriver.setText("");
-                NameDriver.setText("");
-                passwordDriver.setText("");
-                phoneNoDriver.setText("");
-                JobDriver.setText("");
-                genderDriver.setText("");
-                addressDriver.setText("");
-                Toast.makeText(getContext(), "Delete Police done", Toast.LENGTH_SHORT).show();
+
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                error.printStackTrace();
             }
 
-        }) {
-            protected Map<String, String> getParams() {
+        });
 
+        queue.add(jsonObjectRequest);
 
-                // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("user_name", userNameDriver.getText().toString());
-                map.put("name", NameDriver.getText().toString() + " " + NameDriver.getText().toString());
-                map.put("password", passwordDriver.getText().toString());
-                map.put("phone", phoneNoDriver.getText().toString());
-                map.put("dgree", JobDriver.getText().toString());
-                map.put("jobID", genderDriver.getText().toString());
-                map.put("address", addressDriver.getText().toString());
-
-
-                return map;
-            }
-
-
-        };
-
-        queue.add(request);
 
     }
+
 
 
     Handler handler = handler = new Handler() {

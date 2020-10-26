@@ -131,13 +131,21 @@ public class GalleryFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         addLocationBtn = root.findViewById(R.id.btn_add_place_location);
         txtCarNumber = root.findViewById(R.id.ed_txt_car_no);
-       imageBtn = root.findViewById(R.id.btn_add_image);
+        imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
         rvTypeVio = root.findViewById(R.id.rv_typ_vio);
 //      apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
 
         setVioTyp();
+
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAndroidVersion();
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
@@ -409,8 +417,37 @@ public class GalleryFragment extends Fragment {
 
     }
 
+    public void checkAndroidVersion() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE}, 555);
+            } catch (Exception e) {
+
+            }
+        } else {
+            pickImage();
+        }
+    }
+
+    public void pickImage() {
+
+        CropImage.startPickImageActivity(getActivity());
+
+    }
+
+    private void croprequest(Uri imageUri) {
+        CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(getActivity());
+    }
+
+
     int PLACE_PICKER_REQUEST = 1;
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getActivity(), data);
@@ -434,7 +471,51 @@ public class GalleryFragment extends Fragment {
         }
 
 
-        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri imageUri = CropImage.getPickImageResultUri(getContext(), data);
+            croprequest(imageUri);
+        }
+
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
+
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), result.getUri());
+                    TextRecognizer txtRecognizer = new TextRecognizer.Builder(getContext()).build();
+                    if (!txtRecognizer.isOperational()) {
+                        txtCarNo.setText("Detector dependencies are not yet available");
+                    } else {
+                        // Set the bitmap taken to the frame to perform OCR Operations.
+                        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                        SparseArray items = txtRecognizer.detect(frame);
+                        StringBuilder strBuilder = new StringBuilder();
+
+                        for (int i = 0; i < items.size(); i++) {
+                            TextBlock item = (TextBlock) items.valueAt(i);
+                            strBuilder.append(item.getValue());
+                            strBuilder.append("\n");
+                            for (Text line : item.getComponents()) {
+                                //extract scanned text lines here
+                                Log.v("lines", line.getValue());
+                                for (Text element : line.getComponents()) {
+                                    //extract scanned text words here
+                                    Log.v("element", element.getValue());
+                                }
+
+                            }
+                        }
+                        txtCarNumber.setText(strBuilder.toString());
+                    }
+                    //     ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 
@@ -456,112 +537,6 @@ public class GalleryFragment extends Fragment {
             } else {
                 // Permission was denied. Display an error message.
             }
-        }
-    }
-
-
-    public class ImageCroped extends Activity {
-
-        public void click_me(View view) {
-
-            if (view.getId() == imageBtn.getId()) {
-                checkAndroidVersion();
-            } else {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        public void checkAndroidVersion() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                try {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE}, 555);
-                } catch (Exception e) {
-
-                }
-            } else {
-                pickImage();
-            }
-        }
-
-        public void pickImage() {
-            CropImage.startPickImageActivity(this);
-        }
-
-        private void croprequest(Uri imageUri) {
-            CropImage.activity(imageUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setMultiTouchEnabled(true)
-                    .start(this);
-        }
-
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-                Uri imageUri = CropImage.getPickImageResultUri(this, data);
-                croprequest(imageUri);
-            }
-
-
-            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if (resultCode == RESULT_OK) {
-                    try {
-
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), result.getUri());
-                        TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-                        if (!txtRecognizer.isOperational()) {
-                            txtCarNo.setText("Detector dependencies are not yet available");
-                        } else {
-                            // Set the bitmap taken to the frame to perform OCR Operations.
-                            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-                            SparseArray items = txtRecognizer.detect(frame);
-                            StringBuilder strBuilder = new StringBuilder();
-
-                            for (int i = 0; i < items.size(); i++) {
-                                TextBlock item = (TextBlock) items.valueAt(i);
-                                strBuilder.append(item.getValue());
-                                strBuilder.append("\n");
-                                for (Text line : item.getComponents()) {
-                                    //extract scanned text lines here
-                                    Log.v("lines", line.getValue());
-                                    for (Text element : line.getComponents()) {
-                                        //extract scanned text words here
-                                        Log.v("element", element.getValue());
-                                    }
-
-                                }
-                            }
-                            txtCarNumber.setText(strBuilder.toString());
-                        }
-                   //     ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
- //  public void notification(){
-
-//       FirebaseMessaging.getInstance().subscribeToTopic("voi")
-//               .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                   @Override
-//                   public void onComplete(@NonNull Task<Void> task) {
-//                       String msg = getString(R.string.msg_subscribed);
-//                       if (!task.isSuccessful()) {
-//                           msg = getString(R.string.msg_subscribe_failed);
-//                       }
-//                       Log.d(TAG, msg);
-//                       Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-//                   }
-//
-//               });
-
-
-  // }
-        public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
             if (requestCode == 555 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED) {
@@ -570,10 +545,10 @@ public class GalleryFragment extends Fragment {
                 checkAndroidVersion();
             }
         }
-
-
-
     }
+
+
+
 
 
     private void UpdateToken()

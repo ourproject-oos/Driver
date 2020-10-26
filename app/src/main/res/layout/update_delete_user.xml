@@ -289,7 +289,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/ed_txt_user_dgree_police"
+                android:id="@+id/ed_txt_user_job_police"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -297,9 +297,6 @@
                 android:textColor="@color/color2"
                 android:textColorHint="@color/hint_txt_color"
                 android:textSize="20sp" />
-
-
-
 
 
 
@@ -312,6 +309,19 @@
                 android:textColor="@color/color2"
                 android:textColorHint="@color/hint_txt_color"
                 android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/ed_txt_user_dgree_police"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/dgree"
+                    android:textColor="@color/color2"
+                    android:textColorHint="@color/hint_txt_color"
+                    android:textSize="20sp" />
+
+
+
             </LinearLayout>
 
 
