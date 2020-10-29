@@ -23,6 +23,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -52,6 +53,8 @@ public class MainAllActivity extends AppCompatActivity {
     TextView userPoliceID;
     int id;
     AlertDialog alertDialog;
+    String PoliceImageUri = "https://driverchecker.000webhostapp.com/police_img.php";
+    String DriverImageUri = "https://driverchecker.000webhostapp.com/police_img.php";
 
 
     @Override
@@ -61,6 +64,9 @@ public class MainAllActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
+       
 
         f = new File("/data/data/" + getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
         if (f.exists()) {
@@ -79,6 +85,7 @@ public class MainAllActivity extends AppCompatActivity {
         userMajorNav = haderView.findViewById(R.id.user_email_in_nav);
         userPoliceID = haderView.findViewById(R.id.police_id);
         userImageNav = haderView.findViewById(R.id.img_user_nav);
+
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -107,6 +114,7 @@ public class MainAllActivity extends AppCompatActivity {
 
         } else if (major.equals("POLICE")) {
 
+            Picasso.get().load(PoliceImageUri).into(userImageNav);
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_gallery, R.id.nav_logout)
                     .setDrawerLayout(drawer)
@@ -129,6 +137,7 @@ public class MainAllActivity extends AppCompatActivity {
             navigationView.getMenu().getItem(4).setVisible(false);
         } else {
 
+            Picasso.get().load(DriverImageUri).into(userImageNav);
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
                     R.id.nav_dashboard, R.id.nav_logout)

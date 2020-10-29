@@ -98,5 +98,6 @@
     <string name="gender">Gender</string>
     <string name="date">Date</string>
     <string name="id_job">ID Job</string>
+    <string name="Date">Date</string>
 
 </resources>

@@ -4,17 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 
-class LoadingDialog {
+public class LoadingDialog {
 
     private Activity activity;
     private AlertDialog dialog;
 
-    LoadingDialog(Activity myActivity)
+    public LoadingDialog(Activity myActivity)
     {
         activity = myActivity;
     }
 
-    void startLoadingDialog()
+    public void startLoadingDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
@@ -28,7 +28,7 @@ class LoadingDialog {
     }
 
 
-    void dismissDialog()
+    public void dismissDialog()
     {
         dialog.dismiss();
     }

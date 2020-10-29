@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,6 +32,8 @@ import com.example.driver.Driver;
 import com.example.driver.Notifications.APIService;
 import com.example.driver.Police;
 import com.example.driver.R;
+import com.example.driver.VolleyMultipartRequest;
+import com.example.driver.VolleySingleton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -79,7 +82,8 @@ public class update_delete extends Fragment {
     String spinner;
     List<Police> policeList;
     String spCheckedMjr = "POLICE";
-    public String driver_id,police_id;
+    public String driver_id,police_id,driver_update_id, police_update_id;
+    byte[] byteArray = null;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -163,12 +167,14 @@ public class update_delete extends Fragment {
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (spCheckedMjr.contains("DRIVER"))
-                    UpdateDriver();
 
+                if (spCheckedMjr.contains("DRIVER")){
+
+                    UpdateDriver(driver_update_id);
+            }
                 else
                 {
-                    UpdatePolice();
+                    UpdatePolice(police_update_id);
                 }
 
             }
@@ -325,8 +331,10 @@ public class update_delete extends Fragment {
     }
 
 
-    public void UpdateDriver() {
-        final String url = "https://driverchecker.000webhostapp.com/update_driver.php";
+
+    public void UpdateDriver(String driver_update_id) {
+
+        final String url = "https://driverchecker.000webhostapp.com/update_driver.php?driver_update" + driver_update_id + "";
 
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -492,9 +500,8 @@ error.printStackTrace();
 //        queue.add(jsArray);
 //    }
 
-    public void UpdatePolice() {
-        final String url = "https://driverchecker.000webhostapp.com/update_police.php";
-
+    public void UpdatePolice(String police_update_id) {
+        String url = "https://driverchecker.000webhostapp.com/update_police.php?police_id=" + police_update_id +"";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -545,7 +552,7 @@ error.printStackTrace();
 
 
     public void DeletePolice(String police_id) {
-        String url = "https://driverchecker.000webhostapp.com/delete_polve.php?police_id=" + police_id +"";
+        String url = "https://driverchecker.000webhostapp.com/delete_police.php?police_id=" + police_id +"";
         Log.d("url", url);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

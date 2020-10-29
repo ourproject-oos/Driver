@@ -1,12 +1,14 @@
 package com.example.driver.ui.manager.Manager.add_dreiver;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -49,6 +52,8 @@ import com.example.driver.AppHelper;
 import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDB;
 import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDao;
 import com.example.driver.Driver;
+import com.example.driver.LoadingDialog;
+import com.example.driver.LoginActivity;
 import com.example.driver.Manager;
 import com.example.driver.Notifications.APIService;
 import com.example.driver.Notifications.Client;
@@ -81,6 +86,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,8 +103,6 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
     private Uri filePath;
     private Object selectedFilePath;
     private APIService apiService;
-
-
     private DashboardViewModel dashboardViewModel;
     TextInputLayout userName, password, rePassword, firstName, lastName, phoneNo, email, userJob, carNumber, cardDate, licence, carType, address;
     TextInputEditText edt_userName, edt_password, edt_rePassword, edt_firstName, edt_lastName, edt_phoneNo, edt_email, edt_userJob, edt_carNumber, edt_cardDate, edt_licence, edt_carType, edt_address;
@@ -117,6 +121,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
     Uri imageUri;
     byte[] byteArray = null;
     private String mediaPath = "";
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     // private static final int PICK_IMAGE = 100;
 
@@ -295,25 +300,37 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
         });
 
-        edt_cardDate.addTextChangedListener(new TextWatcher() {
+        edt_cardDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onClick(View v) {
+
+                Calendar cal= Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+                        android.R.style.Theme_Holo_Light_DarkActionBar, mDateSetListener, year,month,day);
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
 
             }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateCardDate(s.toString());
-
-            }
-
-
         });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                month = month + 1;
+                Log.d("OnDateSet: ",  + year + "/" + month + "/" + dayOfMonth);
+                String date =  month + "/" + dayOfMonth + "/" + year;
+                edt_cardDate.setText(date);
+
+            }
+        };
+
+
 
         edt_licence.addTextChangedListener(new TextWatcher() {
             @Override
@@ -386,12 +403,70 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
         radioGroup.setOnCheckedChangeListener(this);
 
-
         btn_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //setDriverData();
 //                Toast.makeText(getContext(), "777777", Toast.LENGTH_SHORT).show();
+                loadingDialog.startLoadingDialog();
+
+                if (!validateName(edt_userName.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validatePassword(edt_password.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
+                }
+
+
+                else if (!validateRePassword(edt_rePassword.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateFirstName(edt_firstName.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateLastName(edt_lastName.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+
+                else if (!validatePhone(edt_phoneNo.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid phone", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateCarNumber(edt_carNumber.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid car number", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateCarType(edt_carType.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid car type", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateLicence(edt_licence.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid licence", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateAddress(edt_address.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid Address", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateJob(edt_userJob.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid Job", Toast.LENGTH_SHORT).show();
+                }
+
                 insertDriverWithImage();
 
 
@@ -411,6 +486,8 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
         return root;
     }
+
+    final LoadingDialog loadingDialog = new LoadingDialog(DashboardFragment.super.getActivity());
 
     public void IdentifyMethod(View root) {
 
@@ -496,32 +573,6 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             return false;
 
         }
-        else if (pass.length()<4)
-        {
-            password.setError("Weak");
-            return false;
-        }
-
-        else if (pass.length()<7)
-        {
-            password.setError("Medium");
-            return false;
-
-        }
-
-        else if (pass.length()<10)
-        {
-            password.setError("Strong");
-            password.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
-            return true;
-        }
-
-        else if (pass.length()<20)
-        {
-            password.setError("Very Strong");
-            password.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
-            return true;
-        }
 
         return true;
     }
@@ -536,31 +587,11 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             return false;
 
         }
-        else if (repass.length()<4)
+
+        else if (repass.equals(edt_password))
         {
-            rePassword.setError("Weak");
+            rePassword.setError("Error");
             return false;
-        }
-
-        else if (repass.length()<7)
-        {
-            rePassword.setError("Medium");
-            return false;
-
-        }
-
-        else if (repass.length()<10)
-        {
-            rePassword.setError("Strong");
-            rePassword.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
-            return true;
-        }
-
-        else if (repass.length()<20)
-        {
-            rePassword.setError("Very Strong");
-            rePassword.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
-            return true;
         }
 
         return true;
@@ -653,7 +684,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             carType.setError("Car Type can't be empty");
             return false;
         }
-        else if (!type.trim().matches("[a-zA-Z]+") && !type.trim().matches("[0-10]+"))
+        else if (!type.trim().matches("[a-zA-Z]+") )
         {
             carType.setError("Car Type can only contain letters");
             return false;
@@ -665,24 +696,6 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         }
     }
 
-    private boolean validateCardDate(String card) {
-
-        if (card.trim().isEmpty())
-        {
-            cardDate.setError("Name can't be empty");
-            return false;
-        }
-        else if (!card.trim().matches("[Date]+"))
-        {
-            cardDate.setError("Card Date can only contain Date ");
-            return false;
-        }
-        else
-        {
-            cardDate.setErrorEnabled(false);
-            return true;
-        }
-    }
 
     private boolean validateLicence(String lec) {
 
@@ -793,8 +806,10 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
                         Log.i("Unexpected", message);
 
+                        loadingDialog.dismissDialog();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    loadingDialog.dismissDialog();
                 }
 
                 //Log.d("response1",response.allHeaders.get(0).getValue());
@@ -805,6 +820,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
                 Log.d("response",error.getMessage());
+                loadingDialog.dismissDialog();
             }
         }) {
             @Override
@@ -860,7 +876,7 @@ if(byteArray==null){
 //
 //            @Override
 //            public void onResponse(String response) {
-//                userName.setText("");K
+//                userName.setText("");
 //                firstName.setText("");
 //                lastName.setText("");
 //                password.setText("");
@@ -984,7 +1000,7 @@ if(byteArray==null){
             Uri uri = data.getData();
             if (!uri.isAbsolute()) {
 
-                imageView.setImageDrawable(getContext().getDrawable(R.drawable.image_driver));
+                imageView.setImageDrawable(getContext().getDrawable(R.drawable.imgdriver));
 
 
             } else {

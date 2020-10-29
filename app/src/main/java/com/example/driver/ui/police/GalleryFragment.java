@@ -3,11 +3,14 @@ package com.example.driver.ui.police;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -104,7 +108,7 @@ public class GalleryFragment extends Fragment {
     CheckBox chVolType1, chVolType2, chVolType3, chVolType4, chVolType5, chVolType6, chVolType7, chVolType8, chVolType9, chVolType10, chVolType11, chVolType12, chVolType13, chVolType14, chVolType15;
     Button addBtn, searchBtn;
     ImageButton addLocationBtn, imageBtn;
-    TextView txtName, txtCarType, txtDriverNo;
+    TextView txtName, txtCarType, txtDriverNo, txtDate;
     int driverID, policeID;
     Driver driver;
     RecyclerView rvTypeVio;
@@ -122,6 +126,7 @@ public class GalleryFragment extends Fragment {
     String serialNumber;
     Intent data;
     List<VioType> vioTypeList = new ArrayList<>();
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     //
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -131,10 +136,12 @@ public class GalleryFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         addLocationBtn = root.findViewById(R.id.btn_add_place_location);
         txtCarNumber = root.findViewById(R.id.ed_txt_car_no);
+        txtDate = root.findViewById(R.id.txt_date);
         imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
         rvTypeVio = root.findViewById(R.id.rv_typ_vio);
 //      apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
 
 
         setVioTyp();
@@ -146,6 +153,36 @@ public class GalleryFragment extends Fragment {
                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         });
+
+        txtDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar cal= Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+                        android.R.style.Theme_Holo_Light_DarkActionBar, mDateSetListener, year,month,day);
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                month = month + 1;
+                Log.d("OnDateSet: ",  + year + "/" + month + "/" + dayOfMonth);
+                String date =  month + "/" + dayOfMonth + "/" + year;
+                txtDate.setText(date);
+
+            }
+        };
 
 
 

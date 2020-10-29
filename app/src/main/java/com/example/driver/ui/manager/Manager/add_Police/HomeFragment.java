@@ -40,6 +40,8 @@ import com.android.volley.toolbox.Volley;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDB;
 import com.example.driver.DataBaseRoom.Tables.Manager.ManagerDao;
+import com.example.driver.LoadingDialog;
+import com.example.driver.LoginActivity;
 import com.example.driver.NukeSSLCerts;
 import com.example.driver.R;
 import com.example.driver.VolleyMultipartRequest;
@@ -283,10 +285,58 @@ public class HomeFragment extends Fragment {
         NukeSSLCerts.nuke();
         queue = Volley.newRequestQueue(getContext());
 
+
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                setPoliceData();
+//                loadingDialog.startLoadingDialog();
+
+                if (!validateName(txt_userName.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validatePassword(txt_password.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateRePassword(txt_rePassword.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateFirstName(txt_firstName.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateLastName(txt_lastName.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validatePhone(txt_phoneNo.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateDgree(txt_dgree.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid phone", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateJob(txt_jobID.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid car number", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateAddress(txt_address.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid car type", Toast.LENGTH_SHORT).show();
+                }
+
                 insertPoliceWithImage();
             }
         });
@@ -299,6 +349,9 @@ public class HomeFragment extends Fragment {
         return root;
 
     }
+
+//    final LoadingDialog loadingDialog = new LoadingDialog(HomeFragment.super.getActivity());
+
 
     public void IdentifyMethod(View root)
     {
@@ -366,34 +419,12 @@ public class HomeFragment extends Fragment {
             return false;
 
         }
-        else if (pass.length()<4)
-        {
-            password.setError("Weak");
-            return false;
-        }
 
-        else if (pass.length()<7)
+        else
         {
-            password.setError("Medium");
-            return false;
-
-        }
-
-        else if (pass.length()<10)
-        {
-            password.setError("Strong");
-            password.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
             return true;
         }
 
-        else if (pass.length()<20)
-        {
-            password.setError("Very Strong");
-            password.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
-            return true;
-        }
-
-        return true;
     }
 
     private boolean validateRePassword(String repass) {
@@ -406,32 +437,13 @@ public class HomeFragment extends Fragment {
             return false;
 
         }
-        else if (repass.length()<4)
+
+        else if (repass.equals(txt_password == txt_rePassword))
         {
-            rePassword.setError("Weak");
+            rePassword.setError("Error");
             return false;
         }
 
-        else if (repass.length()<7)
-        {
-            rePassword.setError("Medium");
-            return false;
-
-        }
-
-        else if (repass.length()<10)
-        {
-            rePassword.setError("Strong");
-            rePassword.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
-            return true;
-        }
-
-        else if (repass.length()<20)
-        {
-            rePassword.setError("Very Strong");
-            rePassword.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
-            return true;
-        }
 
         return true;
     }
@@ -638,9 +650,11 @@ public class HomeFragment extends Fragment {
 
 
                     Log.i("Unexpected", message);
+//                    loadingDialog.dismissDialog();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+//                    loadingDialog.dismissDialog();
                 }
 
                 //Log.d("response1",response.allHeaders.get(0).getValue());
@@ -651,6 +665,7 @@ public class HomeFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
                 Log.d("response",error.getMessage());
+//                loadingDialog.dismissDialog();
             }
         }) {
             @Override
@@ -724,21 +739,8 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if (resultCode == RESULT_OK && requestCode == 222) {
             imageUri = data.getData();
-            try {
-
-                //  bitmap1 = MediaStore.Images.Media.getBitmap((ContentResolver) getPath(imageUri), imageUri);
-
-                //
-
-
-            } catch (Exception e) {
-
-                e.printStackTrace();
-
-            }
             //  imageView.setImageBitmap(bitmap1);
         }
 
@@ -787,7 +789,7 @@ public class HomeFragment extends Fragment {
             Uri uri = data.getData();
             if (!uri.isAbsolute()) {
 
-                imageView.setImageDrawable(getContext().getDrawable(R.drawable.image_driver));
+                imageView.setImageDrawable(getContext().getDrawable(R.drawable.policeman));
 
 
             } else {

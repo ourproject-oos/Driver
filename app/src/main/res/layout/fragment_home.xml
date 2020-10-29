@@ -52,15 +52,15 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textColorHint="@color/color_all"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txt_userName_police"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="15dp"
                         android:hint="@string/user_name_p"
                         android:inputType="textPersonName"
                         android:maxLength="15"
@@ -77,15 +77,15 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textColorHint="@color/color_all"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txt_password_police"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginStart="30dp"
                         android:ems="10"
                         android:hint="Password"
                         android:inputType="textPassword"
@@ -102,15 +102,15 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textColorHint="@color/color_all"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/rePassword_police"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginStart="30dp"
                         android:ems="10"
                         android:hint="@string/re_write_password_p"
                         android:inputType="textPassword"
@@ -136,6 +136,8 @@
                         android:id="@+id/txt_layout_fname_p"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
                         android:textSize="20sp"
                         android:layout_weight="1"
                         android:textColorHint="@color/color_all"
@@ -145,8 +147,6 @@
                             android:id="@+id/txt_fName_police"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:layout_marginStart="5dp"
                             android:layout_weight="1"
                             android:hint="@string/first_name"
                             android:inputType="text"
@@ -163,14 +163,14 @@
                         android:layout_weight="1"
                         android:textSize="20sp"
                         android:textColorHint="@color/color_all"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
                         >
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/txt_lName_police"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:layout_marginStart="5dp"
                             android:layout_weight="1"
                             android:hint="@string/last_name"
                             android:inputType="text"
