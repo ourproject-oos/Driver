@@ -62,7 +62,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends Fragment {
     public static final String TAG = "Upload Image";
-
+    LoadingDialog loadingDialog;
     public static final String UPLOAD_URL = "https://driverchecker.000webhostapp.com/insert_police.php";
 
     public static final String UPLOAD_KEY = "upload_image";
@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         IdentifyMethod(root);
-
+        loadingDialog = new LoadingDialog(getActivity());
         txt_userName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -292,52 +292,31 @@ public class HomeFragment extends Fragment {
 //                setPoliceData();
 //                loadingDialog.startLoadingDialog();
 
-                if (!validateName(txt_userName.getText().toString()))
-                {
+                if (!validateName(txt_userName.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validatePassword(txt_password.getText().toString()))
-                {
+                } else if (!validatePassword(txt_password.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateRePassword(txt_rePassword.getText().toString()))
-                {
+                } else if (!validateRePassword(txt_rePassword.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateFirstName(txt_firstName.getText().toString()))
-                {
+                } else if (!validateFirstName(txt_firstName.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateLastName(txt_lastName.getText().toString()))
-                {
+                } else if (!validateLastName(txt_lastName.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validatePhone(txt_phoneNo.getText().toString()))
-                {
+                } else if (!validatePhone(txt_phoneNo.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateDgree(txt_dgree.getText().toString()))
-                {
+                } else if (!validateDgree(txt_dgree.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid phone", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateJob(txt_jobID.getText().toString()))
-                {
+                } else if (!validateJob(txt_jobID.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid car number", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateAddress(txt_address.getText().toString()))
-                {
+                } else if (!validateAddress(txt_address.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid car type", Toast.LENGTH_SHORT).show();
+                } else {
+                    loadingDialog.startLoadingDialog();
+                    insertPoliceWithImage();
+
                 }
 
-                insertPoliceWithImage();
+
             }
         });
 
@@ -353,8 +332,7 @@ public class HomeFragment extends Fragment {
 //    final LoadingDialog loadingDialog = new LoadingDialog(HomeFragment.super.getActivity());
 
 
-    public void IdentifyMethod(View root)
-    {
+    public void IdentifyMethod(View root) {
         userName = root.findViewById(R.id.txt_layout_username_p);
         txt_userName = root.findViewById(R.id.txt_userName_police);
         password = root.findViewById(R.id.txt_layout_password_p);
@@ -377,33 +355,27 @@ public class HomeFragment extends Fragment {
         btn_signup = root.findViewById(R.id.btn_SignUp_police);
 
 
-    imageView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            openGallery();
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
 
-        }
-    });
+            }
+        });
 
 
     }
 
 
-
     private boolean validateName(String name) {
 
-        if (name.trim().isEmpty())
-        {
+        if (name.trim().isEmpty()) {
             userName.setError("Name can't be empty");
             return false;
-        }
-        else if (!name.trim().matches("[a-zA-Z]+"))
-        {
+        } else if (!name.trim().matches("[a-zA-Z]+")) {
             userName.setError("Name can only contain letters");
             return false;
-        }
-        else
-        {
+        } else {
             userName.setErrorEnabled(false);
             return true;
         }
@@ -412,34 +384,25 @@ public class HomeFragment extends Fragment {
     private boolean validatePassword(String pass) {
 
 
-        if (pass.trim().isEmpty())
-        {
+        if (pass.trim().isEmpty()) {
             password.setError("Password can't be empty");
             password.setErrorTextColor(ColorStateList.valueOf(Color.RED));
             return false;
 
         }
-
-        else
-        {
-            return true;
-        }
+        return true;
 
     }
 
     private boolean validateRePassword(String repass) {
 
 
-        if (repass.trim().isEmpty())
-        {
+        if (repass.trim().isEmpty()) {
             rePassword.setError("Password can't be empty");
             rePassword.setErrorTextColor(ColorStateList.valueOf(Color.RED));
             return false;
 
-        }
-
-        else if (repass.equals(txt_password == txt_rePassword))
-        {
+        } else if (repass.equals(txt_password == txt_rePassword)) {
             rePassword.setError("Error");
             return false;
         }
@@ -450,18 +413,13 @@ public class HomeFragment extends Fragment {
 
     private boolean validateFirstName(String fname) {
 
-        if (fname.trim().isEmpty())
-        {
+        if (fname.trim().isEmpty()) {
             firstName.setError("Name can't be empty");
             return false;
-        }
-        else if (!fname.trim().matches("[a-zA-Z]+"))
-        {
+        } else if (!fname.trim().matches("[a-zA-Z]+")) {
             firstName.setError("Name can only contain letters");
             return false;
-        }
-        else
-        {
+        } else {
             firstName.setErrorEnabled(false);
             return true;
         }
@@ -469,18 +427,13 @@ public class HomeFragment extends Fragment {
 
     private boolean validateLastName(String lname) {
 
-        if (lname.trim().isEmpty())
-        {
+        if (lname.trim().isEmpty()) {
             lastName.setError("Name can't be empty");
             return false;
-        }
-        else if (!lname.trim().matches("[a-zA-Z]+"))
-        {
+        } else if (!lname.trim().matches("[a-zA-Z]+")) {
             lastName.setError("Name can only contain letters");
             return false;
-        }
-        else
-        {
+        } else {
             lastName.setErrorEnabled(false);
             return true;
         }
@@ -488,8 +441,7 @@ public class HomeFragment extends Fragment {
 
     private boolean validatePhone(String phone) {
 
-        if (phone.trim().isEmpty())
-        {
+        if (phone.trim().isEmpty()) {
             phoneNo.setError("Phone Number can't be empty");
             phoneNo.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
             return false;
@@ -500,9 +452,7 @@ public class HomeFragment extends Fragment {
             phoneNo.setError("Phone Number can't be more than 9 numbers");
             phoneNo.setErrorTextColor(ColorStateList.valueOf(Color.BLACK));
             return false;
-        }
-        else
-        {
+        } else {
             phoneNo.setEnabled(false);
         }
 
@@ -511,18 +461,13 @@ public class HomeFragment extends Fragment {
 
     private boolean validateJob(String job) {
 
-        if (job.trim().isEmpty())
-        {
+        if (job.trim().isEmpty()) {
             jobID.setError("Job can't be empty");
             return false;
-        }
-        else if (!job.trim().matches("[a-zA-Z]+"))
-        {
+        } else if (!job.trim().matches("[a-zA-Z]+")) {
             jobID.setError("Job can only contain letters");
             return false;
-        }
-        else
-        {
+        } else {
             jobID.setErrorEnabled(false);
             return true;
         }
@@ -530,18 +475,13 @@ public class HomeFragment extends Fragment {
 
     private boolean validateDgree(String type) {
 
-        if (type.trim().isEmpty())
-        {
+        if (type.trim().isEmpty()) {
             dgree.setError("Name can't be empty");
             return false;
-        }
-        else if (!type.trim().matches("[a-zA-Z]+"))
-        {
+        } else if (!type.trim().matches("[a-zA-Z]+")) {
             dgree.setError("Name can only contain letters");
             return false;
-        }
-        else
-        {
+        } else {
             dgree.setErrorEnabled(false);
             return true;
         }
@@ -549,18 +489,13 @@ public class HomeFragment extends Fragment {
 
     private boolean validateAddress(String home) {
 
-        if (home.trim().isEmpty())
-        {
+        if (home.trim().isEmpty()) {
             address.setError("Name can't be empty");
             return false;
-        }
-        else if (!home.trim().matches("[a-zA-Z]+") && !home.trim().matches("[0-10]+"))
-        {
+        } else if (!home.trim().matches("[a-zA-Z]+") && !home.trim().matches("[0-10]+")) {
             address.setError("Address can only contain letters and Numbers");
             return false;
-        }
-        else
-        {
+        } else {
             address.setErrorEnabled(false);
             return true;
         }
@@ -628,8 +563,7 @@ public class HomeFragment extends Fragment {
 //    }
 
 
-    void insertPoliceWithImage()
-    {
+    void insertPoliceWithImage() {
         final String url = "https://driverchecker.000webhostapp.com/insert_police.php";
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST,
                 url, new Response.Listener<NetworkResponse>() {
@@ -639,10 +573,19 @@ public class HomeFragment extends Fragment {
                 Log.d("response1", resultResponse);
                 try {
                     JSONObject result = new JSONObject(resultResponse);
-                    JSONObject result2=result.getJSONObject("result");
+                    JSONObject result2 = result.getJSONObject("result");
 
 
                     String message = result2.getString("err_msg");
+                    int errNo = result2.getInt("err_no");
+
+
+                    if (errNo > 0) {
+
+                        loadingDialog.dismissDialog();
+                        Toast.makeText(getContext(), "error message: " + message, Toast.LENGTH_SHORT).show();
+
+                    }
 
 
                     // tell everybody you have succed upload image and post strings
@@ -650,11 +593,10 @@ public class HomeFragment extends Fragment {
 
 
                     Log.i("Unexpected", message);
-//                    loadingDialog.dismissDialog();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-//                    loadingDialog.dismissDialog();
+                    loadingDialog.dismissDialog();
                 }
 
                 //Log.d("response1",response.allHeaders.get(0).getValue());
@@ -664,14 +606,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
-                Log.d("response",error.getMessage());
-//                loadingDialog.dismissDialog();
+                // Log.d("response",error.getMessage()+"--- " +networkResponse.statusCode);
+                error.printStackTrace();
+                loadingDialog.dismissDialog();
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-
+//         hi what\s the wrong
                 map.put("user_name", txt_userName.getText().toString());
                 map.put("name", txt_firstName.getText().toString() + " " + txt_lastName.getText().toString());
                 map.put("password", txt_password.getText().toString());
@@ -689,16 +632,15 @@ public class HomeFragment extends Fragment {
                 // file name could found file base or direct access from real path
                 // for now just get bitmap data from ImageView
 
-                if(byteArray==null){
+                if (byteArray == null) {
 
                     params.put("file", new DataPart("", new byte[0]));
 
-                }else{
+                } else {
 
-                    params.put("file", new DataPart(txt_userName.getText().toString()+".png", byteArray, "image/*"));
+                    params.put("file", new DataPart(txt_userName.getText().toString() + ".png", byteArray, "image/*"));
 
                 }
-
 
 
                 //DataPart second parameter is byte[]
@@ -710,8 +652,6 @@ public class HomeFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(multipartRequest);
         //  requestMulitiPart.ge
     }
-
-
 
 
     Handler handler = handler = new Handler() {
@@ -727,7 +667,7 @@ public class HomeFragment extends Fragment {
 
     };
 
-    private void showFileChooser () {
+    private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -736,7 +676,7 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("NewApi")
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && requestCode == 222) {
@@ -815,7 +755,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public Object getPath (Uri uri){
+    public Object getPath(Uri uri) {
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -823,25 +763,25 @@ public class HomeFragment extends Fragment {
         return cursor.getString(column_index);
     }
 
-    private void uploadImage () {
+    private void uploadImage() {
 
         UploadImageApacheHttp uploadTask = new UploadImageApacheHttp();
         uploadTask.doFileUpload(UPLOAD_URL, String.valueOf(bitmap), handler);
 
     }
 
-    public void onClick (View v){
+
+    public void onClick(View v) {
 
 
         if (v == btn_signup)
+
             showFileChooser();
         else {
             Toast.makeText(getContext(), "Start Uploading", Toast.LENGTH_SHORT).show();
             uploadImage();
         }
     }
-
-
 
 
 //    public void setter() {

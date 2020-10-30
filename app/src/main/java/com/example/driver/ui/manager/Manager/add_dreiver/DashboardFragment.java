@@ -408,64 +408,64 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             public void onClick(View view) {
                 //setDriverData();
 //                Toast.makeText(getContext(), "777777", Toast.LENGTH_SHORT).show();
-                loadingDialog.startLoadingDialog();
+//                loadingDialog.startLoadingDialog();
 
-                if (!validateName(edt_userName.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validatePassword(edt_password.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
-                }
-
-
-                else if (!validateRePassword(edt_rePassword.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateFirstName(edt_firstName.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateLastName(edt_lastName.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-                }
-
-
-                else if (!validatePhone(edt_phoneNo.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid phone", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateCarNumber(edt_carNumber.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid car number", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateCarType(edt_carType.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid car type", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateLicence(edt_licence.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid licence", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateAddress(edt_address.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid Address", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (!validateJob(edt_userJob.getText().toString()))
-                {
-                    Toast.makeText(getContext(), "Pleas enter a valid Job", Toast.LENGTH_SHORT).show();
-                }
+//                if (!validateName(edt_userName.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else if (!validatePassword(edt_password.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
+//                }
+//
+//
+//                else if (!validateRePassword(edt_rePassword.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else if (!validateFirstName(edt_firstName.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else if (!validateLastName(edt_lastName.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+//                }
+//
+//
+//                else if (!validatePhone(edt_phoneNo.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid phone", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else if (!validateCarNumber(edt_carNumber.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid car number", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else if (!validateCarType(edt_carType.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid car type", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else if (!validateLicence(edt_licence.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid licence", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else if (!validateAddress(edt_address.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid Address", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else if (!validateJob(edt_userJob.getText().toString()))
+//                {
+//                    Toast.makeText(getContext(), "Pleas enter a valid Job", Toast.LENGTH_SHORT).show();
+//                }
 
                 insertDriverWithImage();
 
@@ -806,10 +806,8 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
                         Log.i("Unexpected", message);
 
-                        loadingDialog.dismissDialog();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    loadingDialog.dismissDialog();
                 }
 
                 //Log.d("response1",response.allHeaders.get(0).getValue());
@@ -819,8 +817,8 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
-                Log.d("response",error.getMessage());
-                loadingDialog.dismissDialog();
+//                Log.d("response",error.getMessage());
+                error.printStackTrace();
             }
         }) {
             @Override

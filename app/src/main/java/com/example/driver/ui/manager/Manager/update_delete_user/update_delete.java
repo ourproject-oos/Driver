@@ -332,9 +332,9 @@ public class update_delete extends Fragment {
 
 
 
-    public void UpdateDriver(String driver_update_id) {
+    public void UpdateDriver(final String driver_update_id) {
 
-        final String url = "https://driverchecker.000webhostapp.com/update_driver.php?driver_update" + driver_update_id + "";
+        final String url = "https://driverchecker.000webhostapp.com/update_driver.php?driver_update.php";
 
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -379,6 +379,7 @@ public class update_delete extends Fragment {
                 map.put("card_date", cardDateDriver.getText().toString());
                 map.put("licence", licence.getText().toString());
                 map.put("address", addressDriver.getText().toString());
+                map.put("id", driver_id);
                 return map;
             }
 
