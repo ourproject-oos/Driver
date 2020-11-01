@@ -94,6 +94,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
     public static final String TAG = "Upload Image";
+    LoadingDialog loadingDialog;
     public static final String UPLOAD_URL = "https://driverchecker.000webhostapp.com/insert_driver.php";
     public static final String UPLOAD_KEY = "upload_image";
 
@@ -133,6 +134,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         //final TextView textView = root.findViewjmById(R.id.text_dashboard);
 
         IdentifyMethod(root);
+        loadingDialog = new LoadingDialog(getActivity());
         // addDriver();
         edt_userName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -406,68 +408,67 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         btn_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //setDriverData();
-//                Toast.makeText(getContext(), "777777", Toast.LENGTH_SHORT).show();
-//                loadingDialog.startLoadingDialog();
 
-//                if (!validateName(edt_userName.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else if (!validatePassword(edt_password.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
-//                }
-//
-//
-//                else if (!validateRePassword(edt_rePassword.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else if (!validateFirstName(edt_firstName.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else if (!validateLastName(edt_lastName.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
-//                }
-//
-//
-//                else if (!validatePhone(edt_phoneNo.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid phone", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else if (!validateCarNumber(edt_carNumber.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid car number", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else if (!validateCarType(edt_carType.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid car type", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else if (!validateLicence(edt_licence.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid licence", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else if (!validateAddress(edt_address.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid Address", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else if (!validateJob(edt_userJob.getText().toString()))
-//                {
-//                    Toast.makeText(getContext(), "Pleas enter a valid Job", Toast.LENGTH_SHORT).show();
-//                }
 
-                insertDriverWithImage();
+                if (!validateName(edt_userName.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validatePassword(edt_password.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
+                }
+
+
+                else if (!validateRePassword(edt_rePassword.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid password", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateFirstName(edt_firstName.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateLastName(edt_lastName.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
+                }
+
+
+                else if (!validatePhone(edt_phoneNo.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid phone", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateCarNumber(edt_carNumber.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid car number", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateCarType(edt_carType.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid car type", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateLicence(edt_licence.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid licence", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateAddress(edt_address.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid Address", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!validateJob(edt_userJob.getText().toString()))
+                {
+                    Toast.makeText(getContext(), "Pleas enter a valid Job", Toast.LENGTH_SHORT).show();
+                }else {
+                    loadingDialog.startLoadingDialog();
+                    insertDriverWithImage();
+                }
 
 
             }
@@ -487,7 +488,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
         return root;
     }
 
-    final LoadingDialog loadingDialog = new LoadingDialog(DashboardFragment.super.getActivity());
+
 
     public void IdentifyMethod(View root) {
 
@@ -798,6 +799,14 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
 
                     String message = result2.getString("err_msg");
+                    int errNo = result2.getInt("err_no");
+
+                    if (errNo > 0) {
+
+                        loadingDialog.dismissDialog();
+                        Toast.makeText(getContext(), "error message: " + message, Toast.LENGTH_SHORT).show();
+
+                    }
 
 
                         // tell everybody you have succed upload image and post strings
@@ -808,6 +817,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    loadingDialog.dismissDialog();
                 }
 
                 //Log.d("response1",response.allHeaders.get(0).getValue());
@@ -819,6 +829,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
                 NetworkResponse networkResponse = error.networkResponse;
 //                Log.d("response",error.getMessage());
                 error.printStackTrace();
+                loadingDialog.dismissDialog();
             }
         }) {
             @Override

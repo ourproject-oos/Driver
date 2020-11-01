@@ -52,6 +52,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
+import com.example.driver.LoadingDialog;
 import com.example.driver.Notifications.APIService;
 import com.example.driver.Notifications.Client;
 import com.example.driver.Notifications.Data;
@@ -103,6 +104,7 @@ import static com.example.driver.ui.manager.Manager.add_dreiver.DashboardFragmen
 public class GalleryFragment extends Fragment {
 
     private static final int MY_LOCATION_REQUEST_CODE = 44;
+    LoadingDialog loadingDialog;
     private GalleryViewModel galleryViewModel;
     EditText txtCarNo, txtCarNumber;
     CheckBox chVolType1, chVolType2, chVolType3, chVolType4, chVolType5, chVolType6, chVolType7, chVolType8, chVolType9, chVolType10, chVolType11, chVolType12, chVolType13, chVolType14, chVolType15;
@@ -140,6 +142,7 @@ public class GalleryFragment extends Fragment {
         imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
         rvTypeVio = root.findViewById(R.id.rv_typ_vio);
+        loadingDialog = new LoadingDialog(getActivity());
 //      apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
 
@@ -222,7 +225,7 @@ public class GalleryFragment extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                loadingDialog.startLoadingDialog();
                 setViolationData();
 
 //                FirebaseDatabase.getInstance().getReference().child("Tokens").child(txtCarNumber.getText().toString().trim()).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -423,7 +426,7 @@ public class GalleryFragment extends Fragment {
 //                txtCarType.setText("");
 //                txtDriverNo.setText("");
 //                txtName.setText("");
-
+                loadingDialog.dismissDialog();
                 Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
             }
 
@@ -431,6 +434,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("voly", error.getMessage());
+                loadingDialog.dismissDialog();
             }
 
         }) {

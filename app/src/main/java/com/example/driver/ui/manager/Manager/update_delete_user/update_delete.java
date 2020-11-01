@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.driver.Driver;
+import com.example.driver.LoadingDialog;
 import com.example.driver.Notifications.APIService;
 import com.example.driver.Police;
 import com.example.driver.R;
@@ -54,6 +55,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.example.driver.ui.manager.Manager.add_dreiver.DashboardFragment.TAG;
 
 public class update_delete extends Fragment {
+    LoadingDialog loadingDialog;
 
     String Message, major_up;
     Button search, btn_update, btn_delete;
@@ -93,6 +95,7 @@ public class update_delete extends Fragment {
         queue = Volley.newRequestQueue(getContext());
 
         Identify(root);
+        loadingDialog = new LoadingDialog(getActivity());
         seiListener();
 
         spinnerAdapter = new ArrayAdapter<>(getContext(),
@@ -146,6 +149,7 @@ public class update_delete extends Fragment {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingDialog.startLoadingDialog();
                 getData();
             }
         });
@@ -153,9 +157,11 @@ public class update_delete extends Fragment {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (spCheckedMjr.contains("DRIVER"))
-                    DeleteDriver(driver_id);
+                if (spCheckedMjr.contains("DRIVER")) {
 
+                    loadingDialog.startLoadingDialog();
+                    DeleteDriver(driver_id);
+                }
                 else
                 {
                     DeletePolice(police_id);
@@ -169,11 +175,12 @@ public class update_delete extends Fragment {
             public void onClick(View v) {
 
                 if (spCheckedMjr.contains("DRIVER")){
-
+                    loadingDialog.startLoadingDialog();
                     UpdateDriver(driver_update_id);
             }
                 else
                 {
+                    loadingDialog.startLoadingDialog();
                     UpdatePolice(police_update_id);
                 }
 
@@ -275,7 +282,7 @@ public class update_delete extends Fragment {
                                         cardDateDriver.setText(driver.getCardDate());
                                         licence.setText(driver.getLicence());
                                         addressDriver.setText(driver.getAddress());
-
+                                        loadingDialog.dismissDialog();
 
                                     }
 
@@ -306,6 +313,7 @@ public class update_delete extends Fragment {
                                     phoneNoPolice.setText(police.getPhoneNo());
                                     // dgreePolice.setText(police.getDgree());
                                     passwordPolice.setText(police.getPassword());
+                                    loadingDialog.dismissDialog();
                                 }
 
 
@@ -316,6 +324,7 @@ public class update_delete extends Fragment {
                             e.printStackTrace();
                             Toast.makeText(getContext(), "not found",
                                     Toast.LENGTH_SHORT).show();
+                            loadingDialog.dismissDialog();
 
                         }
                     }
@@ -324,6 +333,7 @@ public class update_delete extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(), "not found",
                         Toast.LENGTH_SHORT).show();
+                loadingDialog.dismissDialog();
             }
         });
 
@@ -352,13 +362,14 @@ public class update_delete extends Fragment {
                 cardDateDriver.setText("");
                 licence.setText("");
                 addressDriver.setText("");
+                loadingDialog.dismissDialog();
                 Toast.makeText(getContext(), "Update Driver done", Toast.LENGTH_SHORT).show();
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                loadingDialog.dismissDialog();
             }
 
         }) {
@@ -411,6 +422,7 @@ public class update_delete extends Fragment {
                         cardDateDriver.setText("");
                         licence.setText("");
                         addressDriver.setText("");
+                        loadingDialog.dismissDialog();
                         Toast.makeText(getContext(), "Delete Driver done", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
@@ -433,7 +445,8 @@ public class update_delete extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-error.printStackTrace();
+            error.printStackTrace();
+                loadingDialog.dismissDialog();
             }
 
         });
@@ -516,13 +529,14 @@ error.printStackTrace();
                 JobDriver.setText("");
                 genderDriver.setText("");
                 addressDriver.setText("");
+                loadingDialog.dismissDialog();
                 Toast.makeText(getContext(), "Update Police done", Toast.LENGTH_SHORT).show();
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                loadingDialog.dismissDialog();
             }
 
         }) {
@@ -569,6 +583,7 @@ error.printStackTrace();
                         jobIdPolice.setText("");
                         dgreePolice.setText("");
                         addressPolice.setText("");
+                        loadingDialog.dismissDialog();
                         Toast.makeText(getContext(), "Delete Police done", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
@@ -592,6 +607,7 @@ error.printStackTrace();
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                loadingDialog.dismissDialog();
             }
 
         });

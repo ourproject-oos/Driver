@@ -289,8 +289,7 @@ public class HomeFragment extends Fragment {
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                setPoliceData();
-//                loadingDialog.startLoadingDialog();
+
 
                 if (!validateName(txt_userName.getText().toString())) {
                     Toast.makeText(getContext(), "Pleas enter a valid name", Toast.LENGTH_SHORT).show();
@@ -614,7 +613,7 @@ public class HomeFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-//         hi what\s the wrong
+
                 map.put("user_name", txt_userName.getText().toString());
                 map.put("name", txt_firstName.getText().toString() + " " + txt_lastName.getText().toString());
                 map.put("password", txt_password.getText().toString());
