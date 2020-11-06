@@ -66,7 +66,7 @@ import com.example.driver.Police;
 import com.example.driver.R;
 import com.example.driver.VolleyMultipartRequest;
 import com.example.driver.VolleySingleton;
-import com.example.driver.ui.UploadImageApacheHttp;
+//import com.example.driver.ui.UploadImageApacheHttp;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -1033,8 +1033,8 @@ if(byteArray==null){
     }
 
     private void uploadImage() {
-        UploadImageApacheHttp uploadTask = new UploadImageApacheHttp();
-        uploadTask.doFileUpload(UPLOAD_URL, String.valueOf(bitmap), handler);
+//        UploadImageApacheHttp uploadTask = new UploadImageApacheHttp();
+//        uploadTask.doFileUpload(UPLOAD_URL, String.valueOf(bitmap), handler);
     }
 
     public void onClick(View v) {

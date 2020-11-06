@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.driver.ui.police.GalleryFragment;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
@@ -34,7 +35,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.onesignal.OneSignal;
+
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -67,6 +68,7 @@ public class MainAllActivity extends AppCompatActivity {
     RoundedImageView userImageNav;
     TextView userPoliceID;
     int id;
+
     AlertDialog alertDialog;
     String PoliceImageUri = "https://driverchecker.000webhostapp.com/police_img.php";
     String DriverImageUri = "https://driverchecker.000webhostapp.com/police_img.php";
@@ -78,8 +80,6 @@ public class MainAllActivity extends AppCompatActivity {
         setContentView(R.layout.manager);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
 
         f = new File("/data/data/" + getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
@@ -180,13 +180,10 @@ public class MainAllActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(5).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-             //   Toast.makeText(MainAllActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                if (item.getItemId()== R.id.nav_logout)
-                {
+                //   Toast.makeText(MainAllActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                if (item.getItemId() == R.id.nav_logout) {
                     logout();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(MainAllActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
 
@@ -268,7 +265,7 @@ public class MainAllActivity extends AppCompatActivity {
         return true;
     }
 
-//
+    //
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //
@@ -276,12 +273,12 @@ public class MainAllActivity extends AppCompatActivity {
 //        return super.onOptionsItemSelected(item);
 //
 //    }
-private void croprequest(Uri imageUri) {
-    CropImage.activity(imageUri)
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .setMultiTouchEnabled(true)
-            .start(this);
-}
+    private void croprequest(Uri imageUri) {
+        CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -302,8 +299,9 @@ private void croprequest(Uri imageUri) {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.getUri());
                     TextRecognizer txtRecognizer = new TextRecognizer.Builder(this).build();
                     if (!txtRecognizer.isOperational()) {
-                     //   txtCarNo.setText();
-                        Toast.makeText(this, "Detector dependencies are not yet available", Toast.LENGTH_SHORT).show();
+                        //   txtCarNo.setText();
+                        GalleryFragment.CAR_NO = "Detector dependencies are not yet available";
+
                     } else {
                         // Set the bitmap taken to the frame to perform OCR Operations.
                         Frame frame = new Frame.Builder().setBitmap(bitmap).build();
@@ -324,9 +322,10 @@ private void croprequest(Uri imageUri) {
 
                             }
                         }
+                        GalleryFragment.CAR_NO = strBuilder.toString();
                         Toast.makeText(this, strBuilder.toString(), Toast.LENGTH_SHORT).show();
 
-                    //    txtCarNumber.setText();
+                        //    txtCarNumber.setText();
                     }
                     //     ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
 

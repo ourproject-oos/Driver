@@ -46,7 +46,6 @@ import com.example.driver.NukeSSLCerts;
 import com.example.driver.R;
 import com.example.driver.VolleyMultipartRequest;
 import com.example.driver.VolleySingleton;
-import com.example.driver.ui.UploadImageApacheHttp;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -762,12 +761,12 @@ public class HomeFragment extends Fragment {
         return cursor.getString(column_index);
     }
 
-    private void uploadImage() {
-
-        UploadImageApacheHttp uploadTask = new UploadImageApacheHttp();
-        uploadTask.doFileUpload(UPLOAD_URL, String.valueOf(bitmap), handler);
-
-    }
+//    private void uploadImage() {
+//
+//        UploadImageApacheHttp uploadTask = new UploadImageApacheHttp();
+//        uploadTask.doFileUpload(UPLOAD_URL, String.valueOf(bitmap), handler);
+//
+//    }
 
 
     public void onClick(View v) {
@@ -778,7 +777,7 @@ public class HomeFragment extends Fragment {
             showFileChooser();
         else {
             Toast.makeText(getContext(), "Start Uploading", Toast.LENGTH_SHORT).show();
-            uploadImage();
+           // uploadImage();
         }
     }
 

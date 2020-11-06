@@ -1,17 +1,3 @@
-buildscript {
-    repositories {
-        maven { url 'https://plugins.gradle.org/m2/'}
-    }
-    dependencies {
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.11.0, 0.99.99]'
-    }
-}
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
-
-repositories {
-    maven { url 'https://maven.google.com' }
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
@@ -20,18 +6,18 @@ android {
     defaultConfig {
         applicationId "com.example.driver"
 
-        manifestPlaceholders = [
-                onesignal_app_id: '675ea5e5-c67c-4911-b58f-c717db8e2455',
-                // Project number pulled from dashboard, local value is ignored.
-                onesignal_google_project_number: 'REMOTE'
-        ]
+//        manifestPlaceholders = [
+//                onesignal_app_id: '675ea5e5-c67c-4911-b58f-c717db8e2455',
+//                // Project number pulled from dashboard, local value is ignored.
+//                onesignal_google_project_number: 'REMOTE'
+//        ]
 
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        multiDexEnabled true
+  multiDexEnabled true
         versionName "1.2"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+       testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -42,17 +28,13 @@ android {
     }
 }
 
-android {
-    useLibrary 'org.apache.http.legacy'
-}
-
 
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
 
-    implementation 'com.onesignal:OneSignal:[3.9.2, 3.99.99]'
+  //  implementation 'com.onesignal:OneSignal:[3.9.2, 3.99.99]'
 
     implementation 'com.google.android.material:material:1.2.0-alpha03'
     implementation 'com.google.android.material:material:1.0.0'

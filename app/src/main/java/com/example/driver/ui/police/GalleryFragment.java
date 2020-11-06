@@ -40,6 +40,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -80,7 +81,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.onesignal.OneSignal;
+
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -131,7 +132,7 @@ public class GalleryFragment extends Fragment {
     Intent data;
     List<VioType> vioTypeList = new ArrayList<>();
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-
+    public static String CAR_NO="";
     //
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -143,9 +144,8 @@ public class GalleryFragment extends Fragment {
         imageBtn = root.findViewById(R.id.btn_add_image);
         addBtn = root.findViewById(R.id.add_v_btn);
         rvTypeVio = root.findViewById(R.id.rv_typ_vio);
-        loadingDialog = new LoadingDialog(getActivity());
+        //loadingDialog = new LoadingDialog(getActivity());
 //      apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
-
 
 
         setVioTyp();
@@ -162,13 +162,13 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Calendar cal= Calendar.getInstance();
+                Calendar cal = Calendar.getInstance();
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialog = new DatePickerDialog(getActivity(),
-                        android.R.style.Theme_Holo_Light_DarkActionBar, mDateSetListener, year,month,day);
+                        android.R.style.Theme_Holo_Light_DarkActionBar, mDateSetListener, year, month, day);
 
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
@@ -181,13 +181,12 @@ public class GalleryFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                 month = month + 1;
-                Log.d("OnDateSet: ",  + year + "/" + month + "/" + dayOfMonth);
-                String date =  month + "/" + dayOfMonth + "/" + year;
+                Log.d("OnDateSet: ", +year + "/" + month + "/" + dayOfMonth);
+                String date = month + "/" + dayOfMonth + "/" + year;
                 txtDate.setText(date);
 
             }
         };
-
 
 
         f = new File("/data/data/" + getContext().getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
@@ -216,7 +215,6 @@ public class GalleryFragment extends Fragment {
         });
 
 
-
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -227,13 +225,27 @@ public class GalleryFragment extends Fragment {
         });
 
 
-
-
-
-
         return root;
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+            String carNo = CAR_NO;
+            txtCarNumber.setText(carNo);
+
+
+        // Toast.makeText(getContext(), "resume", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Toast.makeText(getContext(), "start", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -389,7 +401,8 @@ public class GalleryFragment extends Fragment {
             public void onResponse(String response) {
                 Toast.makeText(getContext(), "" + lat + " " + langLocation, Toast.LENGTH_SHORT).show();
 
-                txtCarNo.setText("");
+                txtCarNumber.setText("");
+//                txtCarNo.setText("");
 //                txtCarType.setText("");
 //                txtDriverNo.setText("");
 //                txtName.setText("");
@@ -406,7 +419,7 @@ public class GalleryFragment extends Fragment {
             }
 
         }) {
-            protected Map<String, String> getParams()  {
+            protected Map<String, String> getParams() {
 
 
                 // EditText userName, password, rePassword, firstName, lastName, phoneNo, email, userJob,carNumber,carType,address;
@@ -432,8 +445,8 @@ public class GalleryFragment extends Fragment {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE}, 555);
             } catch (Exception e) {
-Log.e("err",e.getMessage());
-e.printStackTrace();
+                Log.e("err", e.getMessage());
+                e.printStackTrace();
             }
         } else {
             pickImage();
@@ -442,7 +455,7 @@ e.printStackTrace();
 
     public void pickImage() {
 
-        CropImage.startPickImageActivity(this.getActivity());
+        CropImage.startPickImageActivity(getActivity());
 
     }
 
@@ -450,83 +463,82 @@ e.printStackTrace();
         CropImage.activity(imageUri)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setMultiTouchEnabled(true)
-                .start(this.getActivity());
+                .start(getActivity());
     }
 
 
     int PLACE_PICKER_REQUEST = 1;
-
-   /* public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(getActivity(), data);
-                String toastMsg = String.format("Place: %s", place.getName());
-                //lat = place.getLatLng().latitude;
-                //langLocation = place.getLatLng().longitude;
-                // Toast.makeText(getContext(), String.valueOf(lat), Toast.LENGTH_SHORT).show();
-
-            }
-        }
-
-        if (data != null) {
-
-            Random random = new Random(90);
-            Calendar calendar = Calendar.getInstance();
-            serialNumber = calendar.getTimeInMillis() + "" + random;
-
-            data.getStringExtra("carNumber");
-
-
-        }
-
-
-
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Uri imageUri = CropImage.getPickImageResultUri(getContext(), data);
-            croprequest(imageUri);
-        }
-
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                try {
-
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), result.getUri());
-                    TextRecognizer txtRecognizer = new TextRecognizer.Builder(getContext()).build();
-                    if (!txtRecognizer.isOperational()) {
-                        txtCarNo.setText("Detector dependencies are not yet available");
-                    } else {
-                        // Set the bitmap taken to the frame to perform OCR Operations.
-                        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-                        SparseArray items = txtRecognizer.detect(frame);
-                        StringBuilder strBuilder = new StringBuilder();
-
-                        for (int i = 0; i < items.size(); i++) {
-                            TextBlock item = (TextBlock) items.valueAt(i);
-                            strBuilder.append(item.getValue());
-                            strBuilder.append("\n");
-                            for (Text line : item.getComponents()) {
-                                //extract scanned text lines here
-                                Log.v("lines", line.getValue());
-                                for (Text element : line.getComponents()) {
-                                    //extract scanned text words here
-                                    Log.v("element", element.getValue());
-                                }
-
-                            }
-                        }
-                        txtCarNumber.setText(strBuilder.toString());
-                    }
-                  //     ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }*/
+//@Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PLACE_PICKER_REQUEST) {
+//            if (resultCode == RESULT_OK) {
+//                Place place = PlacePicker.getPlace(getActivity(), data);
+//                String toastMsg = String.format("Place: %s", place.getName());
+//                //lat = place.getLatLng().latitude;
+//                //langLocation = place.getLatLng().longitude;
+//                // Toast.makeText(getContext(), String.valueOf(lat), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }
+//
+//        if (data != null) {
+//
+//            Random random = new Random(90);
+//            Calendar calendar = Calendar.getInstance();
+//            serialNumber = calendar.getTimeInMillis() + "" + random;
+//            data.getStringExtra("carNumber");
+//
+//
+//        }
+//
+//
+//
+//        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+//            Uri imageUri = CropImage.getPickImageResultUri(getContext(), data);
+//            croprequest(imageUri);
+//        }
+//
+//
+//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+//            if (resultCode == RESULT_OK) {
+//                try {
+//
+//                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), result.getUri());
+//                    TextRecognizer txtRecognizer = new TextRecognizer.Builder(getContext()).build();
+//                    if (!txtRecognizer.isOperational()) {
+//                        txtCarNo.setText("Detector dependencies are not yet available");
+//                    } else {
+//                        // Set the bitmap taken to the frame to perform OCR Operations.
+//                        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+//                        SparseArray items = txtRecognizer.detect(frame);
+//                        StringBuilder strBuilder = new StringBuilder();
+//
+//                        for (int i = 0; i < items.size(); i++) {
+//                            TextBlock item = (TextBlock) items.valueAt(i);
+//                            strBuilder.append(item.getValue());
+//                            strBuilder.append("\n");
+//                            for (Text line : item.getComponents()) {
+//                                //extract scanned text lines here
+//                                Log.v("lines", line.getValue());
+//                                for (Text element : line.getComponents()) {
+//                                    //extract scanned text words here
+//                                    Log.v("element", element.getValue());
+//                                }
+//
+//                            }
+//                        }
+//                        txtCarNumber.setText(strBuilder.toString());
+//                    }
+//                  //     ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 
 
     public static String locationString(final Location location) {
@@ -535,8 +547,6 @@ e.printStackTrace();
                 Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
 
     }
-
-
 
 
     @Override
@@ -550,44 +560,39 @@ e.printStackTrace();
                 // Permission was denied. Display an error message.
             }
 
-            if (requestCode == 555 && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED) {
-                pickImage();
-            } else {
-                checkAndroidVersion();
-            }
+
+        }
+        if (requestCode == 555 && grantResults[0] ==
+                PackageManager.PERMISSION_GRANTED) {
+            pickImage();
+        } else {
+            checkAndroidVersion();
         }
     }
 
 
-
-
-
-    private void UpdateToken()
-    {
+    private void UpdateToken() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String refreshToken = FirebaseInstanceId.getInstance().getToken();
         Token token = new Token(refreshToken);
 //        FirebaseDatabase.getInstance().getReference("Token").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
     }
 
-    public void sendNotifications(String usertoken,String message)
-    {
+    public void sendNotifications(String usertoken, String message) {
         Data data = new Data(message);
-        NotificationSender sender = new NotificationSender(data,usertoken);
+        NotificationSender sender = new NotificationSender(data, usertoken);
         apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
             @Override
             public void onResponse(Call<MyResponse> call, retrofit2.Response<MyResponse> response) {
 
-                if (response.code()==200)
-                {
-                    if (response.body().success != 1)
-                    {
+                if (response.code() == 200) {
+                    if (response.body().success != 1) {
                         Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
 
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<MyResponse> call, Throwable t) {
 
