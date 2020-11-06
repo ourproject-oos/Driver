@@ -1,18 +1,29 @@
 package com.example.driver;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.Text;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.os.Handler;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -23,7 +34,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.onesignal.OneSignal;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -36,6 +50,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 
 public class MainAllActivity extends AppCompatActivity {
 
@@ -66,7 +81,6 @@ public class MainAllActivity extends AppCompatActivity {
 
 
 
-       
 
         f = new File("/data/data/" + getPackageName() + "/shared_prefs/" + getString(R.string.shared_preference_usr) + ".xml");
         if (f.exists()) {
@@ -262,7 +276,66 @@ public class MainAllActivity extends AppCompatActivity {
 //        return super.onOptionsItemSelected(item);
 //
 //    }
+private void croprequest(Uri imageUri) {
+    CropImage.activity(imageUri)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setMultiTouchEnabled(true)
+            .start(this);
+}
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri imageUri = CropImage.getPickImageResultUri(this, data);
+            croprequest(imageUri);
+        }
+
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
+
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.getUri());
+                    TextRecognizer txtRecognizer = new TextRecognizer.Builder(this).build();
+                    if (!txtRecognizer.isOperational()) {
+                     //   txtCarNo.setText();
+                        Toast.makeText(this, "Detector dependencies are not yet available", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Set the bitmap taken to the frame to perform OCR Operations.
+                        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                        SparseArray items = txtRecognizer.detect(frame);
+                        StringBuilder strBuilder = new StringBuilder();
+
+                        for (int i = 0; i < items.size(); i++) {
+                            TextBlock item = (TextBlock) items.valueAt(i);
+                            strBuilder.append(item.getValue());
+                            strBuilder.append("\n");
+                            for (Text line : item.getComponents()) {
+                                //extract scanned text lines here
+                                Log.v("lines", line.getValue());
+                                for (Text element : line.getComponents()) {
+                                    //extract scanned text words here
+                                    Log.v("element", element.getValue());
+                                }
+
+                            }
+                        }
+                        Toast.makeText(this, strBuilder.toString(), Toast.LENGTH_SHORT).show();
+
+                    //    txtCarNumber.setText();
+                    }
+                    //     ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

@@ -32,7 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+//plugin yr phone
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -53,6 +53,7 @@ import com.android.volley.toolbox.Volley;;
 import com.android.volley.toolbox.Volley;
 import com.example.driver.Driver;
 import com.example.driver.LoadingDialog;
+import com.example.driver.MainAllActivity;
 import com.example.driver.Notifications.APIService;
 import com.example.driver.Notifications.Client;
 import com.example.driver.Notifications.Data;
@@ -79,6 +80,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.onesignal.OneSignal;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -133,8 +135,7 @@ public class GalleryFragment extends Fragment {
     //
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         addLocationBtn = root.findViewById(R.id.btn_add_place_location);
         txtCarNumber = root.findViewById(R.id.ed_txt_car_no);
@@ -214,13 +215,7 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-//        searchBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getlocation();
-////                getUserData();
-//            }
-//        });
+
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,44 +223,16 @@ public class GalleryFragment extends Fragment {
                 loadingDialog.startLoadingDialog();
                 setViolationData();
 
-//                FirebaseDatabase.getInstance().getReference().child("Tokens").child(txtCarNumber.getText().toString().trim()).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        String usertoken=dataSnapshot.getValue(String.class);
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_against_the_flow_of_traffic));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_Impending_traffic));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_no_parking));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_high_speed));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_without_valid_documentation));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_without_drivers_license));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_driving_vehicle_that_produces_excessive_smoke));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_Driving_through_or_stopping_in_crossing_zone));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_car_with_no_number));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_not_wearing_seatbelt));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_Reckless_driving));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_unnecessary_usage_of_the_horn));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_Refusing_or_comply_to_policemen_signal));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_Unsafe_overtake));
-//                        sendNotifications(usertoken,getString(R.string.vio_typ_using_cell_phone_while_driving));
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
-
-
             }
         });
-        galleryViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
 
-            }
-        });
+
+
+
+
+
         return root;
+
 
 
     }
@@ -429,6 +396,7 @@ public class GalleryFragment extends Fragment {
                 loadingDialog.dismissDialog();
                 Toast.makeText(getContext(), "insert done", Toast.LENGTH_SHORT).show();
             }
+            //pz
 
         }, new Response.ErrorListener() {
             @Override
@@ -464,7 +432,8 @@ public class GalleryFragment extends Fragment {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE}, 555);
             } catch (Exception e) {
-
+Log.e("err",e.getMessage());
+e.printStackTrace();
             }
         } else {
             pickImage();
@@ -473,7 +442,7 @@ public class GalleryFragment extends Fragment {
 
     public void pickImage() {
 
-        CropImage.startPickImageActivity(getActivity());
+        CropImage.startPickImageActivity(this.getActivity());
 
     }
 
@@ -481,14 +450,14 @@ public class GalleryFragment extends Fragment {
         CropImage.activity(imageUri)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setMultiTouchEnabled(true)
-                .start(getActivity());
+                .start(this.getActivity());
     }
 
 
     int PLACE_PICKER_REQUEST = 1;
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
+   /* public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getActivity(), data);
@@ -550,14 +519,14 @@ public class GalleryFragment extends Fragment {
                         }
                         txtCarNumber.setText(strBuilder.toString());
                     }
-                    //     ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
+                  //     ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-    }
+    }*/
 
 
     public static String locationString(final Location location) {
@@ -566,6 +535,8 @@ public class GalleryFragment extends Fragment {
                 Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
 
     }
+
+
 
 
     @Override
