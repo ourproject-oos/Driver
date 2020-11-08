@@ -70,8 +70,9 @@ public class MainAllActivity extends AppCompatActivity {
     int id;
 
     AlertDialog alertDialog;
-    String PoliceImageUri = "https://driverchecker.000webhostapp.com/police_img.php";
-    String DriverImageUri = "https://driverchecker.000webhostapp.com/police_img.php";
+    String policeImageUri = "https://driverchecker.000webhostapp.com/police_img.php";
+    String driverImageUri = "https://driverchecker.000webhostapp.com/driver_img.php";
+    String imgPath;
 
 
     @Override
@@ -87,6 +88,11 @@ public class MainAllActivity extends AppCompatActivity {
             sharedPreferences = getSharedPreferences(getString(R.string.shared_preference_usr), MODE_PRIVATE);
             major = sharedPreferences.getString("major", "");
             name = sharedPreferences.getString("fullName", "user1");
+            imgPath = sharedPreferences.getString("img_path", "");
+
+
+            policeImageUri = "https://driverchecker.000webhostapp.com/" + imgPath;
+            driverImageUri = "https://driverchecker.000webhostapp.com/" + imgPath;
 
 
             Toast.makeText(this, major, Toast.LENGTH_SHORT).show();
@@ -107,7 +113,7 @@ public class MainAllActivity extends AppCompatActivity {
 
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                    R.id.nav_dashboard, R.id.nav_update_delete_user, R.id.nav_logout)
+                    R.id.nav_dashboard, R.id.nav_update_delete_user, R.id.nav_logout,R.id.nav_payment_vio)
                     .setDrawerLayout(drawer)
                     .build();
 
@@ -128,7 +134,7 @@ public class MainAllActivity extends AppCompatActivity {
 
         } else if (major.equals("POLICE")) {
 
-            Picasso.get().load(PoliceImageUri).into(userImageNav);
+            Picasso.get().load(policeImageUri).into(userImageNav);
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_gallery, R.id.nav_logout)
                     .setDrawerLayout(drawer)
@@ -149,9 +155,13 @@ public class MainAllActivity extends AppCompatActivity {
             navigationView.getMenu().getItem(2).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
+            Log.i("imgUrl",policeImageUri);
+            Picasso.get().load(policeImageUri).fit().centerCrop().into(userImageNav);
+
         } else {
 
-            Picasso.get().load(DriverImageUri).into(userImageNav);
+            Picasso.get().load(driverImageUri).into(userImageNav);
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
                     R.id.nav_dashboard, R.id.nav_logout)
@@ -174,10 +184,13 @@ public class MainAllActivity extends AppCompatActivity {
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
+            Log.i("imgUrl",driverImageUri);
+            Picasso.get().load(driverImageUri).fit().centerCrop().into(userImageNav);
 
         }
 
-        navigationView.getMenu().getItem(5).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        navigationView.getMenu().getItem(6).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 //   Toast.makeText(MainAllActivity.this, "Error", Toast.LENGTH_SHORT).show();
@@ -190,6 +203,8 @@ public class MainAllActivity extends AppCompatActivity {
                 return true;
             }
         });
+//        Log.i("imgUrl",policeImageUri);
+//        Picasso.get().load(policeImageUri).fit().centerCrop().into(userImageNav);
 
 
     }

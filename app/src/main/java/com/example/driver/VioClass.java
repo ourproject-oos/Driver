@@ -25,7 +25,15 @@ String name,date,type,carNumber
     ,licence,cardDate,carType,address,amount ;
 double latLocation,longLocation;
 int id,driverId,policeId;
+ boolean isPaid;
 
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
 
     public String getCarNumber() {
         return carNumber;

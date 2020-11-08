@@ -5,6 +5,15 @@ public class Driver  {
 int id;
    String userName, password, Name, phoneNo, email, Job, carNumber, carType,cardDate,licence ,address,gander ;
    double lat,lang;
+    String imgPath;
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 
     public double getLat() {
         return lat;

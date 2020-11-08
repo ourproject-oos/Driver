@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-
         edUserName = findViewById(R.id.userName_ed_text_login);
         edPassword = findViewById(R.id.password_ed_text_login);
         spinner = findViewById(R.id.Spinner_major);
@@ -146,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                                     police.setLat(js.getString("LAT"));
                                     police.setLang(js.getString("LANG"));
 
+                                    police.setImgPath(js.getString("IMAGE_PATH"));
                                     policeList.add(police);
                                 }
                                 if (policeList.size() == 0) {
@@ -169,6 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("lat", police.getLat());
                                     editor.putString("lang", police.getLang());
                                     editor.putString("major", major);
+                                    editor.putString("img_path", police.getImgPath());
                                     editor.commit();
                                     Intent intent = new Intent(LoginActivity.this, MainAllActivity.class);
                                     LoginActivity.this.startActivity(intent);
@@ -212,6 +213,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("phone", driver.getPhoneNo());
                                     editor.putString("address", driver.getAddress());
                                     editor.putString("major", major);
+                                    editor.putString("img_path", driver.getImgPath());
                                     editor.commit();
                                     Intent intent = new Intent(LoginActivity.this, MainAllActivity.class);
                                     LoginActivity.this.startActivity(intent);

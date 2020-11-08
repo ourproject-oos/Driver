@@ -426,6 +426,7 @@ public class GalleryFragment extends Fragment {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("d_id", String.valueOf(driver.getId()));
                 map.put("p_id", String.valueOf(idPolice));
+                map.put("type" , String.valueOf(driver.getCarType()));
                 map.put("lat", String.valueOf(lat));
                 map.put("lang", String.valueOf(langLocation));
                 return map;

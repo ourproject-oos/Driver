@@ -4,6 +4,15 @@ public class Police {
 
     int id;
     String userName, Job_id, dgree, Name, password ,phoneNo,address,lat,lang,job;
+    String imgPath;
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 
     public String getJob() {
         return job;
