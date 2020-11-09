@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -195,7 +196,9 @@ public class LoginActivity extends AppCompatActivity {
                                     driver.setCarNumber(js.getString("CAR_NUM"));
                                     driver.setCarType(js.getString("CAR_TYPE"));
                                     driver.setGander(js.getString("GENDER"));
-
+                                    driver.setImgPath(js.getString("IMG_PATH"));
+//?????
+                                    Log.i("imgUrl",js.getString("IMG_PATH"));
 
                                     driverList.add(driver);
                                 }
@@ -213,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("phone", driver.getPhoneNo());
                                     editor.putString("address", driver.getAddress());
                                     editor.putString("major", major);
-                                    editor.putString("img_path", driver.getImgPath());
+                                    editor.putString("img_path_driver", driver.getImgPath());
                                     editor.commit();
                                     Intent intent = new Intent(LoginActivity.this, MainAllActivity.class);
                                     LoginActivity.this.startActivity(intent);

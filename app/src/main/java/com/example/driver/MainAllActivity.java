@@ -73,6 +73,7 @@ public class MainAllActivity extends AppCompatActivity {
     String policeImageUri = "https://driverchecker.000webhostapp.com/police_img.php";
     String driverImageUri = "https://driverchecker.000webhostapp.com/driver_img.php";
     String imgPath;
+    String imgPathDriver;
 
 
     @Override
@@ -89,10 +90,11 @@ public class MainAllActivity extends AppCompatActivity {
             major = sharedPreferences.getString("major", "");
             name = sharedPreferences.getString("fullName", "user1");
             imgPath = sharedPreferences.getString("img_path", "");
-
+            imgPathDriver= sharedPreferences.getString("img_path_driver", "");
+            //hi whats wrong
 
             policeImageUri = "https://driverchecker.000webhostapp.com/" + imgPath;
-            driverImageUri = "https://driverchecker.000webhostapp.com/" + imgPath;
+            driverImageUri = "https://driverchecker.000webhostapp.com/" + imgPathDriver;
 
 
             Toast.makeText(this, major, Toast.LENGTH_SHORT).show();
@@ -134,7 +136,7 @@ public class MainAllActivity extends AppCompatActivity {
 
         } else if (major.equals("POLICE")) {
 
-            Picasso.get().load(policeImageUri).into(userImageNav);
+
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_gallery, R.id.nav_logout)
                     .setDrawerLayout(drawer)
@@ -156,12 +158,11 @@ public class MainAllActivity extends AppCompatActivity {
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
-            Log.i("imgUrl",policeImageUri);
             Picasso.get().load(policeImageUri).fit().centerCrop().into(userImageNav);
 
         } else {
 
-            Picasso.get().load(driverImageUri).into(userImageNav);
+//            Picasso.get().load(driverImageUri).into(userImageNav); ////??????????
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
                     R.id.nav_dashboard, R.id.nav_logout)
@@ -185,9 +186,8 @@ public class MainAllActivity extends AppCompatActivity {
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
-            Log.i("imgUrl",driverImageUri);
-            Picasso.get().load(driverImageUri).fit().centerCrop().into(userImageNav);
 
+            Picasso.get().load(driverImageUri).fit().centerCrop().into(userImageNav);
         }
 
         navigationView.getMenu().getItem(6).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -203,8 +203,9 @@ public class MainAllActivity extends AppCompatActivity {
                 return true;
             }
         });
-//        Log.i("imgUrl",policeImageUri);
-//        Picasso.get().load(policeImageUri).fit().centerCrop().into(userImageNav);
+        Log.i("imgUrl",policeImageUri);
+        Log.i("imgUrl",driverImageUri);
+
 
 
     }
