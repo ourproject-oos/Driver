@@ -176,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                                     LoginActivity.this.startActivity(intent);
                                     LoginActivity.this.finish();
                                 }
-                            } else if (major.equals("driver")) {
+                            } else if (major.equals("DRIVER")) {
 
 
                                 driverList = new ArrayList<>();
@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                                     driver.setGander(js.getString("GENDER"));
                                     driver.setImgPath(js.getString("IMG_PATH"));
 //?????
-                                    Log.i("imgUrl",js.getString("IMG_PATH"));
+                                    Log.i("imgUrl2",js.getString("IMG_PATH"));
 
                                     driverList.add(driver);
                                 }

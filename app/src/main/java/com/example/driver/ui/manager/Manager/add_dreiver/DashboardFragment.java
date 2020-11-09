@@ -666,11 +666,7 @@ public class DashboardFragment extends Fragment implements RadioGroup.OnCheckedC
             carNumber.setError("Car Number can't be empty");
             return false;
         }
-        else if (!carnum.trim().matches("[a-zA-Z]+") && !carnum.trim().matches("[0-10]+"))
-        {
-            carNumber.setError("Name can only contain letters");
-            return false;
-        }
+
         else
         {
             carNumber.setErrorEnabled(false);
