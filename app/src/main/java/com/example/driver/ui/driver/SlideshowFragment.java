@@ -1,8 +1,11 @@
 package com.example.driver.ui.driver;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +32,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.toolbox.Volley;
+import com.example.driver.IntentService;
+import com.example.driver.JobService;
 import com.example.driver.R;
 import com.example.driver.VioAdapter;
 import com.example.driver.VioClass;
+import com.example.driver.ui.police.GalleryFragment;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
@@ -44,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.support.v4.media.session.MediaControllerCompatApi21.TransportControls.stop;
 
 public class SlideshowFragment extends Fragment {
 
@@ -91,6 +98,22 @@ public class SlideshowFragment extends Fragment {
 
         getUserData();
 
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("TrafficGo")
+                .setContentText("Much longer text that cannot fit one line...")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Much longer text that cannot fit one line..."))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+
+// notificationId is a unique int for each notification that you must define
+        int notificationId = 0;
+        notificationManager.notify(notificationId, builder.build());
+
+
 
 
         return root;
@@ -98,6 +121,25 @@ public class SlideshowFragment extends Fragment {
 
 
     }
+
+    public void startService() {
+
+        String input = recyclerView.getAdapter().toString();
+
+        Intent serviceIntent = new Intent(getContext(), IntentService.class);
+        serviceIntent.putExtra("inputExtra", input);
+
+        startActivity(serviceIntent);
+    }
+
+
+    public void stopService()
+    {
+        Intent serviceIntent = new Intent(getContext(), IntentService.class);
+        stopService(serviceIntent);
+    }
+
+
 
 
     public void Identify (View root)
@@ -212,4 +254,22 @@ public class SlideshowFragment extends Fragment {
 //
 //
 //    }
+
+//    private void createNotificationChannel() {
+//        // Create the NotificationChannel, but only on API 26+ because
+//        // the NotificationChannel class is new and not in the support library
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            CharSequence name = getString(R.string.vio_typ_using_cell_phone_while_driving);
+//            String description = getString(R.string.channel_description);
+//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+//            channel.setDescription(description);
+//            // Register the channel with the system; you can't change the importance
+//            // or other notification behaviors after this
+//            SlideshowFragment notificationManager = getContext().getSystemService(SlideshowFragment.class);
+//            notificationManager.createNotificationChannel(channel);
+//        }
+//    }
+
+
 }
